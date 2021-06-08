@@ -15,7 +15,7 @@ const searchBar = () => {
           } else if (val.first_name.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return val
           }        }).map((val,key)=>{
-            return <div>
+            return<div>
             {val.first_name}</div>
         })}
         </div>
