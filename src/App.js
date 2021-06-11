@@ -22,6 +22,7 @@ function App() {
 //       <EventCard title="Billie Eillish - Happier Than Ever" address="868 Granville St" price="24.99"/>
     </div>
   );
+
 }
 
 export default App;
