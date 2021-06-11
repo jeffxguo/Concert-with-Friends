@@ -41,8 +41,8 @@ export default function EventCard(event) {
                 </div>
                 <CardContent className={classes.cardContent} >
                     <div className={classes.date}>
-                        <Typography variant="h2" style={{ color: COLORS.highlight }}>{months[date.getMonth()]}</Typography>
-                        <Typography style={{ fontSize: 46, fontWeight: "700", color: COLORS.black }}>{date.getDate()}</Typography>
+                        <Typography variant="h2" style={{ marginLeft: -10, color: COLORS.highlight, textAlign: "center" }}>{months[date.getMonth()]}</Typography>
+                        <Typography style={{ marginLeft: -10, fontSize: 46, fontWeight: "700", color: COLORS.black, textAlign: "center" }}>{date.getDate()}</Typography>
                     </div>
                     <div className={classes.details}>
                         <Typography variant="h2">{event.title}</Typography>
