@@ -15,7 +15,7 @@ function App() {
   const [isRedirected, setRedirect] = useState(false);
 
   return (
-    <div className="App">
+    <div className="App" style={{ minWidth: "1300px" }}>
       <ThemeProvider theme={theme}>
         <Navbar loggedIn={isLoggedIn} handleClick={() => setRedirect(true)} />
         <Router>
@@ -33,17 +33,17 @@ function App() {
 const theme = createMuiTheme({
   typography: {
     "fontFamily": `"Open Sans", "Helvetica", "Arial", sans-serif`,
-    "fontSize": 18,
+    "fontSize": 16,
     "color": COLORS.black,
     "fontWeightLight": 300,
     "fontWeightRegular": 400,
     "fontWeightMedium": 500,
     h2: {
-      fontSize: 20,
+      fontSize: "1.4em",
       fontWeight: 700,
     },
     h1: {
-      fontSize: 40,
+      fontSize: "2.4em",
       fontWeight: 700,
       fontFamily: "Helvetica"
     }

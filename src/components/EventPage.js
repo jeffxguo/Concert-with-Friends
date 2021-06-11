@@ -1,16 +1,18 @@
 import { Typography } from "@material-ui/core";
 import CardList from "./CardList";
 import background from "../images/eventPage.jpg";
+import SearchBar from "./SearchBar";
 
 export default function EventPage() {
     return (
-        <div style={{ margin: "2rem 20rem", textAlign: "left" }}>
+        <div style={{ margin: "2em 10%", textAlign: "left" }}>
             <div style={{
                 backgroundImage: `url(${background})`,
-                height: "50vh", width: "100%",
+                height: "40vh", width: "100%",
                 backgroundSize: "cover"
             }}></div>
-            <Typography variant="h1" style={{ margin: "1em 2rem" }}>Upcoming Events</Typography>
+            <SearchBar />
+            <Typography variant="h1" style={{ margin: "1.5em .5em .5em .5em" }}>Upcoming Events</Typography>
             <CardList />
         </div>
     )

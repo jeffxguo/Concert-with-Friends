@@ -7,7 +7,7 @@ export default function CardList() {
         <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
             {data.map((event, i) => {
                 return (
-                    <div key={i} style={{ margin: "1rem 2rem" }}>
+                    <div key={i} style={{ margin: "1.2em 1em" }}>
                         <EventCard title={event.name} address={event._embedded.venues[0].name} price="24.99" date={event.dates.start.dateTime} />
                     </div>
                 )

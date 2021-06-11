@@ -24,7 +24,7 @@ export default function EventCard(event) {
         <div>
             <Card className={classes.card}>
                 <CardMedia component='img' src="https://s1.ticketm.net/dam/a/300/88bcb3d0-aa78-428d-ad10-52514ea72300_570131_CUSTOM.jpg" style={{
-                    height: '15rem'
+                    height: '13em'
                 }} />
                 <div className={classes.addButton}>
                     <IconButton style={{
@@ -89,8 +89,8 @@ const useStyles = makeStyles({
     },
     card: {
         position: 'relative',
-        height: '28rem',
-        width: '24rem'
+        height: '26em',
+        width: '20em'
     },
     addButton: {
         position: 'absolute',
