@@ -72,3 +72,5 @@ Functionalities to remove base on time constriction will be email alerts and add
 ![ConcertWithFriends UI Sketches - page 3](https://user-images.githubusercontent.com/20137196/119717626-c600b500-be23-11eb-9f9c-61731502f1a9.jpeg)
 
 
+## FIGMA hi-fidelity design file
+https://www.figma.com/file/vgKphQ9Y0UD4Z9faVusc6B/cpsc-455-proj?node-id=0%3A1
