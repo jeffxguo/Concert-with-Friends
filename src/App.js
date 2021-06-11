@@ -1,27 +1,28 @@
+import React, { useState } from 'react';
 import './App.css';
 import EventPage from './components/EventPage';
+import LoginPage from './components/LoginPage';
 import Navbar from './components/Navbar';
-import JSONData from './components/MOCK_DATA.json';
-import {useState} from 'react'
+import EventCard from './components/Card';
+import { Route, Link, Redirect, Switch, withRouter, BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('')
-    return (
-        <div className="SearchBar"> 
-        <input type = "text" 
-        placeholder="Search.."  
-        onChange= {event => {setSearchTerm (event.target.value)}}/>
-        {JSONData.filter((val)=>{
-          if (searchTerm == ""){
-            return val
-          } else if (val.first_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return val
-          }        }).map((val,key)=>{
-            return <div>
-            {val.first_name}</div>
-        })}
-        </div>
-    );
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isRedirected, setRedirect] = useState(false);
+
+  return (
+    <div className="App">
+      <Navbar loggedIn={isLoggedIn} handleClick={() => setRedirect(true)}/>
+      <Router>
+        <Switch>
+              <Route path="/login" render={() => <LoginPage />}/>
+              <Route path="/" render={() => isRedirected ? <Redirect to={{ pathname: '/login' }} /> : <EventPage />}/>
+        </Switch>
+      </Router>
+//       <EventCard title="Billie Eillish - Happier Than Ever" address="868 Granville St" price="24.99"/>
+    </div>
+  );
+
 }
 
 export default App;
