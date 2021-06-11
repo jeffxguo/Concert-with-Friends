@@ -27,6 +27,7 @@ function App() {
       </ThemeProvider>
     </div>
   );
+
 }
 
 const theme = createMuiTheme({
