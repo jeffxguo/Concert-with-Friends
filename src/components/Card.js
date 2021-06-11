@@ -12,19 +12,24 @@ import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import GroupIcon from '@material-ui/icons/Group';
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { COLORS } from '../constants/Colors';
+import { Icon } from '@material-ui/core';
 export default function EventCard(event) {
     const classes = useStyles();
-    return(
+    const date = new Date(event.date)
+
+    const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
+    return (
         <div>
             <Card className={classes.card}>
-                <CardMedia component='img' src="https://designshack.net/wp-content/uploads/placeholder-image.png" style={{
-                    height: '13.5rem'
-                }}/>
+                <CardMedia component='img' src="https://s1.ticketm.net/dam/a/300/88bcb3d0-aa78-428d-ad10-52514ea72300_570131_CUSTOM.jpg" style={{
+                    height: '13em'
+                }} />
                 <div className={classes.addButton}>
                     <IconButton style={{
                         backgroundColor: 'white',
-                        color: 'black'
+                        color: COLORS.black,
                     }}>
                         <AddIcon />
                     </IconButton>
@@ -34,35 +39,58 @@ export default function EventCard(event) {
                         {event.price}
                     </Box>
                 </div>
-                <CardContent>
-                    <div className={classes.date}>June 1st</div>
-                    <div className={classes.details}>
-                        <div className="event-title">
-                            <Typography variant="h6">{event.title}</Typography>
-                        </div>
-                        <div className="event-address">
-                            <Typography>{event.address}</Typography>
-                        </div>
+                <CardContent className={classes.cardContent} >
+                    <div className={classes.date}>
+                        <Typography variant="h2" style={{ marginLeft: -10, color: COLORS.highlight, textAlign: "center" }}>{months[date.getMonth()]}</Typography>
+                        <Typography style={{ marginLeft: -10, fontSize: 46, fontWeight: "700", color: COLORS.black, textAlign: "center" }}>{date.getDate()}</Typography>
                     </div>
+                    <div className={classes.details}>
+                        <Typography variant="h2">{event.title}</Typography>
+                        <Typography style={{ marginTop: 10 }}>{event.address}</Typography>
+
+                        <div className="row no-gutters" style={{ marginTop: 10 }}>
+                            <div className={classes.tag}>
+                                <Icon style={{
+                                    color: COLORS.grey,
+                                    marginRight: 10
+                                }}>
+                                    <ConfirmationNumberIcon style={{ height: 26 }} />
+                                </Icon>
+                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>24</span>
+                            </div>
+                            <div className={classes.tag}>
+                                <Icon style={{
+                                    color: COLORS.grey,
+                                    marginRight: 10
+                                }}>
+                                    <GroupIcon style={{ height: 26 }} />
+                                </Icon>
+                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>3</span>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </CardContent>
-                <div>
-                    <Button variant="contained" startIcon={<ConfirmationNumberIcon />}>
-                        23
-                    </Button>
-                    <Button variant="contained" startIcon={<GroupIcon />}>
-                        3
-                    </Button>
-                </div>
+
             </Card>
         </div>
     )
 }
 
 const useStyles = makeStyles({
+    tag: {
+        marginRight: 10,
+        padding: '0px 15px',
+        borderStyle: "solid",
+        borderColor: COLORS.grey,
+        borderWidth: 1,
+        borderRadius: 4
+    },
     card: {
         position: 'relative',
-        height: '24rem',
-        width: '20rem'
+        height: '26em',
+        width: '20em'
     },
     addButton: {
         position: 'absolute',
@@ -73,22 +101,28 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: '20px',
         left: '15px',
+        fontWeight: "700"
     },
     box: {
-        backgroundColor: 'white',
-        padding: '5px 9px',
-        fontSize: '22px'
+        backgroundColor: COLORS.highlight,
+        color: "#fff",
+        padding: '5px 15px',
+        fontSize: '22px',
+
+    },
+    cardContent: {
+        paddingTop: '30px',
+        display: "flex",
+        flexDirection: "row"
     },
     date: {
-        position: 'absolute',
+        alignText: "center",
+        flex: 1,
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center"
+        flexDirection: "column"
     },
     details: {
-        position: "relative",
-        width: "12.5rem",
-        left: "4.4rem",
         textAlign: "left",
+        flex: 3
     }
 });
