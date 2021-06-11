@@ -3,6 +3,7 @@ import './App.css';
 import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
 import Navbar from './components/Navbar';
+import EventCard from './components/Card';
 import { Route, Link, Redirect, Switch, withRouter, BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route path="/" render={() => isRedirected ? <Redirect to={{ pathname: '/login' }} /> : <EventPage />}/>
         </Switch>
       </Router>
+//       <EventCard title="Billie Eillish - Happier Than Ever" address="868 Granville St" price="24.99"/>
     </div>
   );
 }
