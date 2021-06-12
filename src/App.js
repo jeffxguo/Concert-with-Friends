@@ -4,30 +4,41 @@ import './index.css';
 import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
 import Navbar from './components/Navbar';
-import EventCard from './components/Card';
-import { Route, Link, Redirect, Switch, withRouter, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { COLORS } from './constants/Colors';
 import "./index.css";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isRedirected, setRedirect] = useState(false);
+  const [redirectTo, setRedirect] = useState("");
 
   return (
     <div className="App" style={{ minWidth: "1300px" }}>
       <ThemeProvider theme={theme}>
-        <Navbar loggedIn={isLoggedIn} handleClick={() => setRedirect(true)} />
+        <Navbar loggedIn={isLoggedIn} handleClickLogin={() => setRedirect("login")} handleClickGroups={() => setRedirect("groups")} handleLogout={() => setLoggedIn(false)}/>
         <Router>
           <Switch>
-            <Route path="/login" render={() => <LoginPage />} />
-            <Route path="/" render={() => isRedirected ? <Redirect to={{ pathname: '/login' }} /> : <EventPage />} />
+            <Route path="/login" render={() => redirectTo === "login" ? <LoginPage handleLoginSubmit={() => {setLoggedIn(true); setRedirect(""); }} /> : redirectToComponent(redirectTo)} />
+            <Route path="/groups" render={() => redirectTo === "groups" ? <EventPage /> : redirectToComponent(redirectTo)} />
+            <Route path="/" render={() => redirectToComponent(redirectTo)} />
           </Switch>
         </Router>
       </ThemeProvider>
     </div>
   );
 
+}
+
+const redirectToComponent = (redirectTo) => {
+  switch(redirectTo) {
+    case "":
+      return <EventPage />;
+    case "login":
+      return <Redirect to={{ pathname: '/login' }} />;
+    case "groups":
+      return <Redirect to={{ pathname: '/groups' }} />;
+  }
 }
 
 const theme = createMuiTheme({

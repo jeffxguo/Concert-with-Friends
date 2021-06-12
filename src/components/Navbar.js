@@ -23,13 +23,19 @@ export default function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
+  const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   }
+
+  const handleLogout = () => {
+    props.handleLogout();
+    setAnchorEl(null);
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: "white", boxShadow: "none", padding: "0 10%", color: COLORS.black }}>
@@ -41,11 +47,11 @@ export default function Navbar(props) {
           <Typography variant="h1" className={classes.title}>
             Concert w/ Friends
           </Typography>
-          <Button>Groups</Button>
+          <Button color="inherit" onClick={props.handleClickGroups}>Groups</Button>
           {
             props.loggedIn ?
               <div>
-                <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
                   <AccountCircleRoundedIcon />
                 </IconButton>
                 <Menu
@@ -57,10 +63,10 @@ export default function Navbar(props) {
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My groups</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
-              : <Button color="inherit" onClick={props.handleClick}>Login</Button>
+              : <Button color="inherit" onClick={props.handleClickLogin}>Login</Button>
           }
 
         </Toolbar>
