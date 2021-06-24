@@ -12,6 +12,6 @@ export default function CardList() {
                     </div>
                 )
             })}
-        </div >
+        </div>
     )
 }

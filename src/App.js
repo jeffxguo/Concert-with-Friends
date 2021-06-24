@@ -3,6 +3,7 @@ import './App.css';
 import './index.css';
 import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
+import ProfileGroupsPage from './components/ProfileGroupsPage';
 import Navbar from './components/Navbar';
 import { Route, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
