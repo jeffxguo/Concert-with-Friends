@@ -36,6 +36,13 @@ export default function Navbar(props) {
     setAnchorEl(null);
   }
 
+  const handleOpenProfile = () => {
+    if (props.loggedIn) {
+      props.handleOpenProfile();
+    }
+    setAnchorEl(null);
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: "white", boxShadow: "none", padding: "0 10%", color: COLORS.black }}>
@@ -62,7 +69,7 @@ export default function Navbar(props) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My groups</MenuItem>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>

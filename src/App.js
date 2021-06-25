@@ -4,7 +4,9 @@ import './index.css';
 import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
 import Navbar from './components/Navbar';
+import Profile from './components/Profile';
 import MapPage from './components/MapPage';
+
 import { Route, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { COLORS } from './constants/Colors';
@@ -13,11 +15,13 @@ import "./index.css";
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [redirectTo, setRedirect] = useState("");
+  const [isProfileOpen, setProfile] = useState(false);
 
   return (
     <div className="App" style={{ minWidth: "1300px" }}>
       <ThemeProvider theme={theme}>
-        <Navbar loggedIn={isLoggedIn} handleClickLogin={() => setRedirect("login")} handleClickGroups={() => setRedirect("groups")} handleClickMaps={() => setRedirect("maps")}  handleLogout={() => setLoggedIn(false)}/>
+        <Navbar loggedIn={isLoggedIn} handleClickLogin={() => setRedirect("login")} handleClickGroups={() => setRedirect("groups")} handleLogout={() => setLoggedIn(false)} handleOpenProfile={() => setProfile(true)}/>
+        <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)}/>
         <Router>
           <Switch>
             <Route path="/login" render={() => redirectTo === "login" ? <LoginPage handleLoginSubmit={() => {setLoggedIn(true); setRedirect(""); }} /> : redirectToComponent(redirectTo)} />
