@@ -55,6 +55,7 @@ export default function Navbar(props) {
             Concert w/ Friends
           </Typography>
           <Button color="inherit" onClick={props.handleClickGroups}>Groups</Button>
+          <Button color="inherit" onClick={props.handleClickMaps}>Map</Button>
           {
             props.loggedIn ?
               <div>
@@ -81,3 +82,4 @@ export default function Navbar(props) {
     </div>
   );
 }
+

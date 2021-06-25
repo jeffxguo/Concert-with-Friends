@@ -5,6 +5,8 @@ import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
+import MapPage from './components/MapPage';
+
 import { Route, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { COLORS } from './constants/Colors';
@@ -24,6 +26,7 @@ function App() {
           <Switch>
             <Route path="/login" render={() => redirectTo === "login" ? <LoginPage handleLoginSubmit={() => {setLoggedIn(true); setRedirect(""); }} /> : redirectToComponent(redirectTo)} />
             <Route path="/groups" render={() => redirectTo === "groups" ? <EventPage /> : redirectToComponent(redirectTo)} />
+            <Route path="/maps" render={() => redirectTo === "maps" ? <MapPage /> : redirectToComponent(redirectTo)} />
             <Route path="/" render={() => redirectToComponent(redirectTo)} />
           </Switch>
         </Router>
@@ -41,6 +44,8 @@ const redirectToComponent = (redirectTo) => {
       return <Redirect to={{ pathname: '/login' }} />;
     case "groups":
       return <Redirect to={{ pathname: '/groups' }} />;
+    case "maps":
+      return <Redirect to={{ pathname: '/maps' }} />;
   }
 }
 
