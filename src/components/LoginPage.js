@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Grid, Button, TextField, makeStyles } from '@material-ui/core';
 import { COLORS } from '../constants/Colors';
 import SignupPage from './SignupPage';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -65,8 +66,10 @@ export default function LoginPage(props) {
 							</Grid>
 						</Grid>
 						<Grid item xs={12}>
-							<Button color="primary" fullWidth type="button" variant="contained" onClick={handleLoginSubmit}>
-								Log in
+							<Button color="primary" fullWidth type="button" variant="contained">
+								<Link to="/" style={{ color: "white" }}>
+									Log in
+								</Link>
 							</Button>
 						</Grid>
 						<Grid item xs={12} spacing={3}>
