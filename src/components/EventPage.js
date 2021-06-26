@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import CardList from "./CardList";
 import background from "../images/eventPage.jpg";
 import SearchBar from "./SearchBar";
-
+import React from 'react';
 export default function EventPage() {
     return (
         <div style={{ margin: "2em 10%", textAlign: "left" }}>

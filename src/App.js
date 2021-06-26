@@ -14,21 +14,27 @@ import { COLORS } from './constants/Colors';
 import "./index.css";
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(true);
   const [redirectTo, setRedirect] = useState("");
   const [isProfileOpen, setProfile] = useState(false);
-
+  const handleClick = (page) => {
+    alert(page)
+    setRedirect(page)
+  }
   return (
     <div className="App" style={{ minWidth: "1300px" }}>
       <ThemeProvider theme={theme}>
-        <Navbar loggedIn={isLoggedIn} handleClickLogin={() => setRedirect("login")} handleClickGroups={() => setRedirect("groups")} handleLogout={() => setLoggedIn(false)} handleOpenProfile={() => setProfile(true)}/>
-        <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)}/>
         <Router>
+
+          <Navbar loggedIn={isLoggedIn} handleClick={handleClick} handleClickLogin={() => setLoggedIn(true)} handleLogout={() => setLoggedIn(false)} handleOpenProfile={() => setProfile(true)} />
+          <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />
           <Switch>
-            <Route path="/login" render={() => redirectTo === "login" ? <LoginPage handleLoginSubmit={() => {setLoggedIn(true); setRedirect(""); }} /> : redirectToComponent(redirectTo)} />
-            <Route path="/groups" render={() => redirectTo === "groups" ? <EventPage /> : redirectToComponent(redirectTo)} />
-            <Route path="/maps" render={() => redirectTo === "maps" ? <MapPage /> : redirectToComponent(redirectTo)} />
-            <Route path="/" render={() => redirectToComponent(redirectTo)} />
+            <Route path='/' exact component={EventPage} />
+            <Route path='/login' exact>
+              <LoginPage handleLoginSubmit={() => { setLoggedIn(true); setRedirect(""); }} />
+            </Route>
+            <Route path='/map' exact component={MapPage} />
+            <Route path='/mygroups' exact component={ProfileGroupsPage} />
           </Switch>
         </Router>
       </ThemeProvider>
@@ -38,7 +44,7 @@ function App() {
 }
 
 const redirectToComponent = (redirectTo) => {
-  switch(redirectTo) {
+  switch (redirectTo) {
     case "":
       return <EventPage />;
     case "login":

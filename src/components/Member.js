@@ -7,14 +7,14 @@ export default function Member(member) {
     return (
         <Box borderRadius="borderRadius" className={classes.box}>
             <div className={classes.content}>
-                <img className={classes.memberImage} src={member.image}
-                style={{ top: '2em', height: "6em" }} alt={"Member"}/>
+                <img className={classes.memberImage} src={member.image} alt={"Member"} />
                 <div className={classes.details}>
                     <Typography variant="h2">{member.name}</Typography>
-                    <Typography variant="h6">Contact Info</Typography>
-                    <Typography>Phone: {member.phone}</Typography>
-                    <Typography>Email: {member.email}</Typography>
-                    <Typography>IG: {member.ig}</Typography>
+                    <div style={{ marginTop: 10 }}>
+                        <Typography>Phone: {member.phone}</Typography>
+                        <Typography>Email: {member.email}</Typography>
+                        <Typography>IG: {member.ig}</Typography>
+                    </div>
                 </div>
             </div>
         </Box>
@@ -23,24 +23,26 @@ export default function Member(member) {
 
 const useStyles = makeStyles(theme => ({
     memberImage: {
-        flex: 1
+        height: "5em",
+        width: "5em",
+        backgroundSize: "cover",
+        borderRadius: "50%",
     },
     box: {
         position: 'relative',
         backgroundColor: "white",
         color: "black",
-        padding: '5px 15px',
+        padding: '1em',
         fontSize: '22px',
-        height: '10em',
-        width: '30em',
+        width: '100%',
     },
     content: {
-        paddingTop: '2em',
         display: 'flex',
         flexDirection: 'row'
     },
     details: {
-        textAlign: "center",
+        marginLeft: "1em",
+        textAlign: "Left",
         flex: 3
     }
 }));

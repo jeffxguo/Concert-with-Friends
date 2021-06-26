@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Container, Grid, Button, makeStyles } from '@material-ui/core';
+import { COLORS } from '../constants/Colors';
 
 export default function ProfileGroups(group) {
     const classes = useStyles();
@@ -8,7 +9,7 @@ export default function ProfileGroups(group) {
         <Box borderRadius="borderRadius" className={classes.box}>
             <div className={classes.content}>
                 <img className={classes.groupImage} src={group.image}
-                style={{ top: '2em', height: "6em" }} alt={"Group"}/>
+                    alt={"Group"} />
                 <div className={classes.details}>
                     <Typography variant="h2">{group.name}</Typography>
                     <Typography>{group.details}</Typography>
@@ -20,25 +21,25 @@ export default function ProfileGroups(group) {
 
 const useStyles = makeStyles(theme => ({
     groupImage: {
-        flex: 1
+        width: "12em",
+        height: "8em",
+        backgroundSize: "cover"
     },
     box: {
-        position: 'relative',
         backgroundColor: "white",
-        color: "black",
-        padding: '5px 15px',
+        color: COLORS.black,
+        padding: '1em',
         fontSize: '22px',
         height: '10em',
-        width: '30em',
+        width: "100%"
     },
     content: {
-        paddingTop: '2em',
         display: 'flex',
         flexDirection: 'row'
     },
     details: {
-        textAlign: "center",
-        marginTop: 10,
+        textAlign: "left",
+        marginLeft: "1em",
         flex: 3
     }
 }));
