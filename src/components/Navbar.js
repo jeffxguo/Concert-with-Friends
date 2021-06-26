@@ -3,6 +3,9 @@ import NavigationRoundedIcon from '@material-ui/icons/NavigationRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { useState } from 'react';
 import { COLORS } from '../constants/Colors';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
   location: {
     fontSize: 20
+  },
+  nav: {
+    color: COLORS.black,
+    margin: ".5em 1em",
+    fontSize: "1.2em",
   }
 }));
 
@@ -54,13 +62,17 @@ export default function Navbar(props) {
           <Typography variant="h1" className={classes.title}>
             Concert w/ Friends
           </Typography>
-          <Button color="inherit" onClick={props.handleClickGroups}>Groups</Button>
-          <Button color="inherit" onClick={props.handleClickMaps}>Map</Button>
+          <Link color="inherit" to="/" className={classes.nav}>
+            Groups
+          </Link>
+          <Link color="inherit" to="/map" className={classes.nav}>
+            Map
+          </Link>
           {
             props.loggedIn ?
               <div>
                 <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
-                  <AccountCircleRoundedIcon />
+                  <AccountCircleRoundedIcon style={{ height: 40, width: 40 }} />
                 </IconButton>
                 <Menu
                   id="simple-menu"
@@ -70,11 +82,23 @@ export default function Navbar(props) {
                   onClose={handleClose}
                 >
                   <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My groups</MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Link to="/mygroups">
+                      My Groups
+                    </Link>
+                  </MenuItem>
+                  <MenuItem >
+                    <Link to="/" onClick={handleLogout}>
+                      Logout
+                    </Link>
+                  </MenuItem>
                 </Menu>
               </div>
-              : <Button color="inherit" onClick={props.handleClickLogin}>Login</Button>
+              :
+              <Link to="/login" className={classes.nav}>
+                Login
+              </Link>
+
           }
 
         </Toolbar>

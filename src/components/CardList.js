@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { testData } from '../testEvent'
 import EventCard from './Card'
+import React from 'react';
 export default function CardList() {
     const [data, setData] = useState(JSON.parse(testData).events)
     return (
