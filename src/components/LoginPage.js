@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Container, Grid, Button, TextField, makeStyles } from '@material-ui/core';
 import { COLORS } from '../constants/Colors';
 import SignupPage from './SignupPage';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -26,10 +27,13 @@ const useStyles = makeStyles(theme => ({
 export default function LoginPage(props) {
 	const classes = useStyles();
 	const [isRegistered, setRegister] = useState(null);
+	const history = useHistory();
 
 	const handleLoginSubmit = (e) => {
 		e.preventDefault();
-		return props.handleLoginSubmit();
+		props.handleLoginSubmit();
+		history.push("/home");
+		return
 	}
 	return (
 		<Container className={classes.root}>
@@ -67,9 +71,9 @@ export default function LoginPage(props) {
 						</Grid>
 						<Grid item xs={12}>
 							<Button color="primary" fullWidth type="button" variant="contained">
-								<Link to="/" style={{ color: "white" }}>
+								<div onClick={handleLoginSubmit} style={{ color: "white" }}>
 									Log in
-								</Link>
+								</div>
 							</Button>
 						</Grid>
 						<Grid item xs={12} spacing={3}>

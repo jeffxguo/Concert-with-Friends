@@ -30,6 +30,7 @@ function App() {
           <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />
           <Switch>
             <Route path='/' exact component={EventPage} />
+            <Route path='/Home' exact component={EventPage} />
             <Route path='/login' exact>
               <LoginPage handleLoginSubmit={() => { setLoggedIn(true); setRedirect(""); }} />
             </Route>
