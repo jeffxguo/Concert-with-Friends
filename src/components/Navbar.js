@@ -5,7 +5,9 @@ import { useState } from 'react';
 import { COLORS } from '../constants/Colors';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { ActionCreators }  from '../actions/user.actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const loggedIn = useSelector(state => state.login.loggedIn);
+  const dispatch = useDispatch();
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,12 +44,12 @@ export default function Navbar(props) {
   }
 
   const handleLogout = () => {
-    props.handleLogout();
     setAnchorEl(null);
+    return dispatch(ActionCreators.logout());
   }
 
   const handleOpenProfile = () => {
-    if (props.loggedIn) {
+    if (loggedIn) {
       props.handleOpenProfile();
     }
     setAnchorEl(null);
@@ -69,7 +73,7 @@ export default function Navbar(props) {
             Map
           </Link>
           {
-            props.loggedIn ?
+            loggedIn ?
               <div>
                 <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
                   <AccountCircleRoundedIcon style={{ height: 40, width: 40 }} />
@@ -106,4 +110,3 @@ export default function Navbar(props) {
     </div>
   );
 }
-

@@ -14,6 +14,7 @@ import MailRoundedIcon from '@material-ui/icons/MailRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import { Avatar } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 400;
 
@@ -63,17 +64,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// TODO: Mocked profileData which will be replaced with actual data
-const profileData = {
-    "username": [<PersonRoundedIcon/>, "Joe Doe"],
-    "email": [<MailRoundedIcon/>, "joe.doe@gmail.com"],
-    "mobile": [<PhoneRoundedIcon/>, "778-123-456"],
-    "musicTaste": [<MusicNoteRoundedIcon/>, "Pop"]
-}
-
 export default function Profile(props) {
   const classes = useStyles();
   const theme = useTheme();
+  // TODO: Mocked profileData which will be replaced with actual data
+  const profile = useSelector(state => state.login.user);
+  const profileData = {
+      "username": [<PersonRoundedIcon/>, profile.username || ''],
+      "email": [<MailRoundedIcon/>, profile.email || ''],
+      "phone": [<PhoneRoundedIcon/>, profile.phone || ''],
+      "taste": [<MusicNoteRoundedIcon/>, profile.taste || '']
+  }
 
   return (
     <div className={classes.root}>
