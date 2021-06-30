@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Typography, Container, Grid, Button, makeStyles } from '@material-ui/core';
+import React from 'react';
+import { Box, Typography, makeStyles } from '@material-ui/core';
 import { COLORS } from '../constants/Colors';
 
 export default function ProfileGroups(group) {
