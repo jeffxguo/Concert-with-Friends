@@ -57,7 +57,6 @@ export default function SignupPage(props) {
         password: "",
         taste: ""
     })
-    // const [submitted, setSubmitted] = useState(false);
     const registering = useSelector(state => state.signup.registering);
     const dispatch = useDispatch();
 
@@ -73,8 +72,6 @@ export default function SignupPage(props) {
 
     const handleSignupSubmit = (e) => {
         e.preventDefault();
-        // setSubmitted(true);
-        // props.handleSignupSubmit();
         if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
             dispatch(ActionCreators.register(userProfile));
         }

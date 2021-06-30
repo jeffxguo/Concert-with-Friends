@@ -18,14 +18,7 @@ import { history } from './helpers/history';
 import { alertActions } from './actions/alert.actions';
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(true);
-  const [redirectTo, setRedirect] = useState("");
   const [isProfileOpen, setProfile] = useState(false);
-  const handleClick = (page) => {
-    alert(page)
-    setRedirect(page)
-  }
-  const alert = useSelector(state => state.alert);
   const loggedIn = useSelector(state => state.login.loggedIn);
   const dispatch = useDispatch();
 
@@ -40,7 +33,7 @@ function App() {
     <div className="App" style={{ minWidth: "1300px" }}>
       <ThemeProvider theme={theme}>
         <Router history={history}>
-          <Navbar loggedIn={isLoggedIn} handleClick={handleClick} handleClickLogin={() => setLoggedIn(true)} handleLogout={() => setLoggedIn(false)} handleOpenProfile={() => setProfile(true)} />
+          <Navbar handleOpenProfile={() => setProfile(true)} />
           { loggedIn && <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />}
           <Switch>
             <Route path='/' exact component={EventPage} />
