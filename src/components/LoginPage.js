@@ -4,7 +4,7 @@ import { COLORS } from '../constants/Colors';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ActionCreators }  from '../actions/user.actions';
+import { ActionCreators } from '../actions/user.actions';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -38,22 +38,22 @@ export default function LoginPage(props) {
 	const location = useLocation();
 
 	// reset login status
-	useEffect(() => { 
-		dispatch(ActionCreators.logout()); 
+	useEffect(() => {
+		dispatch(ActionCreators.logout());
 	}, []);
 
 	const handleChange = (e) => {
-        const { name, value } = e.target;
-        setCredInputs(inputs => ({ ...inputs, [name]: value }));
-    }
+		const { name, value } = e.target;
+		setCredInputs(inputs => ({ ...inputs, [name]: value }));
+	}
 
 	const handleLoginSubmit = (e) => {
 		e.preventDefault();
 		if (username && password) {
-            // get return url from location state or default to home page
-            const { from } = location.state || { from: { pathname: "/" } };
-            dispatch(ActionCreators.login(username, password, from));
-        }
+			// get return url from location state or default to home page
+			const { from } = location.state || { from: { pathname: "/" } };
+			dispatch(ActionCreators.login(username, password, from));
+		}
 		return;
 	}
 	return (
@@ -96,7 +96,7 @@ export default function LoginPage(props) {
 						</Grid>
 						<Grid item xs={12}>
 							<Button color="primary" fullWidth type="button" variant="contained" onClick={handleLoginSubmit}>
-							{loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+								{loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
 								<div style={{ color: "white" }}>
 									Log in
 								</div>
