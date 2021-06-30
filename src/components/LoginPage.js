@@ -49,8 +49,6 @@ export default function LoginPage(props) {
 
 	const handleLoginSubmit = (e) => {
 		e.preventDefault();
-		// props.handleLoginSubmit();
-		console.log("here", username, password)
 		if (username && password) {
 			// get return url from location state or default to home page
 			const { from } = location.state || { from: { pathname: "/" } };
