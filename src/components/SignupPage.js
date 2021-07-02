@@ -58,6 +58,7 @@ export default function SignupPage(props) {
         taste: ""
     })
     const registering = useSelector(state => state.signup.registering);
+    const alert = useSelector(state => state.alert);
     const dispatch = useDispatch();
 
     // reset login status
@@ -78,7 +79,10 @@ export default function SignupPage(props) {
     }
     return (
         <Container className={classes.root}>
-                    <form>
+            {alert.message &&
+				<div className={`alert ${alert.type}`}>{alert.message}</div>
+			}
+            <form>
             <Grid container spacing={3}>
                 <Grid className={classes.title} item xs={12}>
                     <h3>Sign Up</h3>
