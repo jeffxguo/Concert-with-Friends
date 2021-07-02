@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
-import { IconButton, Grid, Button, TextField, MenuItem, makeStyles } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { ActionCreators } from '../actions/user.actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, IconButton, Grid, Button, TextField, MenuItem, makeStyles } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+import { COLORS } from '../constants/Colors';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
+    root: {
+		width: "30em",
+		padding: 50,
+		marginTop: 200,
+		borderRadius: 10,
+		backgroundColor: COLORS.darkBlue,
+		color: "white"
+	},
     title: {
         "fontFamily": `"Open Sans", "Helvetica", "Arial", sans-serif`
     },
@@ -38,13 +50,35 @@ const musicTypes = [
 
 export default function SignupPage(props) {
     const classes = useStyles();
-    const [musicTaste, setMusicTaste] = useState("");
+    const [userProfile, setUserProfile] = useState({
+        username: "",
+        email: "",
+        phone: "",
+        password: "",
+        taste: ""
+    })
+    const registering = useSelector(state => state.signup.registering);
+    const dispatch = useDispatch();
+
+    // reset login status
+    useEffect(() => {
+        dispatch(ActionCreators.logout());
+    }, []);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserProfile(profile => ({ ...profile, [name]: value }));
+    }
+
     const handleSignupSubmit = (e) => {
         e.preventDefault();
-        props.handleSignupSubmit();
+        if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
+            dispatch(ActionCreators.register(userProfile));
+        }
     }
     return (
-        <form>
+        <Container className={classes.root}>
+                    <form>
             <Grid container spacing={3}>
                 <Grid className={classes.title} item xs={12}>
                     <h3>Sign Up</h3>
@@ -59,6 +93,7 @@ export default function SignupPage(props) {
                                 placeholder="Username"
                                 variant="outlined"
                                 className={classes.txtInput}
+                                onChange={handleChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -69,6 +104,7 @@ export default function SignupPage(props) {
                                 placeholder="Email"
                                 variant="outlined"
                                 className={classes.txtInput}
+                                onChange={handleChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -79,6 +115,7 @@ export default function SignupPage(props) {
                                 placeholder="Phone"
                                 variant="outlined"
                                 className={classes.txtInput}
+                                onChange={handleChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -89,19 +126,19 @@ export default function SignupPage(props) {
                                 placeholder="Password"
                                 variant="outlined"
                                 className={classes.txtInput}
+                                onChange={handleChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 fullWidth
                                 select
-                                name="select"
+                                name="taste"
                                 size="small"
                                 placeholder="Select"
                                 variant="outlined"
                                 className={classes.txtInput}
-                                value={musicTaste}
-                                onChange={(e) => setMusicTaste(e.target.value)}
+                                onChange={handleChange}
                             >
                                 {musicTypes.map((option, idx) => (
                                     <MenuItem key={idx} value={option.value}>
@@ -114,13 +151,18 @@ export default function SignupPage(props) {
                 </Grid>
                 <Grid item xs={12}>
                     <Button fullWidth color="primary" type="button" variant="contained" onClick={handleSignupSubmit}>
+                    {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Register
                     </Button>
                 </Grid>
-                <IconButton color="secondary" onClick={props.handleClickBack}>
-                    <ArrowBackRoundedIcon />
-                </IconButton>
+                <Link to="/login">
+                    <IconButton color="secondary">
+                        <ArrowBackRoundedIcon />
+                    </IconButton>
+                </Link>
             </Grid>
         </form>
+        </Container>
     );
 }
+
