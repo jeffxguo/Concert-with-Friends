@@ -13,9 +13,28 @@ import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
 import { Icon } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+
+import { ActionCreators } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
+
 export default function EventCard(event) {
     const classes = useStyles();
-    const date = new Date(event.date)
+    const date = new Date(event.date);
+    const loggedIn = useSelector(state => state.login.loggedIn);
+    const userData = useSelector(state => state.login.user);
+    const dispatch = useDispatch();
+    const [joined, setJoin] = useState(false);
+
+    const handleClickJoin = () => {
+        if (loggedIn && userData) {
+            dispatch(ActionCreators.addGroup(userData, event.id));
+            setJoin(true);
+        } else {
+            dispatch(alertActions.error("You need to login first"));
+        }
+    }
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -26,12 +45,17 @@ export default function EventCard(event) {
                     height: '13em'
                 }} />
                 <div className={classes.addButton}>
-                    <IconButton style={{
+                    { joined ?
+                    <Button variant="contained" color="secondary">
+                        Leave
+                    </Button>
+                    : <IconButton style={{
                         backgroundColor: 'white',
                         color: COLORS.black,
-                    }}>
+                    }} onClick={handleClickJoin}>
                         <AddIcon />
                     </IconButton>
+                    }
                 </div>
                 <div className={classes.priceTag}>
                     <Box borderRadius="borderRadius" className={classes.box}>

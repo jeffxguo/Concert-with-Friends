@@ -12,7 +12,8 @@ export const ActionCreators = {
   // updateProfile: (user) => ({ type: actionTypes.UPDATE_USER, payload: { user } }),
 
   login,  
-  logout
+  logout,
+  addGroup
 }
 
 function register(user) {
@@ -63,6 +64,28 @@ function login(username, password, from) {
 function logout() {
   userService.logout();
   return { type: actionTypes.LOGOUT };
+}
+
+function addGroup(user, groupId) {
+  return dispatch => {
+    dispatch(request(user));
+
+    userService.addGroup(user, groupId)
+        .then(
+            user => {
+              dispatch(success(user));
+              dispatch(alertActions.success('Joined group successful'));
+            },
+            error => {
+              dispatch(failure(error.toString()));
+              dispatch(alertActions.error(error.toString()));
+            }
+        );
+  };
+
+  function request(user) { return { type: actionTypes.ADDGROUP_REQUEST, user } }
+  function success(user) { return { type: actionTypes.ADDGROUP_SUCCESS, user } }
+  function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
 }
 
 
