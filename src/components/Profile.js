@@ -93,7 +93,7 @@ export default function Profile(props) {
           </IconButton>
         </div>
         <Divider />
-        <Avatar className={classes.avatarImage} alt='Joe Doe' src='../images/avatar.png'></Avatar>
+        <Avatar className={classes.avatarImage} alt={profile.username} src='../images/avatar.png'></Avatar>
         <Divider />
         <List>
           {Object.values(profileData).map((text, index) => (
