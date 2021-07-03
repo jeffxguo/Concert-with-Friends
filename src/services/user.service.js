@@ -4,7 +4,7 @@ export const userService = {
     login,
     logout,
     register,
-    update
+    addGroup
 };
 
 function login(username, password) {
@@ -40,14 +40,19 @@ function register(user) {
     return fetch(`http://localhost:3001/register`, requestOptions).then(handleResponse);
 }
 
-function update(user) {
+function addGroup(user, groupId) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
+        body: JSON.stringify({user, groupId: groupId})
     };
 
-    return fetch(`http://localhost:3001/users/${user.id}`, requestOptions).then(handleResponse);;
+    if (user && user.data && user.data.username) {
+        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(handleResponse);;
+    } else {
+        return Promise.reject("User data not found");
+    }
+
 }
 
 function handleResponse(response) {
