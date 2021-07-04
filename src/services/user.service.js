@@ -44,7 +44,7 @@ function addGroup(user, groupId) {
     const requestOptions = {
         method: 'PUT',
         headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
-        body: JSON.stringify({user, groupId: groupId})
+        body: JSON.stringify({groupId: groupId})
     };
 
     if (user && user.data && user.data.username) {

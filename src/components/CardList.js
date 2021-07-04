@@ -13,7 +13,7 @@ export default function CardList() {
     useEffect(() => {
         setTimeout(() => {
             setAlertVisible(false);
-        }, 3000);
+        }, 5000);
       }, [alert]);
 
     return (
