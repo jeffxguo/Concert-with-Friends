@@ -42,31 +42,32 @@ export default function EventCard(event) {
     return (
         <div>
             <Card className={classes.card}>
-                <CardMedia component='img' src="https://s1.ticketm.net/dam/a/300/88bcb3d0-aa78-428d-ad10-52514ea72300_570131_CUSTOM.jpg" style={{
-                    height: '13em'
+                <CardMedia component='img' src={event.img} style={{
+                    height: '15em'
                 }} />
                 <div className={classes.addButton}>
-                    { joined ?
-                    <Button variant="contained" color="secondary">
-                        Leave
-                    </Button>
-                    : <IconButton style={{
-                        backgroundColor: 'white',
-                        color: COLORS.black,
-                    }} onClick={handleClickJoin}>
-                        <AddIcon />
-                    </IconButton>
+                    {joined ?
+                        <Button variant="contained" color="secondary">
+                            Leave
+                        </Button>
+                        : <IconButton style={{
+                            backgroundColor: 'white',
+                            color: COLORS.black,
+                        }} onClick={handleClickJoin}>
+                            <AddIcon />
+                        </IconButton>
                     }
                 </div>
                 <div className={classes.priceTag}>
                     <Box borderRadius="borderRadius" className={classes.box}>
-                        {event.price}
+                        ${event.price.toFixed(2)}
                     </Box>
                 </div>
                 <CardContent className={classes.cardContent} >
                     <div className={classes.date}>
                         <Typography variant="h2" style={{ marginLeft: -10, color: COLORS.highlight, textAlign: "center" }}>{months[date.getMonth()]}</Typography>
                         <Typography style={{ marginLeft: -10, fontSize: 46, fontWeight: "700", color: COLORS.black, textAlign: "center" }}>{date.getDate()}</Typography>
+                        <Typography style={{ marginLeft: -10, fontSize: 20, fontWeight: "700", color: COLORS.grey, textAlign: "center" }}>({date.getFullYear()})</Typography>
                     </div>
                     <div className={classes.details}>
                         <Typography variant="h2">{event.title}</Typography>
@@ -113,8 +114,8 @@ const useStyles = makeStyles({
     },
     card: {
         position: 'relative',
-        height: '26em',
-        width: '20em'
+        height: '30em',
+        width: '24em'
     },
     addButton: {
         position: 'absolute',
