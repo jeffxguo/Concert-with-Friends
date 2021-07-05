@@ -75,7 +75,7 @@ app.post("/login", (req, res, next) => {
 });
 
 app.post("/register", (req, res) => {
-    User.findOne({ username: mongoose.Types.ObjectId(req.body.username) }, async (err, doc) => {
+    User.findOne({ username: req.body.username }, async (err, doc) => {
         if (err) {
             res.send(res.send({
                 statusCode: 500,
@@ -113,7 +113,7 @@ app.post("/register", (req, res) => {
 app.put("/", (req, res) => {
     var foundUser;
     var foundGroup;
-    User.findOne({ _id: req.body.userid }, async (err, doc) => {
+    User.findOne({ _id: req.body.userId }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,
@@ -126,43 +126,44 @@ app.put("/", (req, res) => {
             });
         } else {
             foundUser = doc;
-        }
-    })
-
-    Group.findOneAndUpdate({ _id: req.body.groupid }, { $push: { usersJoined: foundUser } }, async (err, doc) => {
-        if (err) {
-            res.send({
-                statusCode: 500,
-                message: "Internal Error"
-            });
-        } else if (!doc) {
-            res.send({
-                statusCode: 404,
-                message: "Group Not Found"
-            });
-        } else {
-            foundGroup = doc;
-        }
-    })
-
-    User.updateOne({ _id: req.body.userid }, { $push: { joinedGroups: foundGroup } }, async (err, doc) => {
-        if (err) {
-            res.send({
-                statusCode: 500,
-                message: "Internal Error"
-            });
-        } else if (!doc) {
-            res.send({
-                statusCode: 404,
-                message: "User Not Found"
-            });
-        } else {
-            res.send({
-                statusCode: 200,
-                message: "User and Group Updated"
+            Group.findOneAndUpdate({ _id: req.body.groupId }, { $push: { usersJoined: foundUser._id } }, async (err, doc) => {
+                if (err) {
+                    res.send({
+                        statusCode: 500,
+                        message: "Internal Error"
+                    });
+                } else if (!doc) {
+                    res.send({
+                        statusCode: 404,
+                        message: "Group Not Found"
+                    });
+                } else {
+                    foundGroup = doc;
+                    User.updateOne({ _id: req.body.userid }, { $push: { joinedGroups: foundGroup._id } }, async (err, doc) => {
+                        if (err) {
+                            res.send({
+                                statusCode: 500,
+                                message: "Internal Error"
+                            });
+                        } else if (!doc) {
+                            res.send({
+                                statusCode: 404,
+                                message: "User Not Found"
+                            });
+                        } else {
+                            res.send({
+                                statusCode: 200,
+                                message: "User and Group Updated"
+                            })
+                        }
+                    })
+                }
             })
         }
     })
+
+
+    
 })
 
 app.get("/mygroups/:userid", (req, res) => {

@@ -69,7 +69,6 @@ function logout() {
 function addGroup(user, groupId) {
   return dispatch => {
     dispatch(request(user));
-
     userService.addGroup(user, groupId)
         .then(
             user => {

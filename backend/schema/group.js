@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-var User = require('./user');
 
 const groupSchema = new mongoose.Schema({
     eventid: String,

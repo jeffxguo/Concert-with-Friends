@@ -44,11 +44,12 @@ function addGroup(user, groupId) {
     const requestOptions = {
         method: 'PUT',
         headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
-        body: JSON.stringify({user, groupId: groupId})
+        body: JSON.stringify({userId: user.data._id, groupId: groupId})
     };
+    console.log(user);
 
     if (user && user.data && user.data.username) {
-        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(handleResponse);;
+        return fetch(`http://localhost:3001/`, requestOptions).then(handleResponse);;
     } else {
         return Promise.reject("User data not found");
     }
