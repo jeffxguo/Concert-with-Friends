@@ -93,6 +93,7 @@ app.post("/register", (req, res) => {
             const newUser = new User({
                 username: req.body.username,
                 password: hashedPassword,
+                email: req.body.email,
                 phone: req.body.phone,
                 taste: req.body.taste,
                 joinedGroups: [],
