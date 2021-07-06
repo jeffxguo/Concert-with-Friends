@@ -5,7 +5,7 @@ const user = new mongoose.Schema({
     phone: String,
     taste: String,
     email: String,
-    joinedGroups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }]
+    joinedGroups: [String]
 });
 
 module.exports = mongoose.model('User', user);

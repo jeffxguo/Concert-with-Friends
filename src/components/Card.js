@@ -29,7 +29,7 @@ export default function EventCard(event) {
 
     const handleClickJoin = () => {
         if (loggedIn && userData) {
-            dispatch(ActionCreators.addGroup(userData, "60e107cff2be4aa01d4ffdac"));
+            dispatch(ActionCreators.addGroup(userData, event.id));
             setJoin(true);
         } else {
             dispatch(alertActions.error("You need to login first"));

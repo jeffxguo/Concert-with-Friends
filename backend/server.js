@@ -111,10 +111,10 @@ app.post("/register", (req, res) => {
     res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });*/
 
-app.put("/", (req, res) => {
+app.put("/users/:username", (req, res) => {
     var foundUser;
     var foundGroup;
-    User.findOne({ _id: req.body.userId }, async (err, doc) => {
+    User.findOne({ username: req.params.username }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,
@@ -127,20 +127,43 @@ app.put("/", (req, res) => {
             });
         } else {
             foundUser = doc;
-            Group.findOneAndUpdate({ _id: req.body.groupId }, { $push: { usersJoined: foundUser._id } }, async (err, doc) => {
+            Group.findOneAndUpdate({ eventid: req.body.eventId }, { $push: { usersJoined: foundUser._id } }, async (err, doc) => {
                 if (err) {
                     res.send({
                         statusCode: 500,
                         message: "Internal Error"
                     });
                 } else if (!doc) {
-                    res.send({
-                        statusCode: 404,
-                        message: "Group Not Found"
+                    // res.send({
+                    //     statusCode: 404,
+                    //     message: "Group Not Found"
+                    // });
+                    const newGroup = new Group({
+                        eventid: req.body.eventId,
+                        usersJoined: [foundUser._id]
+                    });
+                    await newGroup.save();
+                    User.updateOne({ username: req.params.username }, { $push: { joinedGroups: newGroup.eventid } }, async (err, doc) => {
+                        if (err) {
+                            res.send({
+                                statusCode: 500,
+                                message: "Internal Error"
+                            });
+                        } else if (!doc) {
+                            res.send({
+                                statusCode: 404,
+                                message: "User Not Found"
+                            });
+                        } else {
+                            res.send({
+                                statusCode: 200,
+                                message: "Group Created and User Updated"
+                            })
+                        }
                     });
                 } else {
                     foundGroup = doc;
-                    User.updateOne({ _id: req.body.userid }, { $push: { joinedGroups: foundGroup._id } }, async (err, doc) => {
+                    User.updateOne({ username: req.params.username }, { $push: { joinedGroups: foundGroup.eventid } }, async (err, doc) => {
                         if (err) {
                             res.send({
                                 statusCode: 500,
@@ -155,20 +178,70 @@ app.put("/", (req, res) => {
                             res.send({
                                 statusCode: 200,
                                 message: "User and Group Updated"
-                            })
+                            });
                         }
-                    })
+                    });
                 }
-            })
+            });
         }
-    })
+    });
+});
 
+app.delete("/users/:username", (req, res) => {
+    var foundUser;
+    var foundGroup;
+    User.findOne({ username: req.params.username }, async (err, doc) => {
+        if (err) {
+            res.send({
+                statusCode: 500,
+                message: "Internal Error"
+            });
+        } else if (!doc) {
+            res.send({
+                statusCode: 404,
+                message: "User Not Found"
+            });
+        } else {
+            foundUser = doc;
+            Group.findOneAndUpdate({ eventid: req.body.eventId }, { $pull: { usersJoined: foundUser._id } }, async (err, doc) => {
+                if (err) {
+                    res.send({
+                        statusCode: 500,
+                        message: "Internal Error"
+                    });
+                } else if (!doc) {
+                    res.send({
+                        statusCode: 404,
+                        message: "Group Not Found"
+                    });
+                } else {
+                    foundGroup = doc;
+                    User.updateOne({ username: req.params.username }, { $pull: { joinedGroups: foundGroup.eventid } }, async (err, doc) => {
+                        if (err) {
+                            res.send({
+                                statusCode: 500,
+                                message: "Internal Error"
+                            });
+                        } else if (!doc) {
+                            res.send({
+                                statusCode: 404,
+                                message: "User Not Found"
+                            });
+                        } else {
+                            res.send({
+                                statusCode: 200,
+                                message: "User and Group Updated"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
 
-    
-})
-
-app.get("/mygroups/:userid", (req, res) => {
-    User.findOne({ _id: req.params.userid }, async (err, doc) => {
+app.get("/:username/groups", (req, res) => {
+    User.findOne({ username: req.params.username }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,
@@ -184,7 +257,26 @@ app.get("/mygroups/:userid", (req, res) => {
             res.send(doc.joinedGroups);
         }
     })
-})
+});
+
+app.get("/:eventid/users", (req, res) => {
+    Group.findOne({ eventid: req.params.eventid }, async (err, doc) => {
+        if (err) {
+            res.send({
+                statusCode: 500,
+                message: "Internal Error"
+            });
+        } else if (!doc) {
+            res.send({
+                statusCode: 404,
+                message: "User Not Found"
+            });
+        } else {
+            console.log(doc);
+            res.send(doc.usersJoined);
+        }
+    })
+});
 
 app.listen(3001, () => {
     console.log("Server Has Started");
