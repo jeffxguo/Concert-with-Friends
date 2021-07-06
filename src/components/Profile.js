@@ -58,9 +58,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
   },
   avatarImage: {
-      margin: "5% 0 5% 50%",
-      width: "50px",
-      height: "50px"
+    margin: "5% 0 5% 50%",
+    width: "50px",
+    height: "50px"
   }
 }));
 
@@ -70,10 +70,10 @@ export default function Profile(props) {
   // TODO: Mocked profileData which will be replaced with actual data
   const profile = useSelector(state => state.login.user.data);
   const profileData = {
-      "username": [<PersonRoundedIcon/>, profile.username || ''],
-      "email": [<MailRoundedIcon/>, profile.email || ''],
-      "phone": [<PhoneRoundedIcon/>, profile.phone || ''],
-      "taste": [<MusicNoteRoundedIcon/>, profile.taste || '']
+    "username": [<PersonRoundedIcon />, profile.username || ''],
+    "email": [<MailRoundedIcon />, profile.email || ''],
+    "phone": [<PhoneRoundedIcon />, profile.phone || ''],
+    "taste": [<MusicNoteRoundedIcon />, profile.taste || '']
   }
 
   return (
@@ -93,14 +93,14 @@ export default function Profile(props) {
           </IconButton>
         </div>
         <Divider />
-        <Avatar className={classes.avatarImage} alt={profile.username} src='../images/avatar.png'></Avatar>
+        <Avatar className={classes.avatarImage} alt={profile?.username} src='../images/avatar.png'></Avatar>
         <Divider />
         <List>
           {Object.values(profileData).map((text, index) => (
             <ListItem button key={text} alignItems="flex-start">
-                <ListItemIcon>
-                    {text[0]}
-                </ListItemIcon>
+              <ListItemIcon>
+                {text[0]}
+              </ListItemIcon>
               <ListItemText primary={text[1]} />
             </ListItem>
           ))}
