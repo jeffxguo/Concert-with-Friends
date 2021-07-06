@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const loggedIn = useSelector(state => state.login.loggedIn);
+  const loggedIn = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
 
   const handleClickMenu = (event) => {

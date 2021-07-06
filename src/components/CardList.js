@@ -1,23 +1,20 @@
-import { useState, useEffect } from 'react'
-import { testData } from '../testEvent'
+import { useEffect } from 'react'
 import EventCard from './Card'
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Fragment } from 'react';
+import { alertActions } from '../actions/alert.actions';
 
 export default function CardList(props) {
-    const [alertVisible, setAlertVisible] = useState(true);
     const alert = useSelector(state => state.alert);
     useEffect(() => {
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 5000);
+        alertActions.clear();
     }, [alert]);
 
     return (
         <Fragment>
             <div>
-                {alertVisible && alert.message &&
+                {alert.message &&
                     <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
             </div>

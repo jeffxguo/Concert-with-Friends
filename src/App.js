@@ -19,7 +19,7 @@ import { alertActions } from './actions/alert.actions';
 
 function App() {
   const [isProfileOpen, setProfile] = useState(false);
-  const loggedIn = useSelector(state => state.login.loggedIn);
+  const loggedIn = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {

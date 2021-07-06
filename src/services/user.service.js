@@ -4,7 +4,9 @@ export const userService = {
     login,
     logout,
     register,
-    addGroup
+    addGroup,
+    getGroups,
+    deleteGroup
 };
 
 function login(username, password) {
@@ -49,11 +51,52 @@ function addGroup(user, eventId) {
     console.log(user);
 
     if (user && user.data && user.data.username) {
-        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(handleResponse);;
+        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(response => response.json())
+        .then((data) => {
+            if (data.statusCode === (404 || 500)) {
+                return Promise.reject(data.message);
+            }
+            localStorage.setItem('user', JSON.stringify(data));
+            return Promise.resolve(data);
+        });
     } else {
         return Promise.reject("User data not found");
     }
 
+}
+
+function getGroups(user) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    if (user && user.data && user.data.username) {
+        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(handleResponse);
+    } else {
+        return Promise.reject("User data not found");
+    }
+}
+
+function deleteGroup(user, eventId) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({eventId: eventId})
+    };
+
+    if (user && user.data && user.data.username) {
+        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(response => response.json())
+        .then((data) => {
+            if (data.statusCode === (404 || 500)) {
+                return Promise.reject(data.message);
+            }
+            localStorage.setItem('user', JSON.stringify(data));
+            return Promise.resolve(data);
+        });
+    } else {
+        return Promise.reject("User data not found");
+    }
 }
 
 function handleResponse(response) {
@@ -67,8 +110,6 @@ function handleResponse(response) {
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
         }
-
-
         return data;
     });
 }

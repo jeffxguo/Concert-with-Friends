@@ -68,7 +68,7 @@ export default function Profile(props) {
   const classes = useStyles();
   const theme = useTheme();
   // TODO: Mocked profileData which will be replaced with actual data
-  const profile = useSelector(state => state.login.user.data);
+  const profile = useSelector(state => state.user.user.data);
   const profileData = {
     "username": [<PersonRoundedIcon />, profile.username || ''],
     "email": [<MailRoundedIcon />, profile.email || ''],
