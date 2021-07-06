@@ -157,7 +157,7 @@ app.put("/users/:username", (req, res) => {
                         } else {
                             res.send({
                                 statusCode: 200,
-                                message: "Group Created and User Updated"
+                                data: doc
                             })
                         }
                     });
@@ -177,7 +177,7 @@ app.put("/users/:username", (req, res) => {
                         } else {
                             res.send({
                                 statusCode: 200,
-                                message: "User and Group Updated"
+                                data: doc
                             });
                         }
                     });
@@ -230,7 +230,7 @@ app.delete("/users/:username", (req, res) => {
                         } else {
                             res.send({
                                 statusCode: 200,
-                                message: "User and Group Updated"
+                                data: doc
                             });
                         }
                     });
