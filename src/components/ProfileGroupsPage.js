@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { testData } from '../testGroups';
-import { Box, ButtonBase, Container, Grid, Button, makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import ProfileGroups from './ProfileGroups';
 import Member from './Member';
 import { COLORS } from '../constants/Colors';

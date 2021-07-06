@@ -40,12 +40,13 @@ function register(user) {
     return fetch(`http://localhost:3001/register`, requestOptions).then(handleResponse);
 }
 
-function addGroup(user, groupId) {
+function addGroup(user, eventId) {
     const requestOptions = {
         method: 'PUT',
         headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
-        body: JSON.stringify({groupId: groupId})
+        body: JSON.stringify({eventId: eventId})
     };
+    console.log(user);
 
     if (user && user.data && user.data.username) {
         return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(handleResponse);;

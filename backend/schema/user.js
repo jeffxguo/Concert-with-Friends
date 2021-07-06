@@ -5,7 +5,7 @@ const user = new mongoose.Schema({
     phone: String,
     taste: String,
     email: String,
-    joinedGroups: Array
+    joinedGroups: [String]
 });
 
-module.exports = mongoose.model("User", user);
+module.exports = mongoose.model('User', user);
