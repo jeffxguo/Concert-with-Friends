@@ -134,16 +134,13 @@ app.put("/users/:username", (req, res) => {
                         message: "Internal Error"
                     });
                 } else if (!doc) {
-                    // res.send({
-                    //     statusCode: 404,
-                    //     message: "Group Not Found"
-                    // });
                     const newGroup = new Group({
                         eventid: req.body.eventId,
                         usersJoined: [foundUser._id]
                     });
                     await newGroup.save();
-                    User.updateOne({ username: req.params.username }, { $push: { joinedGroups: newGroup.eventid } }, async (err, doc) => {
+                    User.findOneAndUpdate({ username: req.params.username }, { $push: { joinedGroups: newGroup.eventid } },
+                        { new: true }, async (err, doc) => {
                         if (err) {
                             res.send({
                                 statusCode: 500,
@@ -163,7 +160,8 @@ app.put("/users/:username", (req, res) => {
                     });
                 } else {
                     foundGroup = doc;
-                    User.updateOne({ username: req.params.username }, { $push: { joinedGroups: foundGroup.eventid } }, async (err, doc) => {
+                    User.findOneAndUpdate({ username: req.params.username }, { $push: { joinedGroups: foundGroup.eventid } },
+                        { new: true }, async (err, doc) => {
                         if (err) {
                             res.send({
                                 statusCode: 500,
@@ -216,7 +214,10 @@ app.delete("/users/:username", (req, res) => {
                     });
                 } else {
                     foundGroup = doc;
-                    User.updateOne({ username: req.params.username }, { $pull: { joinedGroups: foundGroup.eventid } }, async (err, doc) => {
+                    User.findOneAndUpdate(
+                        { username: req.params.username }, 
+                        { $pull: { joinedGroups: foundGroup.eventid } },
+                        { new: true }, async (err, doc) => {
                         if (err) {
                             res.send({
                                 statusCode: 500,
