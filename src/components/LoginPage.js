@@ -33,7 +33,7 @@ export default function LoginPage(props) {
 	})
 	const { username, password } = credInputs;
 	const alert = useSelector(state => state.alert);
-	const loggingIn = useSelector(state => state.login.loggingIn);
+	const loggingIn = useSelector(state => state.user.loggingIn);
 	const dispatch = useDispatch();
 	const location = useLocation();
 

@@ -5,12 +5,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import alert from './reducers/alert.reducer';
 import signup from './reducers/signup.reducer';
-import login from './reducers/login.reducer';
+import user from './reducers/user.reducer';
 
 const rootReducer = combineReducers({
   alert,
   signup,
-  login
+  user
 });
 
 const configureStore = () => {

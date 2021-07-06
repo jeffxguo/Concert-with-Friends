@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
@@ -22,18 +22,32 @@ import { alertActions } from '../actions/alert.actions';
 export default function EventCard(event) {
     const classes = useStyles();
     const date = new Date(event.date);
-    const loggedIn = useSelector(state => state.login.loggedIn);
-    const userData = useSelector(state => state.login.user);
+    const loggedIn = useSelector(state => state.user.loggedIn);
+    const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
-    const [joined, setJoin] = useState(false);
+    const [joined, setJoin] = useState(null);
+
+    useEffect(() => {
+        if (userData && userData.data && userData.data.joinedGroups) {
+            if (userData.data.joinedGroups.includes(event.id)) {
+                setJoin(true);
+            } else {
+                setJoin(false);
+            }
+        }
+    }, [userData]);
 
     const handleClickJoin = () => {
         if (loggedIn && userData) {
             dispatch(ActionCreators.addGroup(userData, event.id));
-            setJoin(true);
+            // setJoin(true);
         } else {
             dispatch(alertActions.error("You need to login first"));
         }
+    }
+
+    const handleClickLeave = () => {
+        dispatch(ActionCreators.deleteGroup(userData, event.id));
     }
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -45,8 +59,8 @@ export default function EventCard(event) {
                     height: '15em'
                 }} />
                 <div className={classes.addButton}>
-                    {joined ?
-                        <Button variant="contained" color="secondary">
+                    {joined && loggedIn ?
+                        <Button variant="contained" color="secondary" onClick={handleClickLeave}>
                             Leave
                         </Button>
                         : <IconButton style={{

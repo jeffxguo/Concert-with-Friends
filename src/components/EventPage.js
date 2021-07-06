@@ -26,6 +26,7 @@ export default function EventPage() {
             .then(data => setEvents(data?._embedded?.events))
 
     }
+
     return (
         <div style={{ margin: "2em 10%", textAlign: "left" }}>
             <div style={{

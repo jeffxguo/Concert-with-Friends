@@ -13,7 +13,9 @@ export const ActionCreators = {
 
   login,  
   logout,
-  addGroup
+  getGroups,
+  addGroup,
+  deleteGroup
 }
 
 function register(user) {
@@ -73,7 +75,7 @@ function addGroup(user, eventId) {
         .then(
             user => {
               dispatch(success(user));
-              dispatch(alertActions.success('Joined group successful'));
+              dispatch(alertActions.success('Joined group successfully'));
             },
             error => {
               dispatch(failure(error.toString()));
@@ -87,6 +89,46 @@ function addGroup(user, eventId) {
   function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
 }
 
+function getGroups(user) {
+  return dispatch => {
+    dispatch(request(user));
 
+    userService.getGroups(user)
+        .then(
+            user => {
+              dispatch(success(user));
+            },
+            error => {
+              dispatch(failure(error.toString()));
+            }
+        );
+  };
+
+  function request(user) { return { type: actionTypes.ADDGROUP_REQUEST, user } }
+  function success(user) { return { type: actionTypes.ADDGROUP_SUCCESS, user } }
+  function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
+}
+
+function deleteGroup(user, groupId) {
+  return dispatch => {
+    dispatch(request(user));
+
+    userService.deleteGroup(user, groupId)
+        .then(
+            user => {
+              dispatch(success(user));
+              dispatch(alertActions.success('Left group successfully'));
+            },
+            error => {
+              dispatch(failure(error.toString()));
+              dispatch(alertActions.error(error.toString()));
+            }
+        );
+  };
+
+  function request(user) { return { type: actionTypes.DELETEGROUP_REQUEST, user } }
+  function success(user) { return { type: actionTypes.DELETEGROUP_SUCCESS, user } }
+  function failure(error) { return { type: actionTypes.DELETEGROUP_FAILURE, error } }
+}
 
 
