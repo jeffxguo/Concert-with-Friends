@@ -269,7 +269,7 @@ app.get("/:eventid/users", (req, res) => {
         } else if (!doc) {
             res.send({
                 statusCode: 404,
-                message: "User Not Found"
+                message: "Group Not Found"
             });
         } else {
             console.log(doc);
