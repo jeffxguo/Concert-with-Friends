@@ -4,7 +4,7 @@ import { userService } from '../services/user.service';
 import { history } from '../helpers/history';
 import { alertActions } from './alert.actions';
 
-export const ActionCreators = {
+export const userActions = {
   register,
 
   // updateProfileImage: (image) => ({ type: actionTypes.UPDATE_PROFILE_PICTURE, payload: { image } }),

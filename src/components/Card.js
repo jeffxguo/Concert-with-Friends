@@ -14,9 +14,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
 import { Icon } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
 
-import { ActionCreators } from '../actions/user.actions';
+import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
 
 export default function EventCard(event) {
@@ -25,29 +24,17 @@ export default function EventCard(event) {
     const loggedIn = useSelector(state => state.user.loggedIn);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
-    const [joined, setJoin] = useState(null);
-
-    useEffect(() => {
-        if (userData && userData.data && userData.data.joinedGroups) {
-            if (userData.data.joinedGroups.includes(event.id)) {
-                setJoin(true);
-            } else {
-                setJoin(false);
-            }
-        }
-    }, [userData]);
 
     const handleClickJoin = () => {
         if (loggedIn && userData) {
-            dispatch(ActionCreators.addGroup(userData, event.id));
-            // setJoin(true);
+            dispatch(userActions.addGroup(userData, event.id));
         } else {
             dispatch(alertActions.error("You need to login first"));
         }
     }
 
     const handleClickLeave = () => {
-        dispatch(ActionCreators.deleteGroup(userData, event.id));
+        dispatch(userActions.deleteGroup(userData, event.id));
     }
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -58,8 +45,8 @@ export default function EventCard(event) {
                 <CardMedia component='img' src={event.img} style={{
                     height: '15em'
                 }} />
-                <div className={classes.addButton}>
-                    {joined && loggedIn ?
+                <div key={event.joined} className={classes.addButton}>
+                    {event.joined && loggedIn ?
                         <Button variant="contained" color="secondary" onClick={handleClickLeave}>
                             Leave
                         </Button>
