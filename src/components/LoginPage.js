@@ -4,7 +4,7 @@ import { COLORS } from '../constants/Colors';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ActionCreators } from '../actions/user.actions';
+import { userActions } from '../actions/user.actions';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -39,7 +39,7 @@ export default function LoginPage(props) {
 
 	// reset login status
 	useEffect(() => {
-		dispatch(ActionCreators.logout());
+		dispatch(userActions.logout());
 	}, []);
 
 	const handleChange = (e) => {
@@ -52,7 +52,7 @@ export default function LoginPage(props) {
 		if (username && password) {
 			// get return url from location state or default to home page
 			const { from } = location.state || { from: { pathname: "/" } };
-			dispatch(ActionCreators.login(username, password, from));
+			dispatch(userActions.login(username, password, from));
 		}
 		return;
 	}

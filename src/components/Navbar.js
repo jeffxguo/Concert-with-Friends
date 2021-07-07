@@ -7,7 +7,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { ActionCreators }  from '../actions/user.actions';
+import { userActions }  from '../actions/user.actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +45,7 @@ export default function Navbar(props) {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    return dispatch(ActionCreators.logout());
+    return dispatch(userActions.logout());
   }
 
   const handleOpenProfile = () => {

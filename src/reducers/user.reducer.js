@@ -3,7 +3,7 @@ import { actionTypes } from '../constants/ActionTypes';
 let user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { loggedIn: true, user } : {};
 
-const authenticationReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.LOGIN_REQUEST:
             return {
@@ -44,4 +44,4 @@ const authenticationReducer = (state = initialState, action) => {
     }
 }
 
-export default authenticationReducer;
+export default userReducer;

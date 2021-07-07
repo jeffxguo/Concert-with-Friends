@@ -72,7 +72,7 @@ function getGroups(user) {
     };
 
     if (user && user.data && user.data.username) {
-        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(handleResponse);
+        return fetch(`http://localhost:3001/${user.data.username}/groups`, requestOptions).then(handleResponse);
     } else {
         return Promise.reject("User data not found");
     }

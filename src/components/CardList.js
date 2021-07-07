@@ -28,7 +28,8 @@ export default function CardList(props) {
                                 price={event.priceRanges ? event.priceRanges[0].min : 0}
                                 address={event._embedded.venues[0].name}
                                 date={event.dates.start.dateTime}
-                                img={event.images[0].url} />
+                                img={event.images[0].url}
+                                joined={event.joined} />
                         </div>
                     )
                 })}

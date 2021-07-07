@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActionCreators } from '../actions/user.actions';
+import { userActions } from '../actions/user.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, IconButton, Grid, Button, TextField, MenuItem, makeStyles } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
@@ -63,7 +63,7 @@ export default function SignupPage(props) {
 
     // reset login status
     useEffect(() => {
-        dispatch(ActionCreators.logout());
+        dispatch(userActions.logout());
     }, []);
 
     const handleChange = (e) => {
@@ -74,7 +74,7 @@ export default function SignupPage(props) {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
-            dispatch(ActionCreators.register(userProfile));
+            dispatch(userActions.register(userProfile));
         }
     }
     return (
