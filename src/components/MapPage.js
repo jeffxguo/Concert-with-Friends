@@ -1,160 +1,100 @@
-import React, { Component, useEffect, useState } from 'react';
-import { testData } from '../testEvent';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import Geocode from "react-geocode";
-import CardList from "./CardList";
-import EventCard from './Card'
+import GoogleMapReact from "google-map-react";
+import React, { useState, useEffect } from 'react';
+import Geocoder from 'react-native-geocoding';
 
 
+const GoogleMaps = ({ latitude, longitude }) => {
+  // const [events, setEvents] = useState([])
+  const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
+  const google = window.google
+  const[currentCity,setCurrentCity]= useState([])
 
+  useEffect(() => {
+      // fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=vancouver&segmentId=KZFzniwnSyZfZ7v7nJ')
+      //     .then(response => response.json())
+      //     .then(data => setEvents(data._embedded.events));
+  }, []);
 
-
-const MapContainer = (props)=> {
+  // console.log(events)
   
 
-  //console.log(CardList.data)  // logs the postal code
-  // console.log(mapData.events[0]._embedded.venues[0].address.line1); //log address
-  // console.log(mapData.events.length);
-
-  const [data, setData] = useState(JSON.parse(testData).events)
-
-  console.log(data[0]._embedded.venues[0].postalCode);
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [mapState, setMapState] = useState({
-    showingInfoWindow: false,  
-    activeMarker: {},          
-    selectedPlace: {}         
+  const [currentLoc, setCurrentLoc] = React.useState({
+    lat: 49.2780527602363,
+    lng: -123.10832917554698
   });
-  
-  const containerStyle = {
-    width: '1440px',
-    height: '800px'
-  };
-  
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(()=>{
-      if (!navigator.geolocation) {
-          setStatus('Geolocation is not supported by your browser');
-      } else {
-          setStatus('Locating...');
-          navigator.geolocation.getCurrentPosition((position) => {
-              setStatus(null);
-              setIsLoading(false);
-              console.log(position);
-              setLat(position.coords.latitude);
-              setLng(position.coords.longitude);
-          }, () => {
-              setStatus('Unable to retrieve your location');
-          });
-      }
-  },[navigator.geolocation]);
 
 
-  const center = {
-    lat: lat,
-    lng: lng
-  };
+  const ModelsMap = async (map, maps) => {
+    const response = await fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city='+currentCity+'&segmentId=KZFzniwnSyZfZ7v7nJ');
+    const data = await response.json();
+    const events = data._embedded.events;
+    console.log({events});
 
-    const { isLoaded } = useJsApiLoader({
-      id: 'google-map-script',
-      googleMapsApiKey: "AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo"
-    })
+    // let dataArray = [];
+    // {
+    //   events.map((markerJson) => dataArray.push(markerJson));
+    // }
 
-    const [map, setMap] = React.useState(null)
+    const dataArray = events;
 
-    const onLoad = React.useCallback(function callback(map) {
-      const bounds = new window.google.maps.LatLngBounds();
-      map.fitBounds(bounds);
-      setMap(map)
-    }, [])
-  
-    const onUnmount = React.useCallback(function callback(map) {
-      setMap(null)
-    }, [])
+    for (let i = 0; i < dataArray.length; i++) {
 
+
+      const marker = new maps.Marker({
+        position: { lat: parseFloat(dataArray[i]._embedded.venues[0].location.latitude), lng: parseFloat(dataArray[i]._embedded.venues[0].location.longitude) },
+        map
+      })
+
+      const infowindow = new maps.InfoWindow({
+        
+        content: "<div style='float:left'><img src='" + dataArray[i].images[0].url + "'></div><div style='float:right; padding: 10px;'><b>" + dataArray[i].name  + "</b><br/>" + dataArray[i]._embedded.venues[0].name + "<br/>" + dataArray[i].dates.start.localDate + "<br/>" + dataArray[i].dates.start.localTime + "<br/>" + '<button onclick="myFunction()">Join</button>'+ "</div>" 
+      });
     
-  
-  // state = {
-  //   showingInfoWindow: false,  // Hides or shows the InfoWindow
-  //   activeMarker: {},          // Shows the active marker upon click
-  //   selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
-  // };
+      marker.addListener("click", () => {
+        infowindow.open({
+          anchor: marker,
+          map,
+          shouldFocus: false,
+        });
+      })
+    }
 
-  const onMarkerClick = (props, marker, e) =>
-  setMapState({
-    selectedPlace: props,
-    activeMarker: marker,
-    showingInfoWindow: true
-  });
 
-const onClose = props => {
-  if (mapState.showingInfoWindow) {
-    setMapState({
-      showingInfoWindow: false,
-      activeMarker: null
-    });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setCurrentLoc({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      });
+    }
   }
+  
+
+  Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
+
+  Geocoder.from(currentLoc)
+  .then(json => {
+  //var addressComponent = json.results[0].address_components[3].long_name;
+    setCurrentCity(json.results[0].address_components[3].long_name)
+  })
+  .catch(error => console.warn(error));
+
+  console.log(currentCity)
+
+
+
+  return (
+    <div style={{ height: "400px", width: "100%" }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo" }}
+        defaultCenter={currentLoc}
+        defaultZoom={12}
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map, maps }) => ModelsMap(map, maps)}
+      ></GoogleMapReact>
+    </div>
+  );
 };
 
-Geocode.setApiKey("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
-
-Geocode.fromAddress(data[0]._embedded.venues[0].postalCode).then(
-  response => {
-    const { markerLat, markerLng } = response.results[0].geometry.location;
-    console.log(markerLat, markerLng);
-  },
-  error => {
-    console.error(error);
-  }
-);
-
-
-
-
-// return isLoading? <p>isLoading</p> : (
-//     <Map
-//       google={props.google}
-//       zoom={14}
-//       style={mapStyles}
-//       initialCenter={
-//         {
-//           lat: 49.281406462562934,
-//           lng: -123.12820819842196
-//         }
-//       }
-//       >
-//       <Marker
-//         onClick={onMarkerClick}
-//         name={'Commodore Ballroom'}
-//       />
-//       <InfoWindow
-//         marker={mapState.activeMarker}
-//         visible={mapState.showingInfoWindow}
-//         onClose={onClose}
-//       >npm i -S @react-google-maps/api
-//         <div>
-//           <h4>{mapState.selectedPlace.name}</h4>
-//         </div>
-//       </InfoWindow>
-//       </Map>
-//   );
-  
-return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={12}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-    >
-      { /* Child components, such as markers, info windows, etc. */}
-    </GoogleMap>
-) : <></>
-}
-
-export default React.memo(MapContainer)
-
+export default GoogleMaps;
