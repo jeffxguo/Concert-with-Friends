@@ -8,7 +8,7 @@ function getMembers(eventId) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`http://localhost:3001/${eventId}/users`, requestOptions).then(response => response.json())
+    return fetch(`http://localhost:3001/users/${eventId}`, requestOptions).then(response => response.json())
     .then((data) => {
         if (data.statusCode === (404 || 500)) {
             return Promise.reject(data.message);
