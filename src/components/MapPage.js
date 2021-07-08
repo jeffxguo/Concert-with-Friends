@@ -1,7 +1,8 @@
 import GoogleMapReact from "google-map-react";
 import React, { useState, useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
-
+import { COLORS } from '../constants/Colors';
+import pin from "../images/pin.png";
 
 const GoogleMaps = ({ latitude, longitude }) => {
   // const [events, setEvents] = useState([])
@@ -24,7 +25,6 @@ const GoogleMaps = ({ latitude, longitude }) => {
 
 
   const ModelsMap = async (map, maps) => {
-
     const getCurrentLongLat = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -65,9 +65,37 @@ const GoogleMaps = ({ latitude, longitude }) => {
         map
       })
 
-      const infowindow = new maps.InfoWindow({
+      console.log(events[i])
+      const date = new Date(events[i].dates.start.dateTime);
 
-        content: `<div style='float:left'><img src=${events[i].images[0].url}></div><div style='float:right; padding: 10px;'><b>${events[i].name}</b><br/>${events[i]._embedded.venues[0].name}<br/>${events[i].dates.start.localDate}<br/>${events[i].dates.start.localTime}<br/><button onclick="myFunction()">Join</button></div>`
+      const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
+      function openLink() {
+        alert("hi")
+      }
+
+      const infowindow = new maps.InfoWindow({
+        content:
+          `<div style='display: flex; max-width: 500px; padding: 10px'>
+        <div style='flex:1'>
+        <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
+        </div>
+        <div style='flex: 2; text-align: left; padding-left: 20px;'>
+        <div style='font-size: 20px; font-weight: 700'>${events[i].name}</div>
+        <div style='font-size: 18px; font-weight: 500; margin-top: 10px;'>
+        <img src=${pin} style='object-fit: cover; height: 20px; margin-right: 5px'>
+        ${events[i]._embedded.venues[0].name}
+        </div>
+        <div style='color: ${COLORS.highlight}; margin-top: 10px; font-size: 18px; font-weight: 500'>
+        ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}
+        </div>
+        <br/>
+        <button o
+        style='background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px'>Join</button>
+        <button onclick="window.open('${events[i].url}');"
+        style='background-color: #fff; color: ${COLORS.highlight}; font-size: 20px; border: solid 1px ${COLORS.highlight}; border-radius: 4px; padding: 9px 20px'>Buy Tickets</button>
+        </div>
+        </div>`
       });
 
       marker.addListener("click", () => {
@@ -80,17 +108,8 @@ const GoogleMaps = ({ latitude, longitude }) => {
     }
   }
 
-
-
-
-
-
-
-
-
-
   return (
-    <div style={{ height: "400px", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo" }}
         defaultCenter={currentLoc}
