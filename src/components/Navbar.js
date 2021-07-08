@@ -8,6 +8,35 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { userActions }  from '../actions/user.actions';
+import Geocoder from 'react-native-geocoding';
+
+  const [currentLoc, setCurrentLoc] = React.useState({
+    lat: 49.2780527602363,
+    lng: -123.10832917554698
+  });
+  const[currentCity,setCurrentCity]= useState([])
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCurrentLoc({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  }
+
+
+useEffect (() => {
+  Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
+
+Geocoder.from(currentLoc)
+.then(json => {
+//var addressComponent = json.results[0].address_components[3].long_name;
+  setCurrentCity(json.results[0].address_components[3].long_name)
+})
+.catch(error => console.warn(error));
+
+}, [])  
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,7 +90,7 @@ export default function Navbar(props) {
         <Toolbar>
           <Button edge="start" className={classes.menuButton} color={COLORS.highlight} aria-label="navigation">
             <NavigationRoundedIcon />
-            <a className={classes.location} style={{ color: COLORS.black }}>Vancouver</a>
+            <a className={classes.location} style={{ color: COLORS.black }}>{currentCity}</a>
           </Button>
           <Typography variant="h1" className={classes.title}>
             Concert w/ Friends
