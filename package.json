@@ -20,6 +20,7 @@
     "express-session": "^1.17.2",
     "geolocation": "^0.2.0",
     "glob-parent": "^5.1.2",
+    "google-map-react": "^2.1.10",
     "google-maps-react": "^2.0.6",
     "mongoose": "^5.13.0",
     "passport": "^0.4.1",
