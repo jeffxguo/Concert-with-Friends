@@ -53,7 +53,7 @@ function addGroup(user, eventId) {
     if (user && user.data && user.data.username) {
         return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(response => response.json())
         .then((data) => {
-            if (data.statusCode === (404 || 500)) {
+            if (data.statusCode === (404 || 500 || 204)) {
                 return Promise.reject(data.message);
             }
             localStorage.setItem('user', JSON.stringify(data));
