@@ -46,9 +46,8 @@ function App() {
             <Route path='/register' exact>
               <SignupPage />
             </Route>
-            <PrivateRoute path='/mygroups' exact component={ProfileGroupsPage} />
+            <PrivateRoute path='/mygroups' exact component={MyGroupsPage} />
           </Switch>
-        {/* <MyGroupsPage /> */}
         </Router>
       </ThemeProvider>
     </div>
