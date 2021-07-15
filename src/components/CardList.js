@@ -29,7 +29,8 @@ export default function CardList(props) {
                                 address={event._embedded.venues[0].name}
                                 date={event.dates.start.dateTime}
                                 img={event.images[0].url}
-                                joined={event.joined} />
+                                joined={event.joined}
+                                memberNum={event.memberNum} />
                         </div>
                     )
                 })}
