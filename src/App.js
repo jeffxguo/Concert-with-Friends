@@ -8,6 +8,7 @@ import ProfileGroupsPage from './components/ProfileGroupsPage';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import MapPage from './components/MapPage';
+import MyGroupsPage from './components/MyGroupsPage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Router, Redirect } from 'react-router-dom';
@@ -47,6 +48,7 @@ function App() {
             </Route>
             <PrivateRoute path='/mygroups' exact component={ProfileGroupsPage} />
           </Switch>
+        {/* <MyGroupsPage /> */}
         </Router>
       </ThemeProvider>
     </div>
