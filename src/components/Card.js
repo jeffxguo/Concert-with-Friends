@@ -90,7 +90,7 @@ export default function EventCard(event) {
                                 }}>
                                     <GroupIcon style={{ height: 26 }} />
                                 </Icon>
-                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>3</span>
+                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>{event.memberNum}</span>
                             </div>
                         </div>
 

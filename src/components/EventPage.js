@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { alertActions } from "../actions/alert.actions";
+import { groupService } from '../services/group.service';
 
 export default function EventPage() {
     const [events, setEvents] = useState([])
@@ -14,18 +15,20 @@ export default function EventPage() {
     useEffect(() => {
         fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=vancouver&segmentId=KZFzniwnSyZfZ7v7nJ')
             .then(response => response.json())
-            .then(data => {
+            .then(async (data) => {
                 let eventsData = data._embedded.events;
+                eventsData = await Promise.all(eventsData.map(async (event) => ({...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length)})));
                 if (userData && userData.data && userData.data.joinedGroups) {
-                    eventsData = eventsData.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
+                    eventsData = eventsData.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))
                 }
                 setEvents(eventsData);
             });
     }, []);
 
-    useEffect(() => {
+    useEffect(async () => {
         if (userData && userData.data && userData.data.joinedGroups) {
-            const eventsData = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))
+            let eventsData = await Promise.all(events.map(async (event) => ({...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length)})));
+            eventsData = eventsData.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))
             setEvents(eventsData);
         }
     }, [userData]);
@@ -41,14 +44,14 @@ export default function EventPage() {
         dispatch(alertActions.clear());
         fetch(url)
             .then(response => response.json())
-            .then(data => {
-                let eventsData = data?._embedded?.events;
+            .then(async (data) => {
+                let eventsData = data._embedded.events;
+                eventsData = await Promise.all(eventsData.map(async (event) => ({...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length)})));
                 if (userData && userData.data && userData.data.joinedGroups) {
-                    eventsData = eventsData.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
+                    eventsData = eventsData.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))
                 }
                 setEvents(eventsData);
-            })
-
+            });
     }
 
     return (
