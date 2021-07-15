@@ -10,8 +10,6 @@ import { alertActions } from '../actions/alert.actions';
 
 export default function GoogleMaps({ latitude, longitude }) {
   const [events, setEvents] = useState([]);
-  // const [mapReference, setMapReference] = useState(null);
-  // const [mapsReference, setMapsReference] = useState(null);
 
   const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
   const loggedIn = useSelector(state => state.user.loggedIn);
@@ -20,8 +18,8 @@ export default function GoogleMaps({ latitude, longitude }) {
   const dispatch = useDispatch();
 
   const [currentLoc, setCurrentLoc] = useState({
-    lat: 49.2780527602363,
-    lng: -123.10832917554698
+    lat: 49.26476441608848,
+    lng: -123.17586711566005
   });
 
   const ModelsMap = async (map, maps) => {
@@ -33,31 +31,43 @@ export default function GoogleMaps({ latitude, longitude }) {
         dispatch(userActions.deleteGroup(userData, eventId));
     }
 
+
+  
     const getCurrentLongLat = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          setCurrentLoc({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        });
-      }
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
     }
+
   
     const getCurrentCity = async () => {
+      
       Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
   
       try {
+        const position = await getCurrentLongLat();
+        const currentLoc = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
+        console.log({currentLoc});
         const json = await Geocoder.from(currentLoc)
         let currentCity = json.results[0].address_components[3].long_name
+        setCurrentLoc(currentLoc);
         return currentCity;
+        
       } catch (error) {
         console.warn(error)
         return null;
       }
+    
     }
 
-    getCurrentLongLat();
+  
+
+    
+   
+    
     return getCurrentCity().then((currentCity) =>
     fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=' + currentCity + '&segmentId=KZFzniwnSyZfZ7v7nJ'))
         .then(response => response.json())
@@ -67,6 +77,7 @@ export default function GoogleMaps({ latitude, longitude }) {
               events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
           }
           // setEvents(eventsData);
+          
 
           for (let i = 0; i < events.length; i++) {
 
@@ -173,4 +184,6 @@ useEffect(() => {
     </div>
   );
 };
+
+
 

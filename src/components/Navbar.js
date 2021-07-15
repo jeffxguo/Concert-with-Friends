@@ -37,32 +37,58 @@ export default function Navbar(props) {
   const dispatch = useDispatch();
 
   const [currentLoc, setCurrentLoc] = React.useState({
-    lat: 49.2780527602363,
-    lng: -123.10832917554698
+    lat: 0,
+    lng: 0
   });
   const[currentCity,setCurrentCity]= useState([])
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setCurrentLoc({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+    const getCurrentLongLat = () => {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
       });
-    });
-  }
+    }
+
+  
+    const getCurrentCity = async () => {
+      
+      Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
+  
+      try {
+        const position = await getCurrentLongLat();
+        const currentLoc = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
+        console.log({currentLoc});
+        const json = await Geocoder.from(currentLoc)
+        let currentCity = json.results[0].address_components[3].long_name
+        setCurrentLoc(currentLoc);
+        setCurrentCity(currentCity);
+        return currentCity;
+        
+      } catch (error) {
+        console.warn(error)
+        return null;
+      }
+    
+    }
+
+    useEffect (() => {
+    getCurrentCity();
+  }, []) 
 
 
-useEffect (() => {
-  Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
+// useEffect (() => {
+//   Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
 
-Geocoder.from(currentLoc)
-.then(json => {
-//var addressComponent = json.results[0].address_components[3].long_name;
-  setCurrentCity(json.results[0].address_components[3].long_name)
-})
-.catch(error => console.warn(error));
+// Geocoder.from(currentLoc)
+// .then(json => {
+// //var addressComponent = json.results[0].address_components[3].long_name;
+//   setCurrentCity(json.results[0].address_components[3].long_name)
+// })
+// .catch(error => console.warn(error));
 
-}, []) 
+// }, []) 
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
