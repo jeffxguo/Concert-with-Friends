@@ -18,21 +18,17 @@ export default function GoogleMaps({ latitude, longitude }) {
   const dispatch = useDispatch();
 
   const [currentLoc, setCurrentLoc] = useState({
-    lat: 49.26476441608848,
-    lng: -123.17586711566005
+    lat: 0,
+    lng: 0
   });
 
   const ModelsMap = async (map, maps) => {
     const handleClickJoin = (eventId) => {
-      if (userData && userData.data && userData.data._id) {
-        dispatch(userActions.addGroup(userData.data._id, eventId));
-      }
+          dispatch(userActions.addGroup(userData, eventId));
     }
 
     const handleClickLeave = (eventId) => {
-      if (userData && userData.data && userData.data._id) {
-        dispatch(userActions.deleteGroup(userData.data._id, eventId));
-      }
+        dispatch(userActions.deleteGroup(userData, eventId));
     }
 
 
@@ -54,11 +50,10 @@ export default function GoogleMaps({ latitude, longitude }) {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         }
-        console.log({currentLoc});
-        const json = await Geocoder.from(currentLoc)
-        let currentCity = json.results[0].address_components[3].long_name
+        map.setCenter(currentLoc);
         setCurrentLoc(currentLoc);
-        return currentCity;
+        console.log(currentLoc)
+        return currentLoc;
         
       } catch (error) {
         console.warn(error)
@@ -67,19 +62,13 @@ export default function GoogleMaps({ latitude, longitude }) {
     
     }
 
+    return getCurrentCity().then((currentLoc) =>
   
-
-    
-   
-    
-    return getCurrentCity().then((currentCity) =>
-    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=' + currentCity + '&segmentId=KZFzniwnSyZfZ7v7nJ'))
+    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
         .then(response => response.json())
         .then(data => {
-          let events = [];
-          if (data._embedded) {
-            events = data._embedded.events;
-          }
+          console.log(data)
+          let events = data._embedded.events;
           if (userData && userData.data && userData.data.joinedGroups) {
               events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
           }
@@ -179,7 +168,10 @@ useEffect(() => {
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo" }}
-        defaultCenter={currentLoc}
+        defaultCenter={{
+          lat: 0,
+          lng: 0
+        }}
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => ModelsMap(map, maps).then(
