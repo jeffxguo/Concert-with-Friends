@@ -103,6 +103,8 @@ app.post("/register", (req, res) => {
                 email: req.body.email,
                 phone: req.body.phone,
                 taste: req.body.taste,
+                facebook: req.body.facebook,
+                instagram: req.body.instagram,
                 joinedGroups: [],
             });
             await newUser.save();

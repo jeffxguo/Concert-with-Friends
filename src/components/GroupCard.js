@@ -15,9 +15,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
-import { groupService } from '../services/group.service';
-
-import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
 
 export default function GroupCard(group) {
@@ -28,13 +25,6 @@ export default function GroupCard(group) {
     const dispatch = useDispatch();
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-    const [members, setMembers] = useState([])
-    useEffect(() => {
-        groupService.getMembers(group.id).then(memb => {
-            console.log(memb)
-            setMembers(memb)
-        })
-    }, []);
 
     return (
         <div>
@@ -83,7 +73,7 @@ export default function GroupCard(group) {
                                                 <ClearIcon />
                                             </IconButton>
                                             {/* Needs to be changed to take data from group.name and group.members */}
-                                            <ContactList name={group.title} members={members} />
+                                            <ContactList name={group.title} id={group.id} />
                                         </span>
                                     )}
                                 </Popup>

@@ -3,33 +3,32 @@ import GroupCardList from "./GroupCardList";
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { alertActions } from "../actions/alert.actions";
+import { userService } from "../services/user.service";
 
 export default function MyGroupsPage() {
     const [groups, setGroups] = useState([])
-    const [userGroups, setUserGroups] = useState([])
 
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
-    const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
+    const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
     useEffect(() => {
-        const userGroups = JSON.parse(localStorage.user).data.joinedGroups
-        console.log(userGroups)
-        setUserGroups(userGroups)
 
-        userGroups.forEach((eventID) => {
-            fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
-                .then(response => response.json())
-                .then(async (data) => {
-                    console.log(data)
-                    setGroups([...groups, data])
+        userService.getGroups(userData.data._id).then(userGroups => {
+            let data = []
+            userGroups.forEach((eventID) => {
+                fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
+                    .then(response => response.json())
+                    .then(async (group) => {
+                        data.push(group)
+                        setGroups([...data])
+                    }).catch(err => {
+                        console.log(err)
+                    })
+            }
+            )
+            console.log(groups)
+        })
 
-                }).catch(err => {
-                    console.log(err)
-                })
-
-        }
-        )
-        console.log(groups)
     }, []);
 
     useEffect(() => {

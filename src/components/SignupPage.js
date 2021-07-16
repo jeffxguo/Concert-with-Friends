@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     root: {
-		width: "30em",
-		padding: 50,
-		marginTop: 200,
-		borderRadius: 10,
-		backgroundColor: COLORS.darkBlue,
-		color: "white"
-	},
+        width: "30em",
+        padding: 50,
+        marginTop: 200,
+        borderRadius: 10,
+        backgroundColor: COLORS.darkBlue,
+        color: "white"
+    },
     title: {
         "fontFamily": `"Open Sans", "Helvetica", "Arial", sans-serif`
     },
@@ -55,7 +55,9 @@ export default function SignupPage(props) {
         email: "",
         phone: "",
         password: "",
-        taste: ""
+        taste: "",
+        facebook: "",
+        instagram: ""
     })
     const registering = useSelector(state => state.signup.registering);
     const alert = useSelector(state => state.alert);
@@ -74,98 +76,122 @@ export default function SignupPage(props) {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
+            console.log(userProfile)
             dispatch(userActions.register(userProfile));
         }
     }
     return (
         <Container className={classes.root}>
             {alert.message &&
-				<div className={`alert ${alert.type}`}>{alert.message}</div>
-			}
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+            }
             <form>
-            <Grid container spacing={3}>
-                <Grid className={classes.title} item xs={12}>
-                    <h3>Sign Up</h3>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="username"
-                                size="small"
-                                placeholder="Username"
-                                variant="outlined"
-                                className={classes.txtInput}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="email"
-                                size="small"
-                                placeholder="Email"
-                                variant="outlined"
-                                className={classes.txtInput}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="phone"
-                                size="small"
-                                placeholder="Phone"
-                                variant="outlined"
-                                className={classes.txtInput}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="password"
-                                size="small"
-                                placeholder="Password"
-                                variant="outlined"
-                                className={classes.txtInput}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                select
-                                name="taste"
-                                size="small"
-                                placeholder="Select"
-                                variant="outlined"
-                                className={classes.txtInput}
-                                onChange={handleChange}
-                            >
-                                {musicTypes.map((option, idx) => (
-                                    <MenuItem key={idx} value={option.value}>
-                                        {option.label}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                <Grid container spacing={3}>
+                    <Grid className={classes.title} item xs={12}>
+                        <h3>Sign Up</h3>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="username"
+                                    size="small"
+                                    placeholder="Username"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="email"
+                                    size="small"
+                                    placeholder="Email"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="phone"
+                                    size="small"
+                                    placeholder="Phone"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="facebook"
+                                    size="small"
+                                    placeholder="Facebook (optional)"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="instagram"
+                                    size="small"
+                                    placeholder="Instagram (optional)"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="password"
+                                    size="small"
+                                    placeholder="Password"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    select
+                                    name="taste"
+                                    size="small"
+                                    placeholder="Select"
+                                    variant="outlined"
+                                    className={classes.txtInput}
+                                    onChange={handleChange}
+                                >
+                                    {musicTypes.map((option, idx) => (
+                                        <MenuItem key={idx} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+
                         </Grid>
                     </Grid>
+                    <Grid item xs={12}>
+                        <Button fullWidth color="primary" type="button" variant="contained" onClick={handleSignupSubmit}>
+                            {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                            Register
+                        </Button>
+                    </Grid>
+                    <Link to="/login">
+                        <IconButton color="secondary">
+                            <ArrowBackRoundedIcon />
+                        </IconButton>
+                    </Link>
                 </Grid>
-                <Grid item xs={12}>
-                    <Button fullWidth color="primary" type="button" variant="contained" onClick={handleSignupSubmit}>
-                    {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                        Register
-                    </Button>
-                </Grid>
-                <Link to="/login">
-                    <IconButton color="secondary">
-                        <ArrowBackRoundedIcon />
-                    </IconButton>
-                </Link>
-            </Grid>
-        </form>
+            </form>
         </Container>
     );
 }
