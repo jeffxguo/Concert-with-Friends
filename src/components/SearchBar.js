@@ -4,12 +4,26 @@ import { COLORS } from '../constants/Colors';
 import { IconButton, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import {  MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment';
 import React from 'react';
 
 const SearchBar = (props) => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedGenre, setSelectedGenre] = useState("")
   const [city, setCity] = useState("")
+  const [startDate, setStartDate] = useState(new Date().setHours(0, 0))
+  const [endDate, setEndDate] = useState(new Date().setHours(23, 59))
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
 
   const classes = useStyles();
   const cities = [
@@ -120,6 +134,48 @@ const SearchBar = (props) => {
             )}
           </Select>
         </div>
+        <div style={{ textAlign: "left" }}>
+          <Typography style={{ fontWeight: "600" }}>From</Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                style={{color: "white",
+                marginTop: "1em",
+                marginRight: "2em",
+                width: "12em",}} 
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="start-date-picker"
+                value={startDate}
+                onChange={handleStartDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+        </div>
+        <div style={{ textAlign: "left" }}>
+          <Typography style={{ fontWeight: "600" }}>To</Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                style={{color: "white",
+                marginTop: "1em",
+                marginRight: "2em",
+                width: "12em",}} 
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="start-date-picker"
+                value={endDate}
+                onChange={handleEndDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+        </div>
         <div style={{
           padding: ".8em .5em",
           marginTop: "2em",
@@ -130,7 +186,7 @@ const SearchBar = (props) => {
           color: "white",
           justifyContent: "center"
         }}
-          onClick={() => props.handleSearch(searchTerm, city, selectedGenre)}
+          onClick={() => props.handleSearch(searchTerm, city, selectedGenre, moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'), moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'))}
         >
           <SearchIcon />
         </div>

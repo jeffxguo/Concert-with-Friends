@@ -72,7 +72,10 @@ export default function GoogleMaps({ latitude, longitude }) {
     fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=' + currentCity + '&segmentId=KZFzniwnSyZfZ7v7nJ'))
         .then(response => response.json())
         .then(data => {
-          let events = data._embedded.events;
+          let events = [];
+          if (data._embedded) {
+            events = data._embedded.events;
+          }
           if (userData && userData.data && userData.data.joinedGroups) {
               events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
           }

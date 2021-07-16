@@ -33,12 +33,14 @@ export default function EventPage() {
         }
     }, [userData]);
 
-    const handleSearch = async (keywords, city, genre) => {
+    const handleSearch = async (keywords, city, genre, startDate, endDate) => {
         let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey
         if (keywords) url += "&keyword=" + keywords
         if (city) url += "&city=" + city
         if (genre) url += "&genreId=" + genre
         url += "&segmentId=KZFzniwnSyZfZ7v7nJ"
+        if (startDate) url += "&startDateTime=" + startDate
+        if (endDate) url += "&endDateTime=" + endDate
 
         console.log(url)
         dispatch(alertActions.clear());
