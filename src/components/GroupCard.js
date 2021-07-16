@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
@@ -15,6 +15,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
+import { groupService } from '../services/group.service';
 
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
@@ -27,6 +28,13 @@ export default function GroupCard(group) {
     const dispatch = useDispatch();
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+    const [members, setMembers] = useState([])
+    useEffect(() => {
+        groupService.getMembers(group.id).then(memb => {
+            console.log(memb)
+            setMembers(memb)
+        })
+    }, []);
 
     return (
         <div>
@@ -75,38 +83,7 @@ export default function GroupCard(group) {
                                                 <ClearIcon />
                                             </IconButton>
                                             {/* Needs to be changed to take data from group.name and group.members */}
-                                            <ContactList name={group.title} members={[
-                                                {
-                                                    "name": "Jeffrey Guo",
-                                                    "phone": "123-456-7890",
-                                                    "email": "test@mail.com",
-                                                    "image": "https://images.theconversation.com/files/319375/original/file-20200309-118956-1cqvm6j.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop"
-                                                },
-                                                {
-                                                    "name": "Timmy Turner",
-                                                    "phone": "1234567891",
-                                                    "email": "test2@mail.com",
-                                                    "image": "https://i.pinimg.com/originals/2c/eb/6d/2ceb6df7fbb6cabab80bdc71dbd6d590.png"
-                                                },
-                                                {
-                                                    "name": "Timmy Turner",
-                                                    "phone": "1234567891",
-                                                    "email": "test2@mail.com",
-                                                    "image": "https://i.pinimg.com/originals/2c/eb/6d/2ceb6df7fbb6cabab80bdc71dbd6d590.png"
-                                                },
-                                                {
-                                                    "name": "Timmy Turner",
-                                                    "phone": "1234567891",
-                                                    "email": "test2@mail.com",
-                                                    "image": "https://i.pinimg.com/originals/2c/eb/6d/2ceb6df7fbb6cabab80bdc71dbd6d590.png"
-                                                },
-                                                {
-                                                    "name": "Timmy Turner",
-                                                    "phone": "1234567891",
-                                                    "email": "test2@mail.com",
-                                                    "image": "https://i.pinimg.com/originals/2c/eb/6d/2ceb6df7fbb6cabab80bdc71dbd6d590.png"
-                                                }
-                                            ]} />
+                                            <ContactList name={group.title} members={members} />
                                         </span>
                                     )}
                                 </Popup>
