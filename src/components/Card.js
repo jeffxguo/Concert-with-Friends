@@ -26,15 +26,17 @@ export default function EventCard(event) {
     const dispatch = useDispatch();
 
     const handleClickJoin = () => {
-        if (loggedIn && userData) {
-            dispatch(userActions.addGroup(userData, event.id));
+        if (loggedIn && userData && userData.data && userData.data._id) {
+            dispatch(userActions.addGroup(userData.data._id, event.id));
         } else {
             dispatch(alertActions.error("You need to login first"));
         }
     }
 
     const handleClickLeave = () => {
-        dispatch(userActions.deleteGroup(userData, event.id));
+        if (userData && userData.data && userData.data._id) {
+        dispatch(userActions.deleteGroup(userData.data._id, event.id));
+        }
     }
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']

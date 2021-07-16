@@ -4,11 +4,13 @@ const router = express.Router();
 const User = require("../schema/user");
 const Group = require("../schema/group");
 
-// Join group
-router.put("/:username", (req, res) => {
-    var foundUser;
-    var foundGroup;
-    User.findOne({ username: req.params.username }, async (err, doc) => {
+/**
+ * PUT : Add a group to user with a specific userId
+*/
+router.put("/:userId", (req, res) => {
+    let foundUser;
+    let foundGroup;
+    User.findOne({ _id: req.params.userId }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,
@@ -38,7 +40,7 @@ router.put("/:username", (req, res) => {
                         usersJoined: [foundUser._id]
                     });
                     await newGroup.save();
-                    User.findOneAndUpdate({ username: req.params.username }, { $push: { joinedGroups: newGroup.eventid } },
+                    User.findOneAndUpdate({ _id: req.params.userId }, { $push: { joinedGroups: newGroup.eventid } },
                         { new: true }, async (err, doc) => {
                         if (err) {
                             res.send({
@@ -59,7 +61,7 @@ router.put("/:username", (req, res) => {
                     });
                 } else {
                     foundGroup = doc;
-                    User.findOneAndUpdate({ username: req.params.username }, { $push: { joinedGroups: foundGroup.eventid } },
+                    User.findOneAndUpdate({ _id: req.params.userId }, { $push: { joinedGroups: foundGroup.eventid } },
                         { new: true }, async (err, doc) => {
                         if (err) {
                             res.send({
@@ -84,11 +86,13 @@ router.put("/:username", (req, res) => {
     });
 });
 
-// Leave group
-router.delete("/:username", (req, res) => {
-    var foundUser;
-    var foundGroup;
-    User.findOne({ username: req.params.username }, async (err, doc) => {
+/**
+ * DELETE: Delete a group from a user with a specific userId
+ */
+router.delete("/:userId", (req, res) => {
+    let foundUser;
+    let foundGroup;
+    User.findOne({ _id: req.params.userId }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,
@@ -115,7 +119,7 @@ router.delete("/:username", (req, res) => {
                 } else {
                     foundGroup = doc;
                     User.findOneAndUpdate(
-                        { username: req.params.username }, 
+                        { _id: req.params.userId }, 
                         { $pull: { joinedGroups: foundGroup.eventid } },
                         { new: true }, async (err, doc) => {
                         if (err) {
@@ -141,7 +145,9 @@ router.delete("/:username", (req, res) => {
     });
 });
 
-// Get users in group with eventid
+/**
+ * GET: Get all users of a group with a specific event id
+ */
 router.get("/:eventid", (req, res) => {
     Group.findOne({ eventid: req.params.eventid }, async (err, doc) => {
         if (err) {
@@ -160,5 +166,26 @@ router.get("/:eventid", (req, res) => {
     })
 });
 
+router.put("/:userId/edit-profile", (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "username": req.body.username, "email": req.body.email, "phone": req.body.phone, "taste": req.body.taste}},
+        { new: true }, async (err, doc) => {
+        if (err) {
+            res.send({
+                statusCode: 500,
+                message: "Internal Error"
+            });
+        } else if (!doc) {
+            res.send({
+                statusCode: 404,
+                message: "User Not Found"
+            });
+        } else {
+            res.send({
+                statusCode: 200,
+                data: doc
+            });
+        }
+    });
+});
 
 module.exports = router;

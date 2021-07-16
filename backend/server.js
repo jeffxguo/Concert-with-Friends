@@ -63,6 +63,7 @@ app.post("/login", (req, res, next) => {
             req.logIn(user, (err) => {
                 if (err) throw err;
                 const userInfo = {
+                    _id: user._id,
                     username: user.username,
                     email: user.email,
                     phone: user.phone,
