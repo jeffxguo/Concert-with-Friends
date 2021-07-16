@@ -5,6 +5,7 @@ export const userService = {
     logout,
     register,
     addGroup,
+    updateProfile,
     getGroups,
     deleteGroup
 };
@@ -42,61 +43,65 @@ function register(user) {
     return fetch(`http://localhost:3001/register`, requestOptions).then(handleResponse);
 }
 
-function addGroup(user, eventId) {
+function addGroup(userId, eventId) {
     const requestOptions = {
         method: 'PUT',
         headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
         body: JSON.stringify({eventId: eventId})
     };
-    console.log(user);
 
-    if (user && user.data && user.data.username) {
-        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(response => response.json())
-        .then((data) => {
-            if (data.statusCode === (404 || 500 || 204)) {
-                return Promise.reject(data.message);
-            }
-            localStorage.setItem('user', JSON.stringify(data));
-            return Promise.resolve(data);
-        });
-    } else {
-        return Promise.reject("User data not found");
-    }
-
+    return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
+    .then((data) => {
+        if (data.statusCode === (404 || 500 || 204)) {
+            return Promise.reject(data.message);
+        }
+        localStorage.setItem('user', JSON.stringify(data));
+        return Promise.resolve(data);
+    });
 }
 
-function getGroups(user) {
+function updateProfile(userId, newProfileData) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
+        body: JSON.stringify(newProfileData)
+    };
+
+    return fetch(`http://localhost:3001/users/${userId}/edit-profile`, requestOptions).then(response => response.json())
+    .then((data) => {
+        if (data.statusCode === (404 || 500)) {
+            return Promise.reject(data.message);
+        }
+        console.log(data);
+        localStorage.setItem('user', JSON.stringify(data));
+        return Promise.resolve(data);
+    });
+}
+
+function getGroups(userId) {
     const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     };
 
-    if (user && user.data && user.data.username) {
-        return fetch(`http://localhost:3001/groups/${user.data.username}`, requestOptions).then(handleResponse);
-    } else {
-        return Promise.reject("User data not found");
-    }
+    return fetch(`http://localhost:3001/groups/${userId}`, requestOptions).then(handleResponse);
 }
 
-function deleteGroup(user, eventId) {
+function deleteGroup(userId, eventId) {
     const requestOptions = {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({eventId: eventId})
     };
 
-    if (user && user.data && user.data.username) {
-        return fetch(`http://localhost:3001/users/${user.data.username}`, requestOptions).then(response => response.json())
-        .then((data) => {
-            if (data.statusCode === (404 || 500)) {
-                return Promise.reject(data.message);
-            }
-            localStorage.setItem('user', JSON.stringify(data));
-            return Promise.resolve(data);
-        });
-    } else {
-        return Promise.reject("User data not found");
-    }
+    return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
+    .then((data) => {
+        if (data.statusCode === (404 || 500)) {
+            return Promise.reject(data.message);
+        }
+        localStorage.setItem('user', JSON.stringify(data));
+        return Promise.resolve(data);
+    });
 }
 
 function handleResponse(response) {

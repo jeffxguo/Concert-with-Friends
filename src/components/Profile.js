@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -13,8 +13,13 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import MailRoundedIcon from '@material-ui/icons/MailRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
+import TextField from '@material-ui/core/TextField';
+import Button from "@material-ui/core/Button";
 import { Avatar } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { COLORS } from '../constants/Colors';
+
+import { userActions } from '../actions/user.actions';
 
 const drawerWidth = 400;
 
@@ -61,13 +66,30 @@ const useStyles = makeStyles((theme) => ({
     margin: "5% 0 5% 50%",
     width: "50px",
     height: "50px"
+  },
+  txtInput: {
+		backgroundColor: "white",
+		borderRadius: 4,
+		border: "none",
+	},
+  editBtn: {
+    backgroundColor: COLORS.grey,
+    color: "white"
   }
 }));
 
 export default function Profile(props) {
   const classes = useStyles();
   const theme = useTheme();
-  // TODO: Mocked profileData which will be replaced with actual data
+  const [editing, setEditing] = useState(null);
+  const [newInputs, setNewInputs] = useState({
+    username: '',
+    email: '',
+    phone: '',
+    taste: ''
+  })
+
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.user.data);
   const profileData = {
     "username": [<PersonRoundedIcon />, profile.username || ''],
@@ -75,6 +97,18 @@ export default function Profile(props) {
     "phone": [<PhoneRoundedIcon />, profile.phone || ''],
     "taste": [<MusicNoteRoundedIcon />, profile.taste || '']
   }
+
+  const handleSaveProfile = () => {
+    if (profile._id && newInputs.email && newInputs.phone && newInputs.taste) {
+      dispatch(userActions.updateProfile(profile._id, newInputs));
+      setEditing(false);
+    }
+  }
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setNewInputs(inputs => ({ ...inputs, [name]: value }));
+	}
 
   return (
     <div className={classes.root}>
@@ -96,15 +130,38 @@ export default function Profile(props) {
         <Avatar className={classes.avatarImage} alt={profile?.username} src='../images/avatar.png'></Avatar>
         <Divider />
         <List>
-          {Object.values(profileData).map((text, index) => (
+          {Object.entries(profileData).map(([key, text], index) => (
             <ListItem button key={text} alignItems="flex-start">
               <ListItemIcon>
                 {text[0]}
               </ListItemIcon>
-              <ListItemText primary={text[1]} />
+              <ListItemText primary={editing ? <TextField
+										className={classes.txtInput}
+										name={key}
+										size="small"
+										variant="outlined"
+										placeholder={text[1]}
+										onChange={handleChange}
+									/>: text[1]} />
             </ListItem>
           ))}
         </List>
+        {
+          editing ? 
+          <div>
+          <Button onClick={handleSaveProfile} variant="contained" color="primary">
+          Save
+          </Button>
+          <Button onClick={() => setEditing(false)}>
+          Cancel
+          </Button>
+          </div> :
+          <div>
+            <Button onClick={() => setEditing(true)} variant="contained" className={classes.editBtn}>
+            Edit
+            </Button>
+          </div>
+        }
       </Drawer>
     </div>
   );

@@ -4,9 +4,11 @@ const router = express.Router();
 const User = require("../schema/user");
 const Group = require("../schema/group");
 
-// Get groups that user with username is in
-router.get("/:username", (req, res) => {
-    User.findOne({ username: req.params.username }, async (err, doc) => {
+/**
+ * GET: Get all groups that a user with a specific username has joined
+ */
+router.get("/:userId", (req, res) => {
+    User.findOne({ _id: req.params.userId }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,

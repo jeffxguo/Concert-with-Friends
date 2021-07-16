@@ -24,11 +24,15 @@ export default function GoogleMaps({ latitude, longitude }) {
 
   const ModelsMap = async (map, maps) => {
     const handleClickJoin = (eventId) => {
-          dispatch(userActions.addGroup(userData, eventId));
+      if (userData && userData.data && userData.data._id) {
+        dispatch(userActions.addGroup(userData.data._id, eventId));
+      }
     }
 
     const handleClickLeave = (eventId) => {
-        dispatch(userActions.deleteGroup(userData, eventId));
+      if (userData && userData.data && userData.data._id) {
+        dispatch(userActions.deleteGroup(userData.data._id, eventId));
+      }
     }
 
 

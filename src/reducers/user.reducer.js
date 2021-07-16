@@ -29,6 +29,18 @@ const userReducer = (state = initialState, action) => {
             };
         case actionTypes.ADDGROUP_FAILURE:
             return {};
+        case actionTypes.UPDATEPROFILE_REQUEST:
+            return {
+                profileUpdating: true
+            };
+        case actionTypes.UPDATEPROFILE_SUCCESS:
+            return {
+                profileUpdated: true,
+                loggedIn: true,
+                user: action.user
+            };
+        case actionTypes.UPDATEPROFILE_FAILURE:
+            return {};
         case actionTypes.DELETEGROUP_REQUEST:
             return {};
         case actionTypes.DELETEGROUP_SUCCESS:

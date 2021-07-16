@@ -15,6 +15,7 @@ export const userActions = {
   logout,
   getGroups,
   addGroup,
+  updateProfile,
   deleteGroup
 }
 
@@ -68,10 +69,10 @@ function logout() {
   return { type: actionTypes.LOGOUT };
 }
 
-function addGroup(user, eventId) {
+function addGroup(userId, eventId) {
   return dispatch => {
-    dispatch(request(user));
-    userService.addGroup(user, eventId)
+    dispatch(request({ userId }));
+    userService.addGroup(userId, eventId)
         .then(
             user => {
               dispatch(success(user));
@@ -89,11 +90,32 @@ function addGroup(user, eventId) {
   function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
 }
 
-function getGroups(user) {
+function updateProfile(userId, newProfileData) {
   return dispatch => {
-    dispatch(request(user));
+    dispatch(request({ userId }));
+    userService.updateProfile(userId, newProfileData)
+        .then(
+            user => {
+              dispatch(success(user));
+              dispatch(alertActions.success('Update profile successfully'));
+            },
+            error => {
+              dispatch(failure(error.toString()));
+              dispatch(alertActions.error(error.toString()));
+            }
+        );
+  };
 
-    userService.getGroups(user)
+  function request(user) { return { type: actionTypes.UPDATEPROFILE_REQUEST, user } }
+  function success(user) { return { type: actionTypes.UPDATEPROFILE_SUCCESS, user } }
+  function failure(error) { return { type: actionTypes.UPDATEPROFILE_FAILURE, error } }
+}
+
+function getGroups(userId) {
+  return dispatch => {
+    dispatch(request({ userId }));
+
+    userService.getGroups(userId)
         .then(
             user => {
               dispatch(success(user));
@@ -109,11 +131,11 @@ function getGroups(user) {
   function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
 }
 
-function deleteGroup(user, groupId) {
+function deleteGroup(userId, groupId) {
   return dispatch => {
-    dispatch(request(user));
+    dispatch(request({ userId }));
 
-    userService.deleteGroup(user, groupId)
+    userService.deleteGroup(userId, groupId)
         .then(
             user => {
               dispatch(success(user));
