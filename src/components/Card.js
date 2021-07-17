@@ -35,7 +35,7 @@ export default function EventCard(event) {
 
     const handleClickLeave = () => {
         if (userData && userData.data && userData.data._id) {
-        dispatch(userActions.deleteGroup(userData.data._id, event.id));
+            dispatch(userActions.deleteGroup(userData.data._id, event.id));
         }
     }
 
@@ -81,18 +81,9 @@ export default function EventCard(event) {
                                     color: COLORS.grey,
                                     marginRight: 10
                                 }}>
-                                    <ConfirmationNumberIcon style={{ height: 26 }} />
-                                </Icon>
-                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>24</span>
-                            </div>
-                            <div className={classes.tag}>
-                                <Icon style={{
-                                    color: COLORS.grey,
-                                    marginRight: 10
-                                }}>
                                     <GroupIcon style={{ height: 26 }} />
                                 </Icon>
-                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>{event.memberNum}</span>
+                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>{event.memberNum ? `${event.memberNum} members` : 'No members yet'}</span>
                             </div>
                         </div>
 
