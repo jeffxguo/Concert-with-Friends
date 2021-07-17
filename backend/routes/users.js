@@ -42,44 +42,44 @@ router.put("/:userId", (req, res) => {
                     await newGroup.save();
                     User.findOneAndUpdate({ _id: req.params.userId }, { $push: { joinedGroups: newGroup.eventid } },
                         { new: true }, async (err, doc) => {
-                        if (err) {
-                            res.send({
-                                statusCode: 500,
-                                message: "Internal Error"
-                            });
-                        } else if (!doc) {
-                            res.send({
-                                statusCode: 404,
-                                message: "User Not Found"
-                            });
-                        } else {
-                            res.send({
-                                statusCode: 200,
-                                data: doc
-                            })
-                        }
-                    });
+                            if (err) {
+                                res.send({
+                                    statusCode: 500,
+                                    message: "Internal Error"
+                                });
+                            } else if (!doc) {
+                                res.send({
+                                    statusCode: 404,
+                                    message: "User Not Found"
+                                });
+                            } else {
+                                res.send({
+                                    statusCode: 200,
+                                    data: doc
+                                })
+                            }
+                        });
                 } else {
                     foundGroup = doc;
                     User.findOneAndUpdate({ _id: req.params.userId }, { $push: { joinedGroups: foundGroup.eventid } },
                         { new: true }, async (err, doc) => {
-                        if (err) {
-                            res.send({
-                                statusCode: 500,
-                                message: "Internal Error"
-                            });
-                        } else if (!doc) {
-                            res.send({
-                                statusCode: 404,
-                                message: "User Not Found"
-                            });
-                        } else {
-                            res.send({
-                                statusCode: 200,
-                                data: doc
-                            });
-                        }
-                    });
+                            if (err) {
+                                res.send({
+                                    statusCode: 500,
+                                    message: "Internal Error"
+                                });
+                            } else if (!doc) {
+                                res.send({
+                                    statusCode: 404,
+                                    message: "User Not Found"
+                                });
+                            } else {
+                                res.send({
+                                    statusCode: 200,
+                                    data: doc
+                                });
+                            }
+                        });
                 }
             });
         }
@@ -119,26 +119,26 @@ router.delete("/:userId", (req, res) => {
                 } else {
                     foundGroup = doc;
                     User.findOneAndUpdate(
-                        { _id: req.params.userId }, 
+                        { _id: req.params.userId },
                         { $pull: { joinedGroups: foundGroup.eventid } },
                         { new: true }, async (err, doc) => {
-                        if (err) {
-                            res.send({
-                                statusCode: 500,
-                                message: "Internal Error"
-                            });
-                        } else if (!doc) {
-                            res.send({
-                                statusCode: 404,
-                                message: "User Not Found"
-                            });
-                        } else {
-                            res.send({
-                                statusCode: 200,
-                                data: doc
-                            });
-                        }
-                    });
+                            if (err) {
+                                res.send({
+                                    statusCode: 500,
+                                    message: "Internal Error"
+                                });
+                            } else if (!doc) {
+                                res.send({
+                                    statusCode: 404,
+                                    message: "User Not Found"
+                                });
+                            } else {
+                                res.send({
+                                    statusCode: 200,
+                                    data: doc
+                                });
+                            }
+                        });
                 }
             });
         }
@@ -148,7 +148,7 @@ router.delete("/:userId", (req, res) => {
 /**
  * GET: Get all users of a group with a specific event id
  */
-router.get("/:eventid", (req, res) => {
+router.get("/group/:eventid", (req, res) => {
     Group.findOne({ eventid: req.params.eventid }, async (err, doc) => {
         if (err) {
             res.send({
@@ -166,9 +166,12 @@ router.get("/:eventid", (req, res) => {
     })
 });
 
-router.put("/:userId/edit-profile", (req, res) => {
-    User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "username": req.body.username, "email": req.body.email, "phone": req.body.phone, "taste": req.body.taste}},
-        { new: true }, async (err, doc) => {
+
+/**
+ * GET: Get user by id
+ */
+router.get("/:id", (req, res) => {
+    User.findOne({ _id: req.params.id }, async (err, doc) => {
         if (err) {
             res.send({
                 statusCode: 500,
@@ -181,11 +184,36 @@ router.put("/:userId/edit-profile", (req, res) => {
             });
         } else {
             res.send({
-                statusCode: 200,
-                data: doc
+                name: doc.username,
+                phone: doc.phone,
+                email: doc.email,
+                instagram: doc.instagram,
+                facebook: doc.facebook
             });
         }
-    });
+    })
+});
+
+router.put("/:userId/edit-profile", (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "username": req.body.username, "email": req.body.email, "phone": req.body.phone, "taste": req.body.taste } },
+        { new: true }, async (err, doc) => {
+            if (err) {
+                res.send({
+                    statusCode: 500,
+                    message: "Internal Error"
+                });
+            } else if (!doc) {
+                res.send({
+                    statusCode: 404,
+                    message: "User Not Found"
+                });
+            } else {
+                res.send({
+                    statusCode: 200,
+                    data: doc
+                });
+            }
+        });
 });
 
 module.exports = router;

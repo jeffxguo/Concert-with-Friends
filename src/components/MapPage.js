@@ -11,7 +11,7 @@ import { alertActions } from '../actions/alert.actions';
 export default function GoogleMaps({ latitude, longitude }) {
   const [events, setEvents] = useState([]);
 
-  const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
+  const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
   const loggedIn = useSelector(state => state.user.loggedIn);
   const userData = useSelector(state => state.user.user);
   const alert = useSelector(state => state.alert);
@@ -36,70 +36,70 @@ export default function GoogleMaps({ latitude, longitude }) {
     }
 
 
-  
+
     const getCurrentLongLat = () => {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
       });
     }
 
-  
+
     const getCurrentCity = async () => {
-      
+
       Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
-  
+
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         }
-        console.log({currentLoc});
+        console.log({ currentLoc });
         const json = await Geocoder.from(currentLoc)
         let currentCity = json.results[0].address_components[3].long_name
         setCurrentLoc(currentLoc);
         return currentCity;
-        
+
       } catch (error) {
         console.warn(error)
         return null;
       }
-    
+
     }
 
-  
 
-    
-   
-    
+
+
+
+
     return getCurrentCity().then((currentCity) =>
-    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=' + currentCity + '&segmentId=KZFzniwnSyZfZ7v7nJ'))
-        .then(response => response.json())
-        .then(data => {
-          let events = [];
-          if (data._embedded) {
-            events = data._embedded.events;
-          }
-          if (userData && userData.data && userData.data.joinedGroups) {
-              events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
-          }
-          // setEvents(eventsData);
-          
+      fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=' + currentCity + '&segmentId=KZFzniwnSyZfZ7v7nJ'))
+      .then(response => response.json())
+      .then(data => {
+        let events = [];
+        if (data._embedded) {
+          events = data._embedded.events;
+        }
+        if (userData && userData.data && userData.data.joinedGroups) {
+          events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
+        }
+        // setEvents(eventsData);
 
-          for (let i = 0; i < events.length; i++) {
 
-            const marker = new maps.Marker({
-              position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
-              map
-            })
-      
-            // console.log(events[i])
-            const date = new Date(events[i].dates.start.dateTime);
-            const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-      
-            const infowindow = new maps.InfoWindow({
-              content:
-                `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
+        for (let i = 0; i < events.length; i++) {
+
+          const marker = new maps.Marker({
+            position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
+            map
+          })
+
+          // console.log(events[i])
+          const date = new Date(events[i].dates.start.dateTime);
+          const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
+          const infowindow = new maps.InfoWindow({
+            content:
+              `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
               <div style='flex:1'>
               <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
               </div>
@@ -121,58 +121,58 @@ export default function GoogleMaps({ latitude, longitude }) {
               style='background-color: #fff; color: ${COLORS.highlight}; font-size: 20px; border: solid 1px ${COLORS.highlight}; border-radius: 4px; padding: 9px 20px'>Buy Tickets</button>
               </div>
               </div>`
+          });
+
+          marker.addListener("click", () => {
+            infowindow.open({
+              anchor: marker,
+              map,
+              shouldFocus: false,
             });
-      
-            marker.addListener("click", () => {
-              infowindow.open({
-                anchor: marker,
-                map,
-                shouldFocus: false,
-              });
-            })
+          })
 
-            const handleClick = (e) => {
-              if (loggedIn && userData) {
-                if (document.getElementById("add-group")) {
-                  handleClickJoin(events[i].id);
-                  document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
-                  document.getElementById("add-group").innerText = "Leave";
-                  document.getElementById("add-group").id = "leave-group";
-                }
-                else if (document.getElementById("leave-group")) {
-                  handleClickLeave(events[i].id);
-                  document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
-                  document.getElementById("leave-group").innerText = "Join";
-                  document.getElementById("leave-group").id = "add-group";
-                }
-                return;
-              } else {
-                return dispatch(alertActions.error("You need to login first"));
+          const handleClick = (e) => {
+            if (loggedIn && userData) {
+              if (document.getElementById("add-group")) {
+                handleClickJoin(events[i].id);
+                document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
+                document.getElementById("add-group").innerText = "Leave";
+                document.getElementById("add-group").id = "leave-group";
               }
-            };
+              else if (document.getElementById("leave-group")) {
+                handleClickLeave(events[i].id);
+                document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
+                document.getElementById("leave-group").innerText = "Join";
+                document.getElementById("leave-group").id = "add-group";
+              }
+              return;
+            } else {
+              return dispatch(alertActions.error("You need to login first"));
+            }
+          };
 
-            maps.event.addListener(infowindow, 'domready', () => {
-              if ( document.getElementById("join-leave")) {
-                document.getElementById("join-leave").addEventListener("click", handleClick)
-              }
-            })
-          }
-          return events;
-    });
+          maps.event.addListener(infowindow, 'domready', () => {
+            if (document.getElementById("join-leave")) {
+              document.getElementById("join-leave").addEventListener("click", handleClick)
+            }
+          })
+        }
+        return events;
+      });
   }
 
   useEffect(() => {
     if (userData && userData.data && userData.data.joinedGroups) {
-        const eventsData = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))
-        setEvents(eventsData);
+      const eventsData = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
+      setEvents(eventsData);
     }
-}, [userData]);
+  }, [userData]);
 
-useEffect(() => {
-  if (alert && alert.message) {
-    window.alert(alert.message);
-  }
-}, [alert]);
+  useEffect(() => {
+    if (alert && alert.message) {
+      window.alert(alert.message);
+    }
+  }, [alert]);
 
 
   return (
