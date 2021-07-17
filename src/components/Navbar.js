@@ -119,7 +119,7 @@ export default function Navbar(props) {
             <a className={classes.location} style={{ color: COLORS.black }}>{currentCity}</a>
           </Button>
           <Typography variant="h1" className={classes.title}>
-            <img style={{ marginLeft: 40, width: 300 }} src={logo} alt={"logo"} />
+            <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
           </Typography>
           <Link color="inherit" to="/" className={classes.nav}>
             Groups
