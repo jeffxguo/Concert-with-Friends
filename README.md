@@ -35,10 +35,11 @@ Functionalities to remove base on time constriction will be email alerts and add
 3. Groups that user’s can join based on events
 4. Filter events by city
 5. join/leave group
+6. Show number of people joined
 
 ### 3-7 "standard" requirements (will most likely complete)
 
-1. Simple form based matching
+1. Profile editing
 2. Filter events/groups by proximity
 3. Filter events/groups by date
 4. Email alerts
