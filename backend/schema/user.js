@@ -5,6 +5,8 @@ const user = new mongoose.Schema({
     phone: String,
     taste: String,
     email: String,
+    facebook: String,
+    instagram: String,
     joinedGroups: [String]
 });
 

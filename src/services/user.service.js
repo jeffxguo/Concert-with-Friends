@@ -7,6 +7,7 @@ export const userService = {
     addGroup,
     updateProfile,
     getGroups,
+    getUser,
     deleteGroup
 };
 
@@ -47,17 +48,17 @@ function addGroup(userId, eventId) {
     const requestOptions = {
         method: 'PUT',
         headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
-        body: JSON.stringify({eventId: eventId})
+        body: JSON.stringify({ eventId: eventId })
     };
 
     return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
-    .then((data) => {
-        if (data.statusCode === (404 || 500 || 204)) {
-            return Promise.reject(data.message);
-        }
-        localStorage.setItem('user', JSON.stringify(data));
-        return Promise.resolve(data);
-    });
+        .then((data) => {
+            if (data.statusCode === (404 || 500 || 204)) {
+                return Promise.reject(data.message);
+            }
+            localStorage.setItem('user', JSON.stringify(data));
+            return Promise.resolve(data);
+        });
 }
 
 function updateProfile(userId, newProfileData) {
@@ -68,14 +69,14 @@ function updateProfile(userId, newProfileData) {
     };
 
     return fetch(`http://localhost:3001/users/${userId}/edit-profile`, requestOptions).then(response => response.json())
-    .then((data) => {
-        if (data.statusCode === (404 || 500)) {
-            return Promise.reject(data.message);
-        }
-        console.log(data);
-        localStorage.setItem('user', JSON.stringify(data));
-        return Promise.resolve(data);
-    });
+        .then((data) => {
+            if (data.statusCode === (404 || 500)) {
+                return Promise.reject(data.message);
+            }
+            console.log(data);
+            localStorage.setItem('user', JSON.stringify(data));
+            return Promise.resolve(data);
+        });
 }
 
 function getGroups(userId) {
@@ -87,21 +88,30 @@ function getGroups(userId) {
     return fetch(`http://localhost:3001/groups/${userId}`, requestOptions).then(handleResponse);
 }
 
+function getUser(userId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(handleResponse);
+}
+
 function deleteGroup(userId, eventId) {
     const requestOptions = {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({eventId: eventId})
+        body: JSON.stringify({ eventId: eventId })
     };
 
     return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
-    .then((data) => {
-        if (data.statusCode === (404 || 500)) {
-            return Promise.reject(data.message);
-        }
-        localStorage.setItem('user', JSON.stringify(data));
-        return Promise.resolve(data);
-    });
+        .then((data) => {
+            if (data.statusCode === (404 || 500)) {
+                return Promise.reject(data.message);
+            }
+            localStorage.setItem('user', JSON.stringify(data));
+            return Promise.resolve(data);
+        });
 }
 
 function handleResponse(response) {
@@ -111,9 +121,9 @@ function handleResponse(response) {
             // auto logout if 401 response returned from api
             logout();
             // location.reload(true);
-        
-        const error = (data && data.message) || response.statusText;
-        return Promise.reject(error);
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
         }
         return data;
     });

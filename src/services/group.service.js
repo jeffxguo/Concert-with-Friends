@@ -8,11 +8,11 @@ function getMembers(eventId) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`http://localhost:3001/users/${eventId}`, requestOptions).then(response => response.json())
-    .then((data) => {
-        if (data.statusCode === (404 || 500)) {
-            return Promise.reject(data.message);
-        }
-        return Promise.resolve(data);
-    });
+    return fetch(`http://localhost:3001/users/group/${eventId}`, requestOptions).then(response => response.json())
+        .then((data) => {
+            if (data.statusCode === (404 || 500)) {
+                return Promise.reject(data.message);
+            }
+            return Promise.resolve(data);
+        });
 }

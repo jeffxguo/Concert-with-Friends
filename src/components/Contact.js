@@ -1,9 +1,8 @@
 import React from 'react';
 import { Box, Typography, Icon, IconButton, Container, Grid, Button, makeStyles } from '@material-ui/core';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import { COLORS } from '../constants/Colors';
+import fb from '../images/fb.png'
+import ig from '../images/ig.png'
 
 export default function Contact(member) {
     const classes = useStyles();
@@ -11,32 +10,30 @@ export default function Contact(member) {
     return (
         <Box borderRadius="borderRadius" className={classes.box}>
             <div className={classes.content}>
-                <img className={classes.memberImage} src={member.image} alt={"Member"} />
+                <img className={classes.memberImage} src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'} alt={"Member"} />
                 <div className={classes.details}>
-                    <Typography variant="h2">{member.name}</Typography>
+                    <Typography style={{ fontSize: "1.2em", fontWeight: 700 }}>{member.name}</Typography>
                     <div className={classes.contactInfo} style={{ marginTop: 10 }}>
-                        <Typography style={{ marginRight: 10 }}>Phone {member.phone}</Typography>
-                        <Typography>Email {member.email}</Typography>
+                        <Typography style={{ marginRight: 40 }}><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Phone </span>{member.phone}</Typography>
+                        <Typography><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Email </span> {member.email}</Typography>
                     </div>
-                    <div className={classes.socials}> 
-                    {/* These don't do anything */}
+                    <div className={classes.socials}>
+                        {/* These don't do anything */}
                         <IconButton style={{
                             marginRight: 10,
                             color: COLORS.black,
                         }}>
-                            <InstagramIcon />
+                            <a href={`https://www.instagram.com/${member.instagram}`} target="blank">
+                                <img className={classes.iconImage} src={ig} alt={"instagram"} />
+                            </a>
                         </IconButton>
                         <IconButton style={{
                             marginRight: 10,
                             color: COLORS.black,
                         }}>
-                            <FacebookIcon />
-                        </IconButton>
-                        <IconButton style={{
-                            marginRight: 10,
-                            color: COLORS.black,
-                        }}>
-                            <WhatsAppIcon />
+                            <a href={`https://www.facebook.com/${member.facebook}`} target="blank">
+                                <img className={classes.iconImage} src={fb} alt={"facebook"} />
+                            </a>
                         </IconButton>
                     </div>
                 </div>
@@ -54,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     },
     box: {
         position: 'relative',
-        backgroundColor: COLORS.lightGrey,
+        backgroundColor: COLORS.bgGrey,
         color: "black",
         padding: '1em',
         fontSize: '22px',

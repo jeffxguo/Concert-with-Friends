@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from '../constants/Colors';
-import pin from "../images/pin.png";
+import pin from "../images/pin.png"
 
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
@@ -11,7 +11,7 @@ import { alertActions } from '../actions/alert.actions';
 export default function GoogleMaps({ latitude, longitude }) {
   const [events, setEvents] = useState([]);
 
-  const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
+  const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
   const loggedIn = useSelector(state => state.user.loggedIn);
   const userData = useSelector(state => state.user.user);
   const alert = useSelector(state => state.alert);
@@ -32,7 +32,7 @@ export default function GoogleMaps({ latitude, longitude }) {
     }
 
 
-  
+
     const getCurrentLongLat = () => {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -42,8 +42,6 @@ export default function GoogleMaps({ latitude, longitude }) {
   
     const getCurrentCity = async () => {
       
-      Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
-  
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
@@ -110,58 +108,58 @@ export default function GoogleMaps({ latitude, longitude }) {
               style='background-color: #fff; color: ${COLORS.highlight}; font-size: 20px; border: solid 1px ${COLORS.highlight}; border-radius: 4px; padding: 9px 20px'>Buy Tickets</button>
               </div>
               </div>`
+          });
+
+          marker.addListener("click", () => {
+            infowindow.open({
+              anchor: marker,
+              map,
+              shouldFocus: false,
             });
-      
-            marker.addListener("click", () => {
-              infowindow.open({
-                anchor: marker,
-                map,
-                shouldFocus: false,
-              });
-            })
+          })
 
-            const handleClick = (e) => {
-              if (loggedIn && userData) {
-                if (document.getElementById("add-group")) {
-                  handleClickJoin(events[i].id);
-                  document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
-                  document.getElementById("add-group").innerText = "Leave";
-                  document.getElementById("add-group").id = "leave-group";
-                }
-                else if (document.getElementById("leave-group")) {
-                  handleClickLeave(events[i].id);
-                  document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
-                  document.getElementById("leave-group").innerText = "Join";
-                  document.getElementById("leave-group").id = "add-group";
-                }
-                return;
-              } else {
-                return dispatch(alertActions.error("You need to login first"));
+          const handleClick = (e) => {
+            if (loggedIn && userData) {
+              if (document.getElementById("add-group")) {
+                handleClickJoin(events[i].id);
+                document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
+                document.getElementById("add-group").innerText = "Leave";
+                document.getElementById("add-group").id = "leave-group";
               }
-            };
+              else if (document.getElementById("leave-group")) {
+                handleClickLeave(events[i].id);
+                document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
+                document.getElementById("leave-group").innerText = "Join";
+                document.getElementById("leave-group").id = "add-group";
+              }
+              return;
+            } else {
+              return dispatch(alertActions.error("You need to login first"));
+            }
+          };
 
-            maps.event.addListener(infowindow, 'domready', () => {
-              if ( document.getElementById("join-leave")) {
-                document.getElementById("join-leave").addEventListener("click", handleClick)
-              }
-            })
-          }
-          return events;
-    });
+          maps.event.addListener(infowindow, 'domready', () => {
+            if (document.getElementById("join-leave")) {
+              document.getElementById("join-leave").addEventListener("click", handleClick)
+            }
+          })
+        }
+        return events;
+      });
   }
 
   useEffect(() => {
     if (userData && userData.data && userData.data.joinedGroups) {
-        const eventsData = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))
-        setEvents(eventsData);
+      const eventsData = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
+      setEvents(eventsData);
     }
-}, [userData]);
+  }, [userData]);
 
-useEffect(() => {
-  if (alert && alert.message) {
-    window.alert(alert.message);
-  }
-}, [alert]);
+  useEffect(() => {
+    if (alert && alert.message) {
+      window.alert(alert.message);
+    }
+  }, [alert]);
 
 
   return (
@@ -183,6 +181,3 @@ useEffect(() => {
     </div>
   );
 };
-
-
-
