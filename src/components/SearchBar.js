@@ -15,14 +15,14 @@ const SearchBar = (props) => {
   const [selectedGenre, setSelectedGenre] = useState("")
   const [city, setCity] = useState("")
   const [startDate, setStartDate] = useState(new Date().setHours(0, 0))
-  const [endDate, setEndDate] = useState(new Date().setHours(23, 59))
+  const [endDate, setEndDate] = useState(null)
 
   const handleStartDateChange = (date) => {
-    setStartDate(date);
+    setStartDate(moment(date).format('YYYY-MM-DDTHH:mm:ssZ'));
   };
 
   const handleEndDateChange = (date) => {
-    setEndDate(date);
+    setEndDate(moment(date.setHours(23, 59)).format('YYYY-MM-DDTHH:mm:ssZ'));
   };
 
   const classes = useStyles();
@@ -188,7 +188,7 @@ const SearchBar = (props) => {
           color: "white",
           justifyContent: "center"
         }}
-          onClick={() => props.handleSearch(searchTerm, city, selectedGenre, moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'), moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'))}
+          onClick={() => props.handleSearch(searchTerm, city, selectedGenre, moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'), endDate)}
         >
           <SearchIcon />
         </div>
