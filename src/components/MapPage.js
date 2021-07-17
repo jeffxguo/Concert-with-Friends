@@ -43,37 +43,30 @@ export default function GoogleMaps({ latitude, longitude }) {
       });
     }
 
-
+  
     const getCurrentCity = async () => {
-
-      Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
-
+      
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         }
-        console.log({ currentLoc });
-        const json = await Geocoder.from(currentLoc)
-        let currentCity = json.results[0].address_components[3].long_name
+        map.setCenter(currentLoc);
         setCurrentLoc(currentLoc);
-        return currentCity;
-
+        console.log(currentLoc)
+        return currentLoc;
+        
       } catch (error) {
         console.warn(error)
         return null;
       }
-
+    
     }
 
-
-
-
-
-
-    return getCurrentCity().then((currentCity) =>
-      fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + '&city=' + currentCity + '&segmentId=KZFzniwnSyZfZ7v7nJ'))
+    return getCurrentCity().then((currentLoc) =>
+  
+    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
       .then(response => response.json())
       .then(data => {
         let events = [];
@@ -191,6 +184,3 @@ export default function GoogleMaps({ latitude, longitude }) {
     </div>
   );
 };
-
-
-
