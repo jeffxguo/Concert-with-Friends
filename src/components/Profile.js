@@ -82,12 +82,6 @@ export default function Profile(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [editing, setEditing] = useState(null);
-  const [newInputs, setNewInputs] = useState({
-    username: '',
-    email: '',
-    phone: '',
-    taste: ''
-  })
 
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.user.data);
@@ -97,6 +91,12 @@ export default function Profile(props) {
     "phone": [<PhoneRoundedIcon />, profile.phone || ''],
     "taste": [<MusicNoteRoundedIcon />, profile.taste || '']
   }
+  const [newInputs, setNewInputs] = useState({
+    username: profile.username || '',
+    email: profile.email || '',
+    phone: profile.phone || '',
+    taste: profile.taste || ''
+  })
 
   const handleSaveProfile = () => {
     if (profile._id && newInputs.email && newInputs.phone && newInputs.taste) {
@@ -140,7 +140,7 @@ export default function Profile(props) {
 										name={key}
 										size="small"
 										variant="outlined"
-										placeholder={text[1]}
+										defaultValue={text[1]}
 										onChange={handleChange}
 									/>: text[1]} />
             </ListItem>
