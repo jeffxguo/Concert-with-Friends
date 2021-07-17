@@ -72,7 +72,6 @@ export default function GroupCard(group) {
                                             }}>
                                                 <ClearIcon />
                                             </IconButton>
-                                            {/* Needs to be changed to take data from group.name and group.members */}
                                             <ContactList name={group.title} id={group.id} />
                                         </span>
                                     )}

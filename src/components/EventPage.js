@@ -80,7 +80,10 @@ export default function EventPage() {
         fetch(url)
             .then(response => response.json())
             .then(async (data) => {
-                let eventsData = data._embedded.events;
+                let eventsData = [];
+                if (data._embedded) {
+                    eventsData = data._embedded.events;
+                }
                 eventsData = await Promise.all(eventsData.map(async (event) => ({...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length).catch(err => {console.log(err);})})));
                 if (userData && userData.data && userData.data.joinedGroups) {
                     eventsData = eventsData.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}))

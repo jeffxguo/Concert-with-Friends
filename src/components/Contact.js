@@ -18,7 +18,6 @@ export default function Contact(member) {
                         <Typography><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Email </span> {member.email}</Typography>
                     </div>
                     <div className={classes.socials}>
-                        {/* These don't do anything */}
                         <IconButton style={{
                             marginRight: 10,
                             color: COLORS.black,
