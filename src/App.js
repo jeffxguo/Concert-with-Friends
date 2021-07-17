@@ -4,7 +4,6 @@ import './index.css';
 import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
-import ProfileGroupsPage from './components/ProfileGroupsPage';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import MapPage from './components/MapPage';
