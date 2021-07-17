@@ -138,8 +138,7 @@ const SearchBar = (props) => {
           <Typography style={{ fontWeight: "600" }}>From</Typography>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
-                style={{color: "white",
-                marginTop: "1em",
+                style={{marginTop: "1em",
                 marginRight: "2em",
                 width: "12em",}} 
                 disableToolbar
@@ -149,8 +148,10 @@ const SearchBar = (props) => {
                 id="start-date-picker"
                 value={startDate}
                 onChange={handleStartDateChange}
+                InputProps={{ className: classes.datePickerInput }}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
+                  className: classes.keyboardButton
                 }}
               />
             </MuiPickersUtilsProvider>
@@ -159,19 +160,20 @@ const SearchBar = (props) => {
           <Typography style={{ fontWeight: "600" }}>To</Typography>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
-                style={{color: "white",
-                marginTop: "1em",
+                style={{marginTop: "1em",
                 marginRight: "2em",
                 width: "12em",}} 
                 disableToolbar
                 variant="inline"
                 format="MM/dd/yyyy"
                 margin="normal"
-                id="start-date-picker"
+                id="end-date-picker"
                 value={endDate}
                 onChange={handleEndDateChange}
+                InputProps={{ className: classes.datePickerInput }}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
+                  className: classes.keyboardButton
                 }}
               />
             </MuiPickersUtilsProvider>
@@ -228,7 +230,16 @@ const useStyles = makeStyles({
   inputFocused: {
     outline: "none",
     border: "none"
+  },
+  datePickerInput: {
+    color: "white",
+    borderBottom: "1px white solid",
+    backgroundColor: COLORS.darkBlue,
+  },
+  keyboardButton: {
+    color: "white"
   }
 });
+
 
 export default SearchBar;
