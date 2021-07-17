@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from '../constants/Colors';
-import pin from "../images/pin.png";
+import pin from "../images/pin.png"
 
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
@@ -18,21 +18,17 @@ export default function GoogleMaps({ latitude, longitude }) {
   const dispatch = useDispatch();
 
   const [currentLoc, setCurrentLoc] = useState({
-    lat: 49.26476441608848,
-    lng: -123.17586711566005
+    lat: 0,
+    lng: 0
   });
 
   const ModelsMap = async (map, maps) => {
     const handleClickJoin = (eventId) => {
-      if (userData && userData.data && userData.data._id) {
-        dispatch(userActions.addGroup(userData.data._id, eventId));
-      }
+          dispatch(userActions.addGroup(userData, eventId));
     }
 
     const handleClickLeave = (eventId) => {
-      if (userData && userData.data && userData.data._id) {
-        dispatch(userActions.deleteGroup(userData.data._id, eventId));
-      }
+        dispatch(userActions.deleteGroup(userData, eventId));
     }
 
 
@@ -67,32 +63,30 @@ export default function GoogleMaps({ latitude, longitude }) {
     return getCurrentCity().then((currentLoc) =>
   
     fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
-      .then(response => response.json())
-      .then(data => {
-        let events = [];
-        if (data._embedded) {
-          events = data._embedded.events;
-        }
-        if (userData && userData.data && userData.data.joinedGroups) {
-          events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
-        }
-        // setEvents(eventsData);
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          let events = data._embedded.events;
+          if (userData && userData.data && userData.data.joinedGroups) {
+              events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
+          }
+          // setEvents(eventsData);
+          
 
+          for (let i = 0; i < events.length; i++) {
 
-        for (let i = 0; i < events.length; i++) {
-
-          const marker = new maps.Marker({
-            position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
-            map
-          })
-
-          // console.log(events[i])
-          const date = new Date(events[i].dates.start.dateTime);
-          const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-
-          const infowindow = new maps.InfoWindow({
-            content:
-              `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
+            const marker = new maps.Marker({
+              position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
+              map
+            })
+      
+            // console.log(events[i])
+            const date = new Date(events[i].dates.start.dateTime);
+            const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+      
+            const infowindow = new maps.InfoWindow({
+              content:
+                `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
               <div style='flex:1'>
               <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
               </div>
@@ -172,7 +166,10 @@ export default function GoogleMaps({ latitude, longitude }) {
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo" }}
-        defaultCenter={currentLoc}
+        defaultCenter={{
+          lat: 0,
+          lng: 0
+        }}
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => ModelsMap(map, maps).then(
