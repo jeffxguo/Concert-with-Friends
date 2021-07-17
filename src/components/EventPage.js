@@ -17,7 +17,7 @@ export default function EventPage() {
             .then(response => response.json())
             .then(async (data) => {
                 let eventsData = data._embedded.events;
-                eventsData = await Promise.all(eventsData.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length) })));
+                eventsData = await Promise.all(eventsData.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length).catch(err => { console.log(err); }) })));
                 if (userData && userData.data && userData.data.joinedGroups) {
                     eventsData = eventsData.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
                 }
@@ -27,7 +27,7 @@ export default function EventPage() {
 
     useEffect(async () => {
         if (userData && userData.data && userData.data.joinedGroups) {
-            let eventsData = await Promise.all(events.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length) })));
+            let eventsData = await Promise.all(events.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length).catch(err => { console.log(err); }) })));
             eventsData = eventsData.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
             setEvents(eventsData);
         }
@@ -48,7 +48,7 @@ export default function EventPage() {
             .then(response => response.json())
             .then(async (data) => {
                 let eventsData = data._embedded.events;
-                eventsData = await Promise.all(eventsData.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length) })));
+                eventsData = await Promise.all(eventsData.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length).catch(err => { console.log(err); }) })));
                 if (userData && userData.data && userData.data.joinedGroups) {
                     eventsData = eventsData.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
                 }

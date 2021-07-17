@@ -9,10 +9,8 @@ export default function ContactList(props) {
     const [members, setMembers] = useState([])
     useEffect(() => {
         const data = []
-        console.log("yy", props.id)
         groupService.getMembers(props.id).then(memberIds => {
             const array = [...memberIds]
-            console.log("ye", array)
             array.forEach(id => {
                 userService.getUser(id).then(user => {
                     data.push(user)
@@ -28,14 +26,14 @@ export default function ContactList(props) {
         <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>
             <div className={classes.text}>
                 <h2>{props.name}</h2>
-                <Typography variant="h1" style={{ color: COLORS.grey }}>Contact List</Typography>
+                <Typography variant="h2" style={{ color: COLORS.grey, marginTop: "2em" }}>Contact List</Typography>
             </div>
             <Box className={classes.contactBox} borderRadius="borderRadius" justify="center">
                 {members.map((member, i) => {
                     console.log(member)
                     return (
                         <div className={classes.items} key={i}>
-                            <Contact name={member.name} image={member.image} phone={member.phone} email={member.email} />
+                            <Contact name={member.name} image={member.image} phone={member.phone} email={member.email} instagram={member.instagram} facebook={member.facebook} />
                         </div>
                     )
                 })}
