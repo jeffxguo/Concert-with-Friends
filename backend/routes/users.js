@@ -195,7 +195,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.put("/:userId/edit-profile", (req, res) => {
-    User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "username": req.body.username, "email": req.body.email, "phone": req.body.phone, "taste": req.body.taste } },
+    User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "username": req.body.username, "email": req.body.email, "phone": req.body.phone, "facebook": req.body.facebook, "instagram": req.body.instagram, "taste": req.body.taste } },
         { new: true }, async (err, doc) => {
             if (err) {
                 res.send({
