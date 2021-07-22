@@ -14,7 +14,6 @@ export default function MyGroupsPage() {
     const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
 
     const handleClickLeave = (eventId) => {
-        alert(eventId)
         if (userData && userData.data && userData.data._id) {
             dispatch(userActions.deleteGroup(userData.data._id, eventId));
         }
