@@ -212,6 +212,7 @@ export default function Profile(props) {
               </ListItemIcon>
               <ListItemText primary={editing ? 
               <TextField
+              disabled={key == "username"}
               error={text["invalid"]}
               helperText={text["invalid"] ? "Invalid entry" : null}
               className={classes.txtInput}
