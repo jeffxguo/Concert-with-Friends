@@ -15,7 +15,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
-import { alertActions } from '../actions/alert.actions';
 
 export default function GroupCard(group) {
     const classes = useStyles();
@@ -23,6 +22,7 @@ export default function GroupCard(group) {
     const loggedIn = useSelector(state => state.user.loggedIn);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
+
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -46,7 +46,7 @@ export default function GroupCard(group) {
 
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
                             <div className={classes.leaveButton}>
-                                <Button style={{
+                                <Button onClick={() => group.handleClickLeave(group.id)} style={{
                                     color: COLORS.highlight,
                                     textAlign: 'center'
                                 }}>
