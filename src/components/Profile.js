@@ -4,6 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,6 +14,8 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import MailRoundedIcon from '@material-ui/icons/MailRounded';
 import MusicNoteRoundedIcon from '@material-ui/icons/MusicNoteRounded';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import { Avatar } from '@material-ui/core';
@@ -20,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { COLORS } from '../constants/Colors';
 
 import { userActions } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
 
 const drawerWidth = 400;
 
@@ -78,6 +82,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const musicTypes = [
+  {
+      label: "Hip-hop",
+      value: "Hip-hop"
+  },
+  {
+      label: "Pop",
+      value: "Pop"
+  },
+  {
+      label: "R&B",
+      value: "R&B"
+  },
+  {
+      label: "Rock'n'roll",
+      value: "Rock'n'roll"
+  },
+  {
+      label: "None of the above",
+      value: "N/A"
+  }
+]
+
 export default function Profile(props) {
   const classes = useStyles();
   const theme = useTheme();
@@ -85,29 +112,77 @@ export default function Profile(props) {
 
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.user.data);
-  const profileData = {
-    "username": [<PersonRoundedIcon />, profile.username || ''],
-    "email": [<MailRoundedIcon />, profile.email || ''],
-    "phone": [<PhoneRoundedIcon />, profile.phone || ''],
-    "taste": [<MusicNoteRoundedIcon />, profile.taste || '']
-  }
-  const [newInputs, setNewInputs] = useState({
-    username: profile.username || '',
-    email: profile.email || '',
-    phone: profile.phone || '',
-    taste: profile.taste || ''
-  })
+  const initialInputs = {
+    username: {
+      icon: <PersonRoundedIcon />,
+      value: profile.username || '',
+      validator: function (u) { return u !== "" },
+      invalid: false
+    },
+    email: {
+      icon: <MailRoundedIcon />,
+      value: profile.email || '',
+      validator: function (e) {
+        const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        return re.test(e);
+      },
+      invalid: false
+    },
+    phone: {
+      icon: <PhoneRoundedIcon />,
+      value: profile.phone || '',
+      validator: function (p) {
+        const re = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        return re.test(p);
+      },
+      invalid: false
+    },
+    facebook: {
+      icon: <FacebookIcon />,
+      value: profile.facebook || '',
+      validator: () => void(0),
+      invalid: false
+    },
+    instagram: {
+      icon: <InstagramIcon />,
+      value: profile.instagram || '',
+      validator: () => void(0),
+      invalid: false
+    },
+    taste: {
+      icon: <MusicNoteRoundedIcon />,
+      value: profile.taste || '',
+      validator: function (t) { return t !== "" },
+      invalid: false
+    }
+  };
+
+  const [profileInputs, setProfileInputs] = useState(initialInputs);
 
   const handleSaveProfile = () => {
-    if (profile._id && newInputs.email && newInputs.phone && newInputs.taste) {
-      dispatch(userActions.updateProfile(profile._id, newInputs));
-      setEditing(false);
+    if (profile._id) {
+      if (Object.values(profileInputs).some(elem => elem.invalid)) {
+        dispatch(alertActions.error("Please fix the invalid inputs first!"))
+        return;
+      } else {
+        const newInputs = Object.entries(profileInputs).map(([key, val]) => ({[key]: val.value}));
+        dispatch(userActions.updateProfile(profile._id, newInputs.reduce((elem1, elem2) => {
+          return Object.assign(elem1, elem2)
+        }, {})
+        ));
+        setEditing(false);
+        return;
+      }
     }
   }
 
-	const handleChange = (e) => {
+	const handleChange = (e, validateInput) => {
 		const { name, value } = e.target;
-		setNewInputs(inputs => ({ ...inputs, [name]: value }));
+    if (name === ("facebook" || "instagram") || validateInput(value)) {
+      setProfileInputs(inputs => ({ ...inputs, [name]: {...inputs[[name]], "value" : value, "invalid": false }}));
+    } else {
+      setProfileInputs(inputs => ({ ...inputs, [name]: {...inputs[[name]], "value" : value, "invalid": true }}));
+    }
 	}
 
   return (
@@ -130,19 +205,31 @@ export default function Profile(props) {
         <Avatar className={classes.avatarImage} alt={profile?.username} src='../images/avatar.png'></Avatar>
         <Divider />
         <List>
-          {Object.entries(profileData).map(([key, text], index) => (
+          {Object.entries(profileInputs).map(([key, text], index) => (
             <ListItem button key={text} alignItems="flex-start">
               <ListItemIcon>
-                {text[0]}
+                {text["icon"]}
               </ListItemIcon>
-              <ListItemText primary={editing ? <TextField
-										className={classes.txtInput}
-										name={key}
-										size="small"
-										variant="outlined"
-										defaultValue={text[1]}
-										onChange={handleChange}
-									/>: text[1]} />
+              <ListItemText primary={editing ? 
+              <TextField
+              disabled={key == "username"}
+              error={text["invalid"]}
+              helperText={text["invalid"] ? "Invalid entry" : null}
+              className={classes.txtInput}
+              name={key}
+              size="small"
+              variant="outlined"
+              defaultValue={text["value"]}
+              onChange={(e) => handleChange(e, text["validator"])}
+              select={key === "taste"}
+            >
+            {key === "taste" ? musicTypes.map((option, idx) => (
+              <MenuItem key={idx} value={option.value}>
+                  {option.label}
+              </MenuItem>
+          )) : null}
+          </TextField>
+              : text["value"]} />
             </ListItem>
           ))}
         </List>
@@ -152,7 +239,11 @@ export default function Profile(props) {
           <Button onClick={handleSaveProfile} variant="contained" color="primary">
           Save
           </Button>
-          <Button onClick={() => setEditing(false)}>
+          <Button onClick={() => {
+            setEditing(false);
+            setProfileInputs(initialInputs);
+            dispatch(alertActions.clear());
+          }}>
           Cancel
           </Button>
           </div> :
