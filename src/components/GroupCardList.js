@@ -22,12 +22,12 @@ export default function GroupCardList(props) {
                 {props.groups.map((group, i) => {
                     return (
                         <div key={i} style={{ margin: "2em 1.4em" }}>
-                            {/* Need to pass in members */}
                             <GroupCard
                                 id={group.id}
                                 title={group.name}
                                 address={group._embedded.venues[0].name}
                                 date={group.dates.start.dateTime}
+                                // endTime={group.dates.end.dateTime}
                                 img={group.images[0].url}
                                 joined={group.joined} />
                         </div>

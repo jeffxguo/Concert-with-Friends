@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import AddToCalendar from 'react-add-to-calendar';
+import 'react-add-to-calendar/dist/react-add-to-calendar.css'
 import Box from '@material-ui/core/Box';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +18,7 @@ import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
 import { alertActions } from '../actions/alert.actions';
+import moment from 'moment';
 
 export default function GroupCard(group) {
     const classes = useStyles();
@@ -28,11 +31,26 @@ export default function GroupCard(group) {
 
     return (
         <div>
+            <head>
+                <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
+            </head>
             <Card className={classes.card}>
                 <CardMedia component='img' src={group.img} style={{
                     height: '15em'
                 }} />
-                <div key={group.joined} className={classes.addButton}>
+                <div className={classes.addCalendarButton}>
+                    {/* <AddToCalendar event={{
+                        title: group.title,
+                        location: group.address,
+                        startTime: group.date,
+                        // endTime: group.endTime
+                    }} buttonLabel="Add To Calendar" buttonTemplate={{ 'calendar-plus-o': 'left' }}/> */}
+                    <div title="Add to Calendar" class="addeventatc" data-dropdown-y="down" onClick={console.log(moment(date).format('YYYY-MM-DDTHH:mm:ss'))}>
+                        Add to Calendar
+                        <span class="start">{moment(date).format('YYYY-MM-DDTHH:mm:ss')}</span>
+                        <span class="title">{group.title}</span>
+                        <span class="location">{group.address}</span>
+                    </div>
                 </div>
                 <CardContent className={classes.cardContent} >
                     <div className={classes.date}>
@@ -117,10 +135,10 @@ const useStyles = makeStyles({
         height: '30em',
         width: '24em'
     },
-    addButton: {
+    addCalendarButton: {
         position: 'absolute',
         top: '20px',
-        right: '15px',
+        left: '15px',
     },
     priceTag: {
         position: 'absolute',
