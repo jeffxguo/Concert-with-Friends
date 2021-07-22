@@ -27,7 +27,6 @@ export default function GroupCardList(props) {
                                 title={group.name}
                                 address={group._embedded.venues[0].name}
                                 date={group.dates.start.dateTime}
-                                // endTime={group.dates.end.dateTime}
                                 img={group.images[0].url}
                                 joined={group.joined} />
                         </div>

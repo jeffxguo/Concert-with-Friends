@@ -31,9 +31,6 @@ export default function GroupCard(group) {
 
     return (
         <div>
-            <head>
-                <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
-            </head>
             <Card className={classes.card}>
                 <CardMedia component='img' src={group.img} style={{
                     height: '15em'
@@ -45,7 +42,7 @@ export default function GroupCard(group) {
                         startTime: group.date,
                         // endTime: group.endTime
                     }} buttonLabel="Add To Calendar" buttonTemplate={{ 'calendar-plus-o': 'left' }}/> */}
-                    <div title="Add to Calendar" class="addeventatc" data-dropdown-y="down" onClick={console.log(moment(date).format('YYYY-MM-DDTHH:mm:ss'))}>
+                    <div title="Add to Calendar" class="addeventatc" data-dropdown-y="down">
                         Add to Calendar
                         <span class="start">{moment(date).format('YYYY-MM-DDTHH:mm:ss')}</span>
                         <span class="title">{group.title}</span>
@@ -139,6 +136,7 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: '20px',
         left: '15px',
+        'z-index': '1'
     },
     priceTag: {
         position: 'absolute',
