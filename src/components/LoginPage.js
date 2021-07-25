@@ -3,7 +3,6 @@ import { Container, Grid, Button, TextField, makeStyles } from '@material-ui/cor
 import { COLORS } from '../constants/Colors';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { userActions } from '../actions/user.actions';
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function LoginPage(props) {
+export default function LoginPage() {
 	const classes = useStyles();
 	const [credInputs, setCredInputs] = useState({
 		username: '',

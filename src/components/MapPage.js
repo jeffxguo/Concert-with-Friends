@@ -1,6 +1,5 @@
 import GoogleMapReact from "google-map-react";
 import React, { useState, useEffect } from 'react';
-import Geocoder from 'react-native-geocoding';
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from '../constants/Colors';
 import pin from "../images/pin.png"
@@ -10,8 +9,6 @@ import { alertActions } from '../actions/alert.actions';
 
 export default function GoogleMaps({ latitude, longitude }) {
   const [events, setEvents] = useState([]);
-
-  const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
   const loggedIn = useSelector(state => state.user.loggedIn);
   const userData = useSelector(state => state.user.user);
   const alert = useSelector(state => state.alert);
@@ -35,15 +32,12 @@ export default function GoogleMaps({ latitude, longitude }) {
       }
     }
 
-
-
     const getCurrentLongLat = () => {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
       });
     }
 
-  
     const getCurrentCity = async () => {
       
       try {
@@ -73,9 +67,7 @@ export default function GoogleMaps({ latitude, longitude }) {
           let events = data._embedded.events;
           if (userData && userData.data && userData.data.joinedGroups) {
               events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
-          }
-          // setEvents(eventsData);
-          
+          }          
 
           for (let i = 0; i < events.length; i++) {
 
@@ -83,8 +75,7 @@ export default function GoogleMaps({ latitude, longitude }) {
               position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
               map
             })
-      
-            // console.log(events[i])
+
             const date = new Date(events[i].dates.start.dateTime);
             const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
       

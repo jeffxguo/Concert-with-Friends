@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Icon, IconButton, Container, Grid, Button, makeStyles } from '@material-ui/core';
+import { Box, Typography, IconButton, makeStyles } from '@material-ui/core';
 import { COLORS } from '../constants/Colors';
 import fb from '../images/fb.png'
 import ig from '../images/ig.png'
