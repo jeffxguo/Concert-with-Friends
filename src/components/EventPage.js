@@ -8,7 +8,7 @@ import { alertActions } from "../actions/alert.actions";
 import { groupService } from '../services/group.service';
 
 export default function EventPage() {
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState([]);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"

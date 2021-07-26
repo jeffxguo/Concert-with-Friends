@@ -71,7 +71,6 @@ function logout() {
 
 function addGroup(userId, eventId) {
   return dispatch => {
-    dispatch(request({ userId }));
     userService.addGroup(userId, eventId)
         .then(
             user => {
@@ -85,14 +84,12 @@ function addGroup(userId, eventId) {
         );
   };
 
-  function request(user) { return { type: actionTypes.ADDGROUP_REQUEST, user } }
   function success(user) { return { type: actionTypes.ADDGROUP_SUCCESS, user } }
   function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
 }
 
 function updateProfile(userId, newProfileData) {
   return dispatch => {
-    dispatch(request({ userId }));
     userService.updateProfile(userId, newProfileData)
         .then(
             user => {
@@ -106,15 +103,12 @@ function updateProfile(userId, newProfileData) {
         );
   };
 
-  function request(user) { return { type: actionTypes.UPDATEPROFILE_REQUEST, user } }
   function success(user) { return { type: actionTypes.UPDATEPROFILE_SUCCESS, user } }
   function failure(error) { return { type: actionTypes.UPDATEPROFILE_FAILURE, error } }
 }
 
 function getGroups(userId) {
   return dispatch => {
-    dispatch(request({ userId }));
-
     userService.getGroups(userId)
         .then(
             user => {
@@ -126,15 +120,12 @@ function getGroups(userId) {
         );
   };
 
-  function request(user) { return { type: actionTypes.ADDGROUP_REQUEST, user } }
   function success(user) { return { type: actionTypes.ADDGROUP_SUCCESS, user } }
   function failure(error) { return { type: actionTypes.ADDGROUP_FAILURE, error } }
 }
 
 function deleteGroup(userId, groupId) {
   return dispatch => {
-    dispatch(request({ userId }));
-
     userService.deleteGroup(userId, groupId)
         .then(
             user => {
@@ -148,7 +139,6 @@ function deleteGroup(userId, groupId) {
         );
   };
 
-  function request(user) { return { type: actionTypes.DELETEGROUP_REQUEST, user } }
   function success(user) { return { type: actionTypes.DELETEGROUP_SUCCESS, user } }
   function failure(error) { return { type: actionTypes.DELETEGROUP_FAILURE, error } }
 }

@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { COLORS } from '../constants/Colors';
-import { IconButton, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import {  MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment';
-import React from 'react';
 
 const SearchBar = (props) => {
   const [searchTerm, setSearchTerm] = useState("")
@@ -105,7 +103,7 @@ const SearchBar = (props) => {
             placeholder="city"
           >
             {cities.map(c =>
-              <option value={c}>{c}</option>
+              <option key={c} value={c}>{c}</option>
             )}
           </Select>
         </div>
@@ -130,7 +128,7 @@ const SearchBar = (props) => {
             placeholder="genre"
           >
             {genre.map(g =>
-              <option value={g.id}>{g.name}</option>
+              <option key={g.id} value={g.id}>{g.name}</option>
             )}
           </Select>
         </div>
