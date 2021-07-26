@@ -84,7 +84,7 @@ function addGroup(userId, eventId, _name, _email, _phone) {
     })
 
     var templateParams = {
-        email: 'ruonanjia54@gmail.com',
+        email: 'concertwithfriends@gmail.com',
         name: _name,
         contact1: _email,
         contact2: _phone
