@@ -5,8 +5,6 @@ import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import AddToCalendar from 'react-add-to-calendar';
-import 'react-add-to-calendar/dist/react-add-to-calendar.css'
 import Box from '@material-ui/core/Box';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,8 +15,10 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
+import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
 import moment from 'moment';
+import AddToCalendarHOC from 'react-add-to-calendar-hoc';
 
 export default function GroupCard(group) {
     const classes = useStyles();
@@ -26,6 +26,12 @@ export default function GroupCard(group) {
     const loggedIn = useSelector(state => state.user.loggedIn);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
+
+    const handleClickLeave = () => {
+        if (userData && userData.data && userData.data._id) {
+            dispatch(userActions.deleteGroup(userData.data._id, group.id));
+        }
+    }
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -36,17 +42,11 @@ export default function GroupCard(group) {
                     height: '15em'
                 }} />
                 <div className={classes.addCalendarButton}>
-                    {/* <AddToCalendar event={{
-                        title: group.title,
-                        location: group.address,
-                        startTime: group.date,
-                        // endTime: group.endTime
-                    }} buttonLabel="Add To Calendar" buttonTemplate={{ 'calendar-plus-o': 'left' }}/> */}
-                    <div title="Add to Calendar" class="addeventatc" data-dropdown-y="down">
+                    <div title="Add to Calendar" className="addeventatc" data-dropdown-y="down">
                         Add to Calendar
-                        <span class="start">{moment(date).format('YYYY-MM-DDTHH:mm:ss')}</span>
-                        <span class="title">{group.title}</span>
-                        <span class="location">{group.address}</span>
+                        <span className="start">{moment(date).format('YYYY-MM-DDTHH:mm:ss')}</span>
+                        <span className="title">{group.title}</span>
+                        <span className="location">{group.address}</span>
                     </div>
                 </div>
                 <CardContent className={classes.cardContent} >
@@ -64,7 +64,7 @@ export default function GroupCard(group) {
                                 <Button style={{
                                     color: COLORS.highlight,
                                     textAlign: 'center'
-                                }}>
+                                }} onClick={handleClickLeave}>
                                     {"Leave Group"}
                                 </Button>
                             </div>
