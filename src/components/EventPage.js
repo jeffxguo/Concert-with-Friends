@@ -34,7 +34,7 @@ export default function EventPage() {
             setCurrentLoc(currentLoc);
             console.log(currentLoc)
 
-            fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50')
+            fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50')
                 .then(response => response.json())
                 .then(async (data) => {
                     let eventsData = data._embedded.events;
@@ -65,14 +65,16 @@ export default function EventPage() {
         }
     }, [userData]);
 
-    const handleSearch = async (keywords, city, genre, startDate, endDate) => {
-        let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey
+    const handleSearch = async (keywords, city, radius, genre, startDate, endDate) => {
+        let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + "&sort=date,asc&segmentId=KZFzniwnSyZfZ7v7nJ"
         if (keywords) url += "&keyword=" + keywords
-        if (city) url += "&city=" + city
+        if (city != "current location") url += "&city=" + city
+        if (city = "current location") url += "&geoPoint=" + currentLoc.lat + "," + currentLoc.lng 
+        if (radius) url += "&radius=" + radius
         if (genre) url += "&genreId=" + genre
-        url += "&segmentId=KZFzniwnSyZfZ7v7nJ"
-        if (startDate) url += "&startDateTime=" + startDate
-        if (endDate) url += "&endDateTime=" + endDate
+        if (startDate) url += "&startDateTime=" + startDate.substring(0,19) + "Z"
+        if (endDate) url += "&endDateTime=" + endDate.substring(0,19) + "Z"
+        console.log(url)
 
         dispatch(alertActions.clear());
         fetch(url)
