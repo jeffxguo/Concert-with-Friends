@@ -12,7 +12,6 @@ export default function MyGroupsPage() {
     const dispatch = useDispatch();
     const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
     useEffect(() => {
-
         userService.getGroups(userData.data._id).then(userGroups => {
             let data = []
             userGroups.forEach((eventID) => {

@@ -25,7 +25,7 @@ export default function GoogleMaps({ latitude, longitude }) {
   const ModelsMap = async (map, maps) => {
     const handleClickJoin = (eventId) => {
       if (userData && userData.data && userData.data._id) {
-          dispatch(userActions.addGroup(userData.data._id, eventId));
+        dispatch(userActions.addGroup(userData.data._id, eventId, userData.data.username, userData.data.email, userData.data.phone));
       }
     }
 
@@ -43,9 +43,9 @@ export default function GoogleMaps({ latitude, longitude }) {
       });
     }
 
-  
+
     const getCurrentCity = async () => {
-      
+
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
@@ -56,41 +56,41 @@ export default function GoogleMaps({ latitude, longitude }) {
         setCurrentLoc(currentLoc);
         console.log(currentLoc)
         return currentLoc;
-        
+
       } catch (error) {
         console.warn(error)
         return null;
       }
-    
+
     }
 
     return getCurrentCity().then((currentLoc) =>
-  
-    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          let events = data._embedded.events;
-          if (userData && userData.data && userData.data.joinedGroups) {
-              events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
-          }
-          // setEvents(eventsData);
-          
 
-          for (let i = 0; i < events.length; i++) {
+      fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50'))
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        let events = data._embedded.events;
+        if (userData && userData.data && userData.data.joinedGroups) {
+          events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
+        }
+        // setEvents(eventsData);
 
-            const marker = new maps.Marker({
-              position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
-              map
-            })
-      
-            // console.log(events[i])
-            const date = new Date(events[i].dates.start.dateTime);
-            const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-      
-            const infowindow = new maps.InfoWindow({
-              content:
-                `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
+
+        for (let i = 0; i < events.length; i++) {
+
+          const marker = new maps.Marker({
+            position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
+            map
+          })
+
+          // console.log(events[i])
+          const date = new Date(events[i].dates.start.dateTime);
+          const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
+          const infowindow = new maps.InfoWindow({
+            content:
+              `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
               <div style='flex:1'>
               <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
               </div>

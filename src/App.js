@@ -24,10 +24,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      history.listen((location, action) => {
-          // clear alert on location change
-          dispatch(alertActions.clear());
-      });
+    history.listen((location, action) => {
+      // clear alert on location change
+      dispatch(alertActions.clear());
+    });
   }, []);
 
   return (
@@ -35,7 +35,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router history={history}>
           <Navbar handleOpenProfile={() => setProfile(true)} />
-          { loggedIn && <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />}
+          {loggedIn && <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />}
           <Switch>
             <Route path='/' exact component={EventPage} />
             <Route path='/home' exact component={EventPage} />
@@ -57,15 +57,15 @@ function App() {
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   return (
-      <Route {...rest} render={props => {
-          if (!localStorage.getItem('user')) {
-              // not logged in so redirect to login page with the return url
-              return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-          }
+    <Route {...rest} render={props => {
+      if (!localStorage.getItem('user')) {
+        // not logged in so redirect to login page with the return url
+        return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+      }
 
-          // logged in so return component
-          return <Component {...props} />
-      }} />
+      // logged in so return component
+      return <Component {...props} />
+    }} />
   );
 }
 

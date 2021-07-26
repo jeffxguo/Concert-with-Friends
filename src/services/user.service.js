@@ -1,4 +1,6 @@
 import { authHeader } from '../helpers/auth-header';
+import { groupService } from './group.service';
+import emailjs from 'emailjs-com';
 
 export const userService = {
     login,
@@ -10,6 +12,9 @@ export const userService = {
     getUser,
     deleteGroup
 };
+
+
+emailjs.init("user_wBQ98U5brugzhi3uFKp08");
 
 function login(username, password) {
     const requestOptions = {
@@ -44,12 +49,54 @@ function register(user) {
     return fetch(`http://localhost:3001/register`, requestOptions).then(handleResponse);
 }
 
-function addGroup(userId, eventId) {
+function addGroup(userId, eventId, _name, _email, _phone) {
+    console.log("got here")
     const requestOptions = {
         method: 'PUT',
         headers: { /*...authHeader(),*/ 'Content-Type': 'application/json' },
         body: JSON.stringify({ eventId: eventId })
     };
+
+    const data = []
+    groupService.getMembers(eventId).then(memberIds => {
+        const array = [...memberIds]
+        array.forEach(id => {
+            userService.getUser(id).then(user => {
+                data.push(user)
+            })
+        })
+    })
+
+    data.forEach(user => {
+        var templateParams = {
+            email: user.email,
+            name: _name,
+            contact1: _email,
+            contact2: _phone
+        };
+
+        emailjs.send('service_spamsea', 'template_bxy4k56', templateParams)
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+            }, function (error) {
+                console.log('FAILED...', error);
+            });
+    })
+
+    var templateParams = {
+        email: 'ruonanjia54@gmail.com',
+        name: _name,
+        contact1: _email,
+        contact2: _phone
+    };
+
+    emailjs.send('service_spamsea', 'template_bxy4k56', templateParams)
+        .then(function (response) {
+            console.log('SUCCESS!', response.status, response.text);
+        }, function (error) {
+            console.log('FAILED...', error);
+        });
+
 
     return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
         .then((data) => {
