@@ -49,7 +49,7 @@ function register(user) {
     return fetch(`http://localhost:3001/register`, requestOptions).then(handleResponse);
 }
 
-function addGroup(userId, eventId, _name, _email, _phone) {
+function addGroup(userId, eventId, _name, _email, _phone, _event) {
     console.log("got here")
     const requestOptions = {
         method: 'PUT',
@@ -70,6 +70,7 @@ function addGroup(userId, eventId, _name, _email, _phone) {
     data.forEach(user => {
         var templateParams = {
             email: user.email,
+            event: _event,
             name: _name,
             contact1: _email,
             contact2: _phone
@@ -85,6 +86,7 @@ function addGroup(userId, eventId, _name, _email, _phone) {
 
     var templateParams = {
         email: 'concertwithfriends@gmail.com',
+        event: _event,
         name: _name,
         contact1: _email,
         contact2: _phone

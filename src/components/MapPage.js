@@ -23,9 +23,9 @@ export default function GoogleMaps({ latitude, longitude }) {
   });
 
   const ModelsMap = async (map, maps) => {
-    const handleClickJoin = (eventId) => {
+    const handleClickJoin = (eventId, eventName) => {
       if (userData && userData.data && userData.data._id) {
-        dispatch(userActions.addGroup(userData.data._id, eventId, userData.data.username, userData.data.email, userData.data.phone));
+        dispatch(userActions.addGroup(userData.data._id, eventId, userData.data.username, userData.data.email, userData.data.phone, eventName));
       }
     }
 
@@ -125,7 +125,7 @@ export default function GoogleMaps({ latitude, longitude }) {
           const handleClick = (e) => {
             if (loggedIn && userData) {
               if (document.getElementById("add-group")) {
-                handleClickJoin(events[i].id);
+                handleClickJoin(events[i].id, events[i].name);
                 document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
                 document.getElementById("add-group").innerText = "Leave";
                 document.getElementById("add-group").id = "leave-group";

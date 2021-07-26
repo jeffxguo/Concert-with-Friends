@@ -69,10 +69,10 @@ function logout() {
   return { type: actionTypes.LOGOUT };
 }
 
-function addGroup(userId, eventId, _name, _email, _phone) {
+function addGroup(userId, eventId, _name, _email, _phone, _event) {
   return dispatch => {
     dispatch(request({ userId }));
-    userService.addGroup(userId, eventId, _name, _email, _phone)
+    userService.addGroup(userId, eventId, _name, _email, _phone, _event)
       .then(
         user => {
           dispatch(success(user));
