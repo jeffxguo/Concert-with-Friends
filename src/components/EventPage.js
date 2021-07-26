@@ -68,8 +68,10 @@ export default function EventPage() {
     const handleSearch = async (keywords, city, radius, genre, startDate, endDate) => {
         let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + "&sort=date,asc&segmentId=KZFzniwnSyZfZ7v7nJ"
         if (keywords) url += "&keyword=" + keywords
-        if (city != "current location") url += "&city=" + city
-        if (city = "current location") url += "&geoPoint=" + currentLoc.lat + "," + currentLoc.lng 
+        if (city !== "current location") {url += "&city=" + city
+            }else {
+                url += "&geoPoint=" + currentLoc.lat + "," + currentLoc.lng 
+            }
         if (radius) url += "&radius=" + radius
         if (genre) url += "&genreId=" + genre
         if (startDate) url += "&startDateTime=" + startDate.substring(0,19) + "Z"
