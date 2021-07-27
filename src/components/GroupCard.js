@@ -19,13 +19,24 @@ import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
 import moment from 'moment';
 import AddToCalendarHOC from 'react-add-to-calendar-hoc';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default function GroupCard(group) {
     const classes = useStyles();
     const date = new Date(group.date);
+    const duration = moment.duration(date - date).asHours();
     const loggedIn = useSelector(state => state.user.loggedIn);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
+
+    const MappedDropdown = (args) => (
+        <div>
+                {args.children.map((link, i) => (
+                    <Dropdown.Item onClick={()=>window.open(link.address)} key={i}>{link}</Dropdown.Item>
+                ))}
+                </div>
+    )
+    const AddToCalendarDropdown = AddToCalendarHOC(Button, MappedDropdown);
 
     const handleClickLeave = () => {
         if (userData && userData.data && userData.data._id) {
@@ -41,13 +52,14 @@ export default function GroupCard(group) {
                 <CardMedia component='img' src={group.img} style={{
                     height: '15em'
                 }} />
-                <div className={classes.addCalendarButton}>
-                    <div title="Add to Calendar" className="addeventatc" data-dropdown-y="down">
-                        Add to Calendar
-                        <span className="start">{moment(date).format('YYYY-MM-DDTHH:mm:ss')}</span>
-                        <span className="title">{group.title}</span>
-                        <span className="location">{group.address}</span>
-                    </div>
+                <div>
+                    <AddToCalendarDropdown className={classes.addCalendarButton} event={{
+                        location: group.address,
+                        duration: duration,
+                        startDatetime: moment(date).format('YYYYMMDDTHHmmssZ'),
+                        endDatetime: moment(date).add(1, 'hours').format('YYYYMMDDTHHmmssZ'),
+                        title: group.title
+                    }} />
                 </div>
                 <CardContent className={classes.cardContent} >
                     <div className={classes.date}>
@@ -133,6 +145,9 @@ const useStyles = makeStyles({
         width: '24em'
     },
     addCalendarButton: {
+        backgroundColor: COLORS.white,
+        borderRadius: 4,
+        padding: '3px 5px',
         position: 'absolute',
         top: '20px',
         left: '15px',
