@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Box from '@material-ui/core/Box';
 import AddIcon from '@material-ui/icons/Add';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import GroupIcon from '@material-ui/icons/Group';
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -47,8 +46,8 @@ export default function EventCard(event) {
                 <CardMedia component='img' src={event.img} style={{
                     height: '15em'
                 }} />
-                <div key={event.joined} className={classes.addButton}>
-                    {event.joined && loggedIn ?
+                <div className={classes.addButton}>
+                    {loggedIn && event.joined ?
                         <Button variant="contained" color="secondary" onClick={handleClickLeave}>
                             Leave
                         </Button>

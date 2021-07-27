@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import './index.css';
 import EventPage from './components/EventPage';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
-import ProfileGroupsPage from './components/ProfileGroupsPage';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import MapPage from './components/MapPage';
@@ -14,9 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Router, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { COLORS } from './constants/Colors';
-import "./index.css";
 import { history } from './helpers/history';
 import { alertActions } from './actions/alert.actions';
+
+import './App.css';
+import './index.css';
 
 function App() {
   const [isProfileOpen, setProfile] = useState(false);
@@ -24,10 +23,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    history.listen((location, action) => {
-      // clear alert on location change
-      dispatch(alertActions.clear());
-    });
+      history.listen(() => {
+          // clear alert
+          dispatch(alertActions.clear());
+      });
   }, []);
 
   return (
@@ -57,15 +56,14 @@ function App() {
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   return (
-    <Route {...rest} render={props => {
-      if (!localStorage.getItem('user')) {
-        // not logged in so redirect to login page with the return url
-        return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-      }
-
-      // logged in so return component
-      return <Component {...props} />
-    }} />
+      <Route {...rest} render={props => {
+          if (!localStorage.getItem('user')) {
+              // not logged in so redirect to login page with the return url
+              return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+          }
+          // logged in so return component
+          return <Component {...props} />
+      }} />
   );
 }
 

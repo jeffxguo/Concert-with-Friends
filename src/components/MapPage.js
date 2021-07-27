@@ -1,6 +1,5 @@
 import GoogleMapReact from "google-map-react";
 import React, { useState, useEffect } from 'react';
-import Geocoder from 'react-native-geocoding';
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from '../constants/Colors';
 import pin from "../images/pin.png"
@@ -10,8 +9,6 @@ import { alertActions } from '../actions/alert.actions';
 
 export default function GoogleMaps({ latitude, longitude }) {
   const [events, setEvents] = useState([]);
-
-  const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
   const loggedIn = useSelector(state => state.user.loggedIn);
   const userData = useSelector(state => state.user.user);
   const alert = useSelector(state => state.alert);
@@ -35,14 +32,11 @@ export default function GoogleMaps({ latitude, longitude }) {
       }
     }
 
-
-
     const getCurrentLongLat = () => {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
       });
     }
-
 
     const getCurrentCity = async () => {
 
@@ -66,31 +60,28 @@ export default function GoogleMaps({ latitude, longitude }) {
 
     return getCurrentCity().then((currentLoc) =>
 
-      fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50'))
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        let events = data._embedded.events;
-        if (userData && userData.data && userData.data.joinedGroups) {
-          events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
-        }
-        // setEvents(eventsData);
+  
+    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
+        .then(response => response.json())
+        .then(data => {
+          let events = data._embedded.events;
+          if (userData && userData.data && userData.data.joinedGroups) {
+              events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
+          }          
 
+          for (let i = 0; i < events.length; i++) {
 
-        for (let i = 0; i < events.length; i++) {
+            const marker = new maps.Marker({
+              position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
+              map
+            })
 
-          const marker = new maps.Marker({
-            position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
-            map
-          })
-
-          // console.log(events[i])
-          const date = new Date(events[i].dates.start.dateTime);
-          const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-
-          const infowindow = new maps.InfoWindow({
-            content:
-              `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
+            const date = new Date(events[i].dates.start.dateTime);
+            const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+      
+            const infowindow = new maps.InfoWindow({
+              content:
+                `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
               <div style='flex:1'>
               <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
               </div>
