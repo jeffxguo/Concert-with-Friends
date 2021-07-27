@@ -34,7 +34,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router history={history}>
           <Navbar handleOpenProfile={() => setProfile(true)} />
-          { loggedIn && <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />}
+          {loggedIn && <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />}
           <Switch>
             <Route path='/' exact component={EventPage} />
             <Route path='/home' exact component={EventPage} />

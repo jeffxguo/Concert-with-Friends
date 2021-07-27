@@ -21,7 +21,6 @@ export default function MyGroupsPage() {
     }
 
     useEffect(() => {
-
         userService.getGroups(userData.data._id).then(userGroups => {
             let data = []
             userGroups.forEach((eventID) => {

@@ -11,7 +11,7 @@ export const userActions = {
 
   // updateProfile: (user) => ({ type: actionTypes.UPDATE_USER, payload: { user } }),
 
-  login,  
+  login,
   logout,
   getGroups,
   addGroup,
@@ -24,17 +24,17 @@ function register(user) {
     dispatch(request(user));
 
     userService.register(user)
-        .then(
-            user => { 
-                dispatch(success());
-                history.push('/login');
-                dispatch(alertActions.success('Registration successful'));
-            },
-            error => {
-                dispatch(failure(error.toString()));
-                dispatch(alertActions.error(error.toString()));
-            }
-        );
+      .then(
+        user => {
+          dispatch(success());
+          history.push('/login');
+          dispatch(alertActions.success('Registration successful'));
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
   }
 
   function request(user) { return { type: actionTypes.REGISTER_REQUEST, user } }
@@ -44,19 +44,19 @@ function register(user) {
 
 function login(username, password, from) {
   return dispatch => {
-      dispatch(request({ username }));
+    dispatch(request({ username }));
 
-      userService.login(username, password)
-          .then(
-              user => { 
-                  dispatch(success(user));
-                  history.push(from);
-              },
-              error => {
-                  dispatch(failure(error.toString()));
-                  dispatch(alertActions.error(error.toString()));
-              }
-          );
+    userService.login(username, password)
+      .then(
+        user => {
+          dispatch(success(user));
+          history.push(from);
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
   };
 
   function request(user) { return { type: actionTypes.LOGIN_REQUEST, user } }
@@ -69,7 +69,7 @@ function logout() {
   return { type: actionTypes.LOGOUT };
 }
 
-function addGroup(userId, eventId) {
+function addGroup(userId, eventId, _name, _email, _phone, _event) {
   return dispatch => {
     userService.addGroup(userId, eventId)
         .then(
@@ -91,16 +91,16 @@ function addGroup(userId, eventId) {
 function updateProfile(userId, newProfileData) {
   return dispatch => {
     userService.updateProfile(userId, newProfileData)
-        .then(
-            user => {
-              dispatch(success(user));
-              dispatch(alertActions.success('Update profile successfully'));
-            },
-            error => {
-              dispatch(failure(error.toString()));
-              dispatch(alertActions.error(error.toString()));
-            }
-        );
+      .then(
+        user => {
+          dispatch(success(user));
+          dispatch(alertActions.success('Update profile successfully'));
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
   };
 
   function success(user) { return { type: actionTypes.UPDATEPROFILE_SUCCESS, user } }
@@ -110,14 +110,14 @@ function updateProfile(userId, newProfileData) {
 function getGroups(userId) {
   return dispatch => {
     userService.getGroups(userId)
-        .then(
-            user => {
-              dispatch(success(user));
-            },
-            error => {
-              dispatch(failure(error.toString()));
-            }
-        );
+      .then(
+        user => {
+          dispatch(success(user));
+        },
+        error => {
+          dispatch(failure(error.toString()));
+        }
+      );
   };
 
   function success(user) { return { type: actionTypes.ADDGROUP_SUCCESS, user } }
@@ -127,16 +127,16 @@ function getGroups(userId) {
 function deleteGroup(userId, groupId) {
   return dispatch => {
     userService.deleteGroup(userId, groupId)
-        .then(
-            user => {
-              dispatch(success(user));
-              dispatch(alertActions.success('Left group successfully'));
-            },
-            error => {
-              dispatch(failure(error.toString()));
-              dispatch(alertActions.error(error.toString()));
-            }
-        );
+      .then(
+        user => {
+          dispatch(success(user));
+          dispatch(alertActions.success('Left group successfully'));
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
   };
 
   function success(user) { return { type: actionTypes.DELETEGROUP_SUCCESS, user } }

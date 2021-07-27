@@ -20,9 +20,9 @@ export default function GoogleMaps({ latitude, longitude }) {
   });
 
   const ModelsMap = async (map, maps) => {
-    const handleClickJoin = (eventId) => {
+    const handleClickJoin = (eventId, eventName) => {
       if (userData && userData.data && userData.data._id) {
-          dispatch(userActions.addGroup(userData.data._id, eventId));
+        dispatch(userActions.addGroup(userData.data._id, eventId, userData.data.username, userData.data.email, userData.data.phone, eventName));
       }
     }
 
@@ -39,7 +39,7 @@ export default function GoogleMaps({ latitude, longitude }) {
     }
 
     const getCurrentCity = async () => {
-      
+
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
@@ -50,20 +50,20 @@ export default function GoogleMaps({ latitude, longitude }) {
         setCurrentLoc(currentLoc);
         console.log(currentLoc)
         return currentLoc;
-        
+
       } catch (error) {
         console.warn(error)
         return null;
       }
-    
+
     }
 
     return getCurrentCity().then((currentLoc) =>
+
   
     fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           let events = data._embedded.events;
           if (userData && userData.data && userData.data.joinedGroups) {
               events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
@@ -116,7 +116,7 @@ export default function GoogleMaps({ latitude, longitude }) {
           const handleClick = (e) => {
             if (loggedIn && userData) {
               if (document.getElementById("add-group")) {
-                handleClickJoin(events[i].id);
+                handleClickJoin(events[i].id, events[i].name);
                 document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
                 document.getElementById("add-group").innerText = "Leave";
                 document.getElementById("add-group").id = "leave-group";
