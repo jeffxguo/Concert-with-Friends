@@ -28,7 +28,9 @@ export default function GroupCardList(props) {
                                 address={group._embedded.venues[0].name}
                                 date={group.dates.start.dateTime}
                                 img={group.images[0].url}
-                                joined={group.joined} />
+                                joined={group.joined}
+                                handleClickLeave={props.handleClickLeave}
+                            />
                         </div>
                     )
                 })}

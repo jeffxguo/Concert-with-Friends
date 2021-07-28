@@ -1,19 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { COLORS } from '../constants/Colors';
-import { IconButton, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import {  MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment';
-import React from 'react';
 
 const SearchBar = (props) => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedGenre, setSelectedGenre] = useState("")
   const [city, setCity] = useState("")
+  const [radius, setRadius] = useState("")
   const [startDate, setStartDate] = useState(new Date().setHours(0, 0))
   const [endDate, setEndDate] = useState(null)
 
@@ -27,11 +26,22 @@ const SearchBar = (props) => {
 
   const classes = useStyles();
   const cities = [
+    " ",
     "Vancouver",
     "Montreal",
     "Calgary",
-    "Toronto"
+    "Toronto",
+    "current location"
   ]
+
+  const radiuses = [
+    " ",
+    "5",
+    "25",
+    "50",
+    "100"
+  ]
+
   const genre = [
     {
       "id": "",
@@ -105,10 +115,34 @@ const SearchBar = (props) => {
             placeholder="city"
           >
             {cities.map(c =>
-              <option value={c}>{c}</option>
+              <option key={c} value={c}>{c}</option>
             )}
           </Select>
         </div>
+        <div style={{ textAlign: "left" }}>
+        <Typography style={{ fontWeight: "600" }}>Radius(miles)</Typography>
+        <Select
+          style={{
+            color: "white",
+            marginTop: "1em",
+            marginRight: "2em",
+            width: "9em"
+          }}
+          className={classes.select}
+          inputProps={{
+            classes: {
+              icon: classes.icon,
+            },
+          }}
+          native
+          onChange={event => { setRadius(String(event.target.value).toLowerCase()) }}
+          placeholder="radius"
+        >
+          {radiuses.map(r =>
+            <option value={r}>{r}</option>
+          )}
+        </Select>
+      </div>
         <div style={{ textAlign: "left" }}>
           <Typography style={{ fontWeight: "600" }}>Genre</Typography>
 
@@ -130,7 +164,7 @@ const SearchBar = (props) => {
             placeholder="genre"
           >
             {genre.map(g =>
-              <option value={g.id}>{g.name}</option>
+              <option key={g.id} value={g.id}>{g.name}</option>
             )}
           </Select>
         </div>
@@ -188,7 +222,7 @@ const SearchBar = (props) => {
           color: "white",
           justifyContent: "center"
         }}
-          onClick={() => props.handleSearch(searchTerm, city, selectedGenre, moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'), endDate)}
+          onClick={() => props.handleSearch(searchTerm, city, radius, selectedGenre, moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'), endDate)}
         >
           <SearchIcon />
         </div>

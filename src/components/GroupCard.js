@@ -73,7 +73,7 @@ export default function GroupCard(group) {
 
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
                             <div className={classes.leaveButton}>
-                                <Button style={{
+                                <Button onClick={() => group.handleClickLeave(group.id)} style={{
                                     color: COLORS.highlight,
                                     textAlign: 'center'
                                 }} onClick={handleClickLeave}>
