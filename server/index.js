@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const path = require('path');
 const app = express();
 
 const PORT = process.env.PORT || 3001;
