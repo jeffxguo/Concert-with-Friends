@@ -31,10 +31,10 @@ export default function GroupCard(group) {
 
     const MappedDropdown = (args) => (
         <div>
-                {args.children.map((link, i) => (
-                    <Dropdown.Item onClick={()=>window.open(link.address)} key={i}>{link}</Dropdown.Item>
-                ))}
-                </div>
+            {args.children.map((link, i) => (
+                <Dropdown.Item key={i}>{link}</Dropdown.Item>
+            ))}
+        </div>
     )
     const AddToCalendarDropdown = AddToCalendarHOC(Button, MappedDropdown);
 
