@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server",
-    "start": "node server",
+    "devStart": "nodemon server/index.js",
+    "start": "node server/index.js",
     "heroku-postbuild": "cd client/ && npm install && npm run build"
   },
   "author": "",
