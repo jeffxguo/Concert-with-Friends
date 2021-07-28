@@ -8,7 +8,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI || "";
 
 const passportLocal = require("passport-local").Strategy;
 
@@ -19,7 +20,7 @@ var usersRouter = require('./routes/users');
 var groupsRouter = require('./routes/groups');
 
 mongoose.connect(
-    "mongodb+srv://admin:HsCPYvslxRPm2nyP@cluster0.fhpsk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    MONGODB_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
