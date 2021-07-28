@@ -8,8 +8,9 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 
-const passportLocal = require("passport-local").Strategy;
+const PORT = process.env.PORT || 5000;
 
+const passportLocal = require("passport-local").Strategy;
 
 const User = require("./schema/user");
 const Group = require("./schema/group");
@@ -120,7 +121,13 @@ app.post("/register", (req, res) => {
     res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });*/
 
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-app.listen(3001, () => {
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  });
+
+app.listen(PORT, () => {
     console.log("Server Has Started");
 });

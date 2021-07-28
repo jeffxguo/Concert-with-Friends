@@ -23,7 +23,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`http://localhost:3001/login`, requestOptions)
+    return fetch(`/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             console.log(user);
@@ -45,7 +45,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`http://localhost:3001/register`, requestOptions).then(handleResponse);
+    return fetch(`/register`, requestOptions).then(handleResponse);
 }
 
 function addGroup(userId, eventId, _name, _email, _phone, _event) {
@@ -99,7 +99,7 @@ function addGroup(userId, eventId, _name, _email, _phone, _event) {
         });
 
 
-    return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
+    return fetch(`/users/${userId}`, requestOptions).then(response => response.json())
         .then((data) => {
             if (data.statusCode === (404 || 500 || 204)) {
                 return Promise.reject(data.message);
@@ -116,7 +116,7 @@ function updateProfile(userId, newProfileData) {
         body: JSON.stringify(newProfileData)
     };
 
-    return fetch(`http://localhost:3001/users/${userId}/edit-profile`, requestOptions).then(response => response.json())
+    return fetch(`/users/${userId}/edit-profile`, requestOptions).then(response => response.json())
         .then((data) => {
             if (data.statusCode === (404 || 500)) {
                 return Promise.reject(data.message);
@@ -133,7 +133,7 @@ function getGroups(userId) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`http://localhost:3001/groups/${userId}`, requestOptions).then(handleResponse);
+    return fetch(`/groups/${userId}`, requestOptions).then(handleResponse);
 }
 
 function getUser(userId) {
@@ -142,7 +142,7 @@ function getUser(userId) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(handleResponse);
+    return fetch(`/users/${userId}`, requestOptions).then(handleResponse);
 }
 
 function deleteGroup(userId, eventId) {
@@ -152,7 +152,7 @@ function deleteGroup(userId, eventId) {
         body: JSON.stringify({ eventId: eventId })
     };
 
-    return fetch(`http://localhost:3001/users/${userId}`, requestOptions).then(response => response.json())
+    return fetch(`/users/${userId}`, requestOptions).then(response => response.json())
         .then((data) => {
             if (data.statusCode === (404 || 500)) {
                 return Promise.reject(data.message);
