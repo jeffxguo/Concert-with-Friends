@@ -111,7 +111,8 @@ export default function Profile(props) {
   const [editing, setEditing] = useState(null);
 
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.user.data);
+  const userData = useSelector(state => state.user.user);
+  const profile = userData && userData.data;
   const initialInputs = {
     username: {
       icon: <PersonRoundedIcon />,
@@ -123,7 +124,7 @@ export default function Profile(props) {
       icon: <MailRoundedIcon />,
       value: profile.email || '',
       validator: function (e) {
-        const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]{2,4})*$/;
         return re.test(e);
       },
       invalid: false
@@ -202,17 +203,17 @@ export default function Profile(props) {
           </IconButton>
         </div>
         <Divider />
-        <Avatar className={classes.avatarImage} alt={profile?.username} src='../images/avatar.png'></Avatar>
+        <Avatar className={classes.avatarImage} alt={profile?.username}></Avatar>
         <Divider />
         <List>
           {Object.entries(profileInputs).map(([key, text], index) => (
-            <ListItem button key={text} alignItems="flex-start">
+            <ListItem button key={index} alignItems="flex-start">
               <ListItemIcon>
                 {text["icon"]}
               </ListItemIcon>
               <ListItemText primary={editing ? 
               <TextField
-              disabled={key == "username"}
+              disabled={key === "username"}
               error={text["invalid"]}
               helperText={text["invalid"] ? "Invalid entry" : null}
               className={classes.txtInput}

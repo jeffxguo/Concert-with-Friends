@@ -38,12 +38,6 @@ export default function GroupCard(group) {
     )
     const AddToCalendarDropdown = AddToCalendarHOC(Button, MappedDropdown);
 
-    const handleClickLeave = () => {
-        if (userData && userData.data && userData.data._id) {
-            dispatch(userActions.deleteGroup(userData.data._id, group.id));
-        }
-    }
-
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
     return (
@@ -73,10 +67,10 @@ export default function GroupCard(group) {
 
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
                             <div className={classes.leaveButton}>
-                                <Button style={{
+                                <Button onClick={() => group.handleClickLeave(group.id)} style={{
                                     color: COLORS.highlight,
                                     textAlign: 'center'
-                                }} onClick={handleClickLeave}>
+                                }}>
                                     {"Leave Group"}
                                 </Button>
                             </div>

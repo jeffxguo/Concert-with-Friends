@@ -49,6 +49,7 @@ Functionalities to remove base on time constriction will be email alerts and add
 
 1. Spotify integration where users can display their playlist
 2. In app messaging 
+3. Be able to send invite links to friends
 
 ## Task Breakdown
 

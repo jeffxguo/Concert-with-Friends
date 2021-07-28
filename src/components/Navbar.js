@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    color: COLORS.highlight
   },
   title: {
     flexGrow: 1
@@ -114,7 +115,7 @@ export default function Navbar(props) {
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: "white", boxShadow: "none", padding: "0 10%", color: COLORS.black }}>
         <Toolbar>
-          <Button edge="start" className={classes.menuButton} color={COLORS.highlight} aria-label="navigation">
+          <Button edge="start" className={classes.menuButton} aria-label="navigation">
             <NavigationRoundedIcon />
             <a className={classes.location} style={{ color: COLORS.black }}>{currentCity}</a>
           </Button>
