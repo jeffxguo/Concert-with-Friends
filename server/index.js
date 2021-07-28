@@ -9,8 +9,12 @@ const cookieParser = require("cookie-parser");
 const path = require('path');
 const app = express();
 
+const NODE_ENV = process.env.NODE_ENV || "development";
+if (NODE_ENV === "development") {
+  require('dotenv').config();
+}
 const PORT = process.env.PORT || 3001;
-const MONGODB_URI = process.env.MONGODB_URI || "";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const passportLocal = require("passport-local").Strategy;
 
