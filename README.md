@@ -2,6 +2,8 @@
 
 ## Project Description
 
+Concert with Friends is a web application that helps you find new friends to view a concert with. Find concerts nearby you on the map or filtered from a list and join its group to start meeting new people.
+
 ### Who is it for? 
 
 People who love music/going to concerts and are looking for others to join them in this event.
