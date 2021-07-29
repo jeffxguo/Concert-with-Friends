@@ -179,7 +179,7 @@ export default function Profile(props) {
 
 	const handleChange = (e, validateInput) => {
 		const { name, value } = e.target;
-    if (name === ("facebook" || "instagram") || validateInput(value)) {
+    if (["facebook", "instagram"].includes(name) || validateInput(value)) {
       setProfileInputs(inputs => ({ ...inputs, [name]: {...inputs[[name]], "value" : value, "invalid": false }}));
     } else {
       setProfileInputs(inputs => ({ ...inputs, [name]: {...inputs[[name]], "value" : value, "invalid": true }}));
