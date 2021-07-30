@@ -6,10 +6,17 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const path = require('path');
 const app = express();
 
-const passportLocal = require("passport-local").Strategy;
+const NODE_ENV = process.env.NODE_ENV || "development";
+if (NODE_ENV === "development") {
+  require('dotenv').config();
+}
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI;
 
+const passportLocal = require("passport-local").Strategy;
 
 const User = require("./schema/user");
 const Group = require("./schema/group");
@@ -18,7 +25,7 @@ var usersRouter = require('./routes/users');
 var groupsRouter = require('./routes/groups');
 
 mongoose.connect(
-    "mongodb+srv://admin:HsCPYvslxRPm2nyP@cluster0.fhpsk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    MONGODB_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -120,7 +127,13 @@ app.post("/register", (req, res) => {
     res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });*/
 
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-app.listen(3001, () => {
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  });
+
+app.listen(PORT, () => {
     console.log("Server Has Started");
 });
