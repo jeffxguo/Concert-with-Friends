@@ -5,18 +5,13 @@ import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import Box from '@material-ui/core/Box';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
-import { Icon } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
-import { userActions } from '../actions/user.actions';
-import { alertActions } from '../actions/alert.actions';
 import moment from 'moment';
 import AddToCalendarHOC from 'react-add-to-calendar-hoc';
 import Dropdown from 'react-bootstrap/Dropdown'
