@@ -22,7 +22,6 @@ export default function GroupCardList(props) {
                 {props.groups.map((group, i) => {
                     return (
                         <div key={i} style={{ margin: "2em 1.4em" }}>
-                            {/* Need to pass in members */}
                             <GroupCard
                                 id={group.id}
                                 title={group.name}

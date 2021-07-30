@@ -5,24 +5,33 @@ import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import Box from '@material-ui/core/Box';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
-import { Icon } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
+import moment from 'moment';
+import AddToCalendarHOC from 'react-add-to-calendar-hoc';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default function GroupCard(group) {
     const classes = useStyles();
     const date = new Date(group.date);
+    const duration = moment.duration(date - date).asHours();
     const loggedIn = useSelector(state => state.user.loggedIn);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
+    const MappedDropdown = (args) => (
+        <div>
+            {args.children.map((link, i) => (
+                <Dropdown.Item key={i}>{link}</Dropdown.Item>
+            ))}
+        </div>
+    )
+    const AddToCalendarDropdown = AddToCalendarHOC(Button, MappedDropdown);
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -32,7 +41,14 @@ export default function GroupCard(group) {
                 <CardMedia component='img' src={group.img} style={{
                     height: '15em'
                 }} />
-                <div key={group.joined} className={classes.addButton}>
+                <div>
+                    <AddToCalendarDropdown className={classes.addCalendarButton} event={{
+                        location: group.address,
+                        duration: duration,
+                        startDatetime: moment(date).format('YYYYMMDDTHHmmssZ'),
+                        endDatetime: moment(date).add(1, 'hours').format('YYYYMMDDTHHmmssZ'),
+                        title: group.title
+                    }} />
                 </div>
                 <CardContent className={classes.cardContent} >
                     <div className={classes.date}>
@@ -117,10 +133,14 @@ const useStyles = makeStyles({
         height: '30em',
         width: '24em'
     },
-    addButton: {
+    addCalendarButton: {
+        backgroundColor: COLORS.white,
+        borderRadius: 4,
+        padding: '3px 5px',
         position: 'absolute',
         top: '20px',
-        right: '15px',
+        left: '15px',
+        'z-index': '1'
     },
     priceTag: {
         position: 'absolute',
