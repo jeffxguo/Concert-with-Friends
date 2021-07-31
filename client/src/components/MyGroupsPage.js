@@ -8,7 +8,6 @@ import { userActions } from '../actions/user.actions';
 
 export default function MyGroupsPage() {
     const [groups, setGroups] = useState([])
-
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
@@ -20,21 +19,18 @@ export default function MyGroupsPage() {
         setGroups(groups.filter(group => group.id !== eventId))
     }
 
+
     useEffect(() => {
-        userService.getGroups(userData.data._id).then(userGroups => {
-            let data = []
-            userGroups.forEach((eventID) => {
-                fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
-                    .then(response => response.json())
-                    .then(async (group) => {
-                        data.push(group)
-                        setGroups([...data])
-                    }).catch(err => {
-                        console.log(err)
-                    })
+        const data = []
+
+        userService.getGroups(userData.data._id).then(async (userGroups) => {
+            for (const eventID of userGroups) {
+                const response = await fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
+                const group = await response.json()
+                data.push(group)
             }
-            )
-            console.log(groups)
+        }).then(_res => {
+            setGroups(data)
         })
 
     }, []);
