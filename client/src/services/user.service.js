@@ -48,8 +48,7 @@ function register(user) {
     return fetch(`/register`, requestOptions).then(handleResponse);
 }
 
-function addGroup(userId, eventId, _name, _email, _phone, _event) {
-    console.log("got here")
+function addGroup(userId, eventId, name, email, phone, event) {
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -69,10 +68,10 @@ function addGroup(userId, eventId, _name, _email, _phone, _event) {
     data.forEach(user => {
         var templateParams = {
             email: user.email,
-            event: _event,
-            name: _name,
-            contact1: _email,
-            contact2: _phone
+            event: event,
+            name: name,
+            contact1: email,
+            contact2: phone
         };
 
         emailjs.send('service_spamsea', 'template_bxy4k56', templateParams)
@@ -85,10 +84,10 @@ function addGroup(userId, eventId, _name, _email, _phone, _event) {
 
     var templateParams = {
         email: 'concertwithfriends@gmail.com',
-        event: _event,
-        name: _name,
-        contact1: _email,
-        contact2: _phone
+        event: event,
+        name: name,
+        contact1: email,
+        contact2: phone
     };
 
     emailjs.send('service_spamsea', 'template_bxy4k56', templateParams)

@@ -71,17 +71,17 @@ function logout() {
 
 function addGroup(userId, eventId, _name, _email, _phone, _event) {
   return dispatch => {
-    userService.addGroup(userId, eventId)
-        .then(
-            user => {
-              dispatch(success(user));
-              dispatch(alertActions.success('Joined group successfully'));
-            },
-            error => {
-              dispatch(failure(error.toString()));
-              dispatch(alertActions.error(error.toString()));
-            }
-        );
+    userService.addGroup(userId, eventId, _name, _email, _phone, _event)
+      .then(
+        user => {
+          dispatch(success(user));
+          dispatch(alertActions.success('Joined group successfully'));
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
   };
 
   function success(user) { return { type: actionTypes.ADDGROUP_SUCCESS, user } }
