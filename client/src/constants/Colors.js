@@ -7,4 +7,5 @@ export const COLORS = {
     lightGrey: "#F0F0F0",
     bgGrey: "#F6F6F6",
     white: "#FFFFFF",
+    pink: "#f50057"
 }
