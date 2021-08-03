@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import MapPage from './components/MapPage';
 import MyGroupsPage from './components/MyGroupsPage';
+import LandingPage from './components/LandingPage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Router, Redirect } from 'react-router-dom';
@@ -23,10 +24,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      history.listen(() => {
-          // clear alert
-          dispatch(alertActions.clear());
-      });
+    history.listen(() => {
+      // clear alert
+      dispatch(alertActions.clear());
+    });
   }, []);
 
   return (
@@ -36,7 +37,7 @@ function App() {
           <Navbar handleOpenProfile={() => setProfile(true)} />
           {loggedIn && <Profile isOpen={isProfileOpen} handleCloseProfile={() => setProfile(false)} />}
           <Switch>
-            <Route path='/' exact component={EventPage} />
+            <Route path='/' exact component={LandingPage} />
             <Route path='/home' exact component={EventPage} />
             <Route path='/map' exact component={MapPage} />
             <Route path='/login' exact>
@@ -56,14 +57,14 @@ function App() {
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   return (
-      <Route {...rest} render={props => {
-          if (!localStorage.getItem('user')) {
-              // not logged in so redirect to login page with the return url
-              return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-          }
-          // logged in so return component
-          return <Component {...props} />
-      }} />
+    <Route {...rest} render={props => {
+      if (!localStorage.getItem('user')) {
+        // not logged in so redirect to login page with the return url
+        return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+      }
+      // logged in so return component
+      return <Component {...props} />
+    }} />
   );
 }
 

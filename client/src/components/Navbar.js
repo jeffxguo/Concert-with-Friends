@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   nav: {
     color: COLORS.black,
-    margin: ".5em 1em",
+    margin: "1.6em 1em",
     fontSize: "1.2em",
   }
 }));
@@ -60,7 +60,6 @@ export default function Navbar(props) {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       }
-      console.log({ currentLoc });
       const json = await Geocoder.from(currentLoc)
       let currentCity = json.results[0].address_components[3].long_name
       setCurrentLoc(currentLoc);
@@ -119,10 +118,12 @@ export default function Navbar(props) {
             <NavigationRoundedIcon />
             <a className={classes.location} style={{ color: COLORS.black }}>{currentCity}</a>
           </Button>
-          <Typography variant="h1" className={classes.title}>
-            <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
-          </Typography>
-          <Link color="inherit" to="/" className={classes.nav}>
+          <Link to="/" className={classes.title}>
+            <Typography variant="h1" >
+              <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
+            </Typography>
+          </Link>
+          <Link color="inherit" to="/home" className={classes.nav}>
             Groups
           </Link>
           <Link color="inherit" to="/map" className={classes.nav}>
