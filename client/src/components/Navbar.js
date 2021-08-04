@@ -120,7 +120,7 @@ export default function Navbar(props) {
           </Button>
           <Link to="/" className={classes.title}>
             <Typography variant="h1" >
-              <img style={{ marginLeft: 40, width: "8.4em" }} src={logo} alt={"logo"} />
+              <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
             </Typography>
           </Link>
           <Link color="inherit" to="/home" className={classes.nav}>
