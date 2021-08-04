@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
 import ClearIcon from '@material-ui/icons/Clear';
+import ShareIcon from '@material-ui/icons/Share';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
@@ -102,15 +103,13 @@ export default function GroupCard(group) {
                                 </Popup>
                             </div>
                         <div className={classes.inviteButton}>
-                            <Popup trigger={<Button style={{
-                                color: COLORS.white,
-                                overlay: {
-                                    background: "#FFFF00"
-                                },
-                                textAlign: 'center'
+                            <Popup trigger={
+                            <IconButton style={{
+                                color: COLORS.highlight,
+                                backgroundColor: COLORS.white
                             }}>
-                                {"Invite Friends"}
-                            </Button>} modal>
+                                <ShareIcon />
+                            </IconButton>} modal>
                                 {close => (
                                     <span className={classes.modal} style={{                                        
                                     }}>
@@ -139,16 +138,16 @@ export default function GroupCard(group) {
                                                 </div>
                                                 <div class="form-group">
                                                 <label>Message</label>
-                                                <textarea class="form-control" name ="message" id="exampleFormControlTextarea1" rows="4"></textarea>
+                                                <textarea class="form-control" name ="message" rows="4"></textarea>
                                                 </div>
                                                 <button type="submit" value = "send" class="btn btn-primary">Send</button>
 
-                                                <input type="hidden" name="group_title" value={group.title}/>
+                                                {/* <input type="hidden" name="group_title" value={group.title}/>
                                                 <input type="hidden" name="group_address" value={group.address}/>
                                                 <input type="hidden" name="group_month" value= {months[date.getMonth()]}/>
                                                 <input type="hidden" name="group_date" value= {date.getDate()}/>
                                                 <input type="hidden" name="group_year" value= {date.getFullYear()}/>
-                                                <input type="hidden" name="user_name" value= {userData.data.username}/>
+                                                <input type="hidden" name="user_name" value= {userData.data.username}/> */}
                                             </form>
                                         </div> 
                                     </span>
@@ -166,15 +165,15 @@ export default function GroupCard(group) {
 
 const useStyles = makeStyles({
     leaveButton: {
-        padding: '0px 0px',
+        padding: '0px 10px',
         borderStyle: "solid",
         borderColor: COLORS.highlight,
         borderWidth: 1,
         borderRadius: 4,
         position: 'absolute',
         bottom: '15px',
-        left: '10px',
-        width: '127px',
+        left: '30px',
+        width: '150px',
     },
     membersButton: {
         padding: '0px 4px',
@@ -185,31 +184,19 @@ const useStyles = makeStyles({
         borderRadius: 4,
         position: 'absolute',
         bottom: '15px',
-        left: '150px',
+        right: '30px',
         width: '150px',
     },
     inviteButton: {
-        // position: 'fixed',
-        // backgroundColor: '#00000050',
-        // width: '100%',
-        // height: '100vh',
-        // top: '-1rem',
-        // left: 0
         padding: '0px 4px',
-        backgroundColor: COLORS.highlight,
-        borderStyle: "solid",
-        borderColor: COLORS.highlight,
-        borderWidth: 1,
-        borderRadius: 4,
         position: 'absolute',
-        bottom: '15px',
-        right: '5%',
-        width: '150px',
+        top: '20px',
+        right: '5%'
     },
     card: {
         position: 'relative',
         height: '30em',
-        width: '30em'
+        width: '24em'
     },
     addCalendarButton: {
         backgroundColor: COLORS.white,
@@ -219,19 +206,6 @@ const useStyles = makeStyles({
         top: '20px',
         left: '15px',
         'z-index': '1'
-    },
-    priceTag: {
-        position: 'absolute',
-        top: '20px',
-        left: '15px',
-        fontWeight: "700"
-    },
-    box: {
-        backgroundColor: COLORS.highlight,
-        color: "#fff",
-        padding: '5px 15px',
-        fontSize: '22px',
-
     },
     cardContent: {
         paddingTop: '30px',
