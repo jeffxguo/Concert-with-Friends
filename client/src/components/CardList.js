@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import EventCard from './Card'
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -7,17 +7,16 @@ import { alertActions } from '../actions/alert.actions';
 
 export default function CardList(props) {
     const alert = useSelector(state => state.alert);
-    useEffect(() => {
-        alertActions.clear();
-    }, [alert]);
 
     return (
         <Fragment>
+
             <div>
                 {alert.message &&
-                    <div className={`alert ${alert.type}`}>{alert.message}</div>
+                    <div style={{ position: "fixed", zIndex: 100, width: "30vw", left: 0, textAlign: "center", bottom: 80, margin: "0 35vw 0 35vw" }} className={`alert ${alert.type}`}>{alert.message}</div>
                 }
             </div>
+
             <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                 {props.events.map((event, i) => {
                     return (

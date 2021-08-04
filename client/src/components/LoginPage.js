@@ -7,21 +7,21 @@ import { userActions } from '../actions/user.actions';
 
 const useStyles = makeStyles(theme => ({
 	root: {
-        [theme.breakpoints.down('sm')]: {
-            width: "20%",
-            height: "20%",
-            padding: 30
-        },
-        [theme.breakpoints.down('md')]: {
-            width: "30%",
-            height: "30%",
-            padding: 40
-        },
-        [theme.breakpoints.up('lg')]: {
-            width: "40%",
-            height: "40%",
-            padding: 50
-        },
+		[theme.breakpoints.down('sm')]: {
+			width: "20%",
+			height: "20%",
+			padding: 30
+		},
+		[theme.breakpoints.down('md')]: {
+			width: "30%",
+			height: "30%",
+			padding: 40
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: "40%",
+			height: "40%",
+			padding: 50
+		},
 		marginTop: "12%",
 		borderRadius: 10,
 		backgroundColor: COLORS.darkBlue,
@@ -71,7 +71,7 @@ export default function LoginPage() {
 	return (
 		<Container className={classes.root}>
 			{alert.message &&
-				<div className={`alert ${alert.type}`}>{alert.message}</div>
+				<div style={{ position: "fixed", zIndex: 100, width: "30vw", left: 0, textAlign: "center", bottom: 80, margin: "0 35vw 0 35vw" }} className={`alert ${alert.type}`}>{alert.message}</div>
 			}
 			{
 				<form>
