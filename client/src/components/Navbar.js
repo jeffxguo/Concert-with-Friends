@@ -22,12 +22,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   location: {
-    fontSize: 20
+    fontSize: "1em"
   },
   nav: {
     color: COLORS.black,
-    margin: "1.6em 1em",
-    fontSize: "1.2em",
+    margin: "1em",
+    fontSize: "1em",
     textDecoration: "none",
     '&:hover': {
       textDecorationColor: COLORS.highlight,

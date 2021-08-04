@@ -67,8 +67,8 @@ export default function EventCard(event) {
                 <CardContent className={classes.cardContent} >
                     <div className={classes.date}>
                         <Typography variant="h2" style={{ marginLeft: -10, color: COLORS.highlight, textAlign: "center" }}>{months[date.getMonth()]}</Typography>
-                        <Typography style={{ marginLeft: -10, fontSize: 46, fontWeight: "700", color: COLORS.black, textAlign: "center" }}>{date.getDate()}</Typography>
-                        <Typography style={{ marginLeft: -10, fontSize: 20, fontWeight: "700", color: COLORS.grey, textAlign: "center" }}>({date.getFullYear()})</Typography>
+                        <Typography style={{ marginLeft: -10, fontSize: "2.6em", fontWeight: "700", color: COLORS.black, textAlign: "center" }}>{date.getDate()}</Typography>
+                        <Typography style={{ marginLeft: -10, fontSize: "1.2em", fontWeight: "700", color: COLORS.grey, textAlign: "center" }}>({date.getFullYear()})</Typography>
                     </div>
                     <div className={classes.details}>
                         <Typography variant="h2">{event.title}</Typography>
@@ -82,7 +82,7 @@ export default function EventCard(event) {
                                 }}>
                                     <GroupIcon style={{ height: 26 }} />
                                 </Icon>
-                                <span style={{ fontSize: 20, fontWeight: 600, color: COLORS.black }}>{event.memberNum ? `${event.memberNum} members` : 'No members yet'}</span>
+                                <span style={{ fontSize: "1.2em", fontWeight: 600, color: COLORS.black }}>{event.memberNum ? `${event.memberNum} members` : 'No members yet'}</span>
                             </div>
                         </div>
 
@@ -111,6 +111,7 @@ const useStyles = makeStyles({
     },
     addButton: {
         position: 'absolute',
+        fontSize: "1.4em",
         top: '20px',
         right: '15px',
     },
@@ -124,7 +125,7 @@ const useStyles = makeStyles({
         backgroundColor: COLORS.highlight,
         color: "#fff",
         padding: '5px 15px',
-        fontSize: '22px',
+        fontSize: '1.1em',
 
     },
     cardContent: {

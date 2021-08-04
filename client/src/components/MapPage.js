@@ -60,47 +60,47 @@ export default function GoogleMaps({ latitude, longitude }) {
 
     return getCurrentCity().then((currentLoc) =>
 
-  
-    fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat+","+currentLoc.lng +'&keyword=music&radius=50'))
-        .then(response => response.json())
-        .then(data => {
-          let events = data._embedded.events;
-          if (userData && userData.data && userData.data.joinedGroups) {
-              events = events.map((event) => ({...event, joined: userData.data.joinedGroups.includes(event.id)}));
-          }          
 
-          for (let i = 0; i < events.length; i++) {
+      fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50'))
+      .then(response => response.json())
+      .then(data => {
+        let events = data._embedded.events;
+        if (userData && userData.data && userData.data.joinedGroups) {
+          events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
+        }
 
-            const marker = new maps.Marker({
-              position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
-              map
-            })
+        for (let i = 0; i < events.length; i++) {
 
-            const date = new Date(events[i].dates.start.dateTime);
-            const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-      
-            const infowindow = new maps.InfoWindow({
-              content:
-                `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
+          const marker = new maps.Marker({
+            position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
+            map
+          })
+
+          const date = new Date(events[i].dates.start.dateTime);
+          const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
+          const infowindow = new maps.InfoWindow({
+            content:
+              `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
               <div style='flex:1'>
               <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
               </div>
               <div style='flex: 2; text-align: left; padding-left: 20px;'>
-              <div style='font-size: 20px; font-weight: 700'>${events[i].name}</div>
-              <div style='font-size: 18px; font-weight: 500; margin-top: 10px;'>
+              <div style='font-size: 1.2em; font-weight: 700'>${events[i].name}</div>
+              <div style='font-size: 1.1em; font-weight: 500; margin-top: 10px;'>
               <img src=${pin} style='object-fit: cover; height: 20px; margin-right: 5px'>
               ${events[i]._embedded.venues[0].name}
               </div>
-              <div style='color: ${COLORS.highlight}; margin-top: 10px; font-size: 18px; font-weight: 500'>
+              <div style='color: ${COLORS.highlight}; margin-top: 10px; font-size: 1.1em; font-weight: 500'>
               ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}
               </div>
               <br/>
               <div id="join-leave" style='display: inline-block'>
               <button id=${events[i].joined ? "leave-group" : "add-group"}
-              style='background-color: ${events[i].joined ? COLORS.lightRed : COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px'>${events[i].joined ? "Leave" : "Join"}</button>
+              style='background-color: ${events[i].joined ? COLORS.lightRed : COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: .5em 1em'>${events[i].joined ? "Leave" : "Join"}</button>
               </div>
               <button onclick="window.open('${events[i].url}');"
-              style='background-color: #fff; color: ${COLORS.highlight}; font-size: 20px; border: solid 1px ${COLORS.highlight}; border-radius: 4px; padding: 9px 20px'>Buy Tickets</button>
+              style='background-color: #fff; color: ${COLORS.highlight}; font-size: 1.2em; border: solid 1px ${COLORS.highlight}; border-radius: 4px; padding: .5em 1em'>Buy Tickets</button>
               </div>
               </div>`
           });
@@ -117,13 +117,13 @@ export default function GoogleMaps({ latitude, longitude }) {
             if (loggedIn && userData) {
               if (document.getElementById("add-group")) {
                 handleClickJoin(events[i].id, events[i].name);
-                document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
+                document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: 10px 20px`);
                 document.getElementById("add-group").innerText = "Leave";
                 document.getElementById("add-group").id = "leave-group";
               }
               else if (document.getElementById("leave-group")) {
                 handleClickLeave(events[i].id);
-                document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 20px; border: none; border-radius: 4px; padding: 10px 20px`);
+                document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: 10px 20px`);
                 document.getElementById("leave-group").innerText = "Join";
                 document.getElementById("leave-group").id = "add-group";
               }
