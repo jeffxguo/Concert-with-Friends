@@ -54,7 +54,7 @@ export default function GroupCard(group) {
                         <Typography style={{ marginTop: 10 }}>{group.address}</Typography>
 
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
-                            <div className={classes.leaveButton}>
+                            <div className={classes.inviteButton}>
                             <Popup trigger={
                             <Button style={{
                                 color: COLORS.highlight,
@@ -164,8 +164,8 @@ export default function GroupCard(group) {
 }
 
 const useStyles = makeStyles({
-    leaveButton: {
-        padding: '0px 10px',
+    inviteButton: {
+        padding: '0px 7px',
         borderStyle: "solid",
         borderColor: COLORS.highlight,
         borderWidth: 1,
