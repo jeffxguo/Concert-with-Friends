@@ -22,12 +22,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   location: {
-    fontSize: "1.1em"
+    fontSize: "1em"
   },
   nav: {
     color: COLORS.black,
     margin: "1em",
-    fontSize: "1.1em",
+    fontSize: "1em",
   }
 }));
 
