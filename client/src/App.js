@@ -71,17 +71,17 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 const theme = createMuiTheme({
   typography: {
     "fontFamily": `"Open Sans", "Helvetica", "Arial", sans-serif`,
-    "fontSize": 16,
+    "fontSize": "1.1em",
     "color": COLORS.black,
     "fontWeightLight": 300,
     "fontWeightRegular": 400,
     "fontWeightMedium": 500,
     h2: {
-      fontSize: "1.4em",
+      fontSize: "1.3em",
       fontWeight: 700,
     },
     h1: {
-      fontSize: "2.4em",
+      fontSize: "1.8em",
       fontWeight: 700,
       fontFamily: "Helvetica"
     }

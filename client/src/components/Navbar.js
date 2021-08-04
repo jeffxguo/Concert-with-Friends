@@ -22,12 +22,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   location: {
-    fontSize: 20
+    fontSize: "1.1em"
   },
   nav: {
     color: COLORS.black,
-    margin: "1.6em 1em",
-    fontSize: "1.2em",
+    margin: "1em",
+    fontSize: "1.1em",
   }
 }));
 
@@ -120,7 +120,7 @@ export default function Navbar(props) {
           </Button>
           <Link to="/" className={classes.title}>
             <Typography variant="h1" >
-              <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
+              <img style={{ marginLeft: 40, width: "7em" }} src={logo} alt={"logo"} />
             </Typography>
           </Link>
           <Link color="inherit" to="/home" className={classes.nav}>
