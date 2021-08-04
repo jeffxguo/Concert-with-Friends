@@ -151,7 +151,8 @@ export default function GroupCard(group) {
                                     handleClose();}}>Add to Calendar</MenuItem>
                                 <MenuItem onClick={() => {window.open(group.url)
                                     handleClose();}}>Purchase Tickets</MenuItem>
-                                <MenuItem onClick={() => group.handleClickLeave(group.id)}>Leave Group</MenuItem>
+                                <MenuItem onClick={() => {group.handleClickLeave(group.id);
+                                    handleClose();}}>Leave Group</MenuItem>
                             </Menu>
                         </div>  
                         </div>
