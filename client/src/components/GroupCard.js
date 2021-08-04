@@ -130,8 +130,8 @@ const useStyles = makeStyles({
     },
     card: {
         position: 'relative',
-        height: '30em',
-        width: '24em'
+        height: '26em',
+        width: '22em'
     },
     addCalendarButton: {
         backgroundColor: COLORS.white,
