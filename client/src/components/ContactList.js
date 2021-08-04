@@ -25,10 +25,10 @@ export default function ContactList(props) {
     return (
         <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>
             <div className={classes.text}>
-                <h2>{props.name}</h2>
+                <Typography variant="h2" style={{ color: COLORS.black, fontWeight: 600 }}>{props.name}</Typography>
             </div>
             <div className={classes.contactText}>
-                <Typography variant="h2" style={{ color: COLORS.grey, marginTop: "2em" }}>Contact List</Typography>
+                <Typography style={{ color: COLORS.grey, marginTop: "2em", fontWeight: 600 }}>Contact List</Typography>
             </div>
             <Box className={classes.contactBox} borderRadius="borderRadius" justify="center">
                 {members.map((member, i) => {
@@ -55,13 +55,13 @@ const useStyles = makeStyles(theme => ({
     contactText: {
         position: 'absolute',
         left: '3em',
-        top: '8em'
+        top: '6em'
     },
     contactBox: {
         position: 'absolute',
         padding: "1em",
         margin: '0 0 0 2em',
-        top: '12.2em',
+        top: '10em',
         height: '37em',
         width: '45em',
         overflowY: 'scroll',
