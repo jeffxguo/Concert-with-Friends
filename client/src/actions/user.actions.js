@@ -29,10 +29,16 @@ function register(user) {
           dispatch(success());
           history.push('/login');
           dispatch(alertActions.success('Registration successful'));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         },
         error => {
           dispatch(failure(error.toString()));
           dispatch(alertActions.error(error.toString()));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         }
       );
   }
@@ -55,6 +61,9 @@ function login(username, password, from) {
         error => {
           dispatch(failure(error.toString()));
           dispatch(alertActions.error(error.toString()));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         }
       );
   };
@@ -76,10 +85,16 @@ function addGroup(userId, eventId, _name, _email, _phone, _event) {
         user => {
           dispatch(success(user));
           dispatch(alertActions.success('Joined group successfully'));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         },
         error => {
           dispatch(failure(error.toString()));
           dispatch(alertActions.error(error.toString()));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         }
       );
   };
@@ -95,6 +110,9 @@ function updateProfile(userId, newProfileData) {
         user => {
           dispatch(success(user));
           dispatch(alertActions.success('Update profile successfully'));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         },
         error => {
           dispatch(failure(error.toString()));
@@ -131,10 +149,16 @@ function deleteGroup(userId, groupId) {
         user => {
           dispatch(success(user));
           dispatch(alertActions.success('Left group successfully'));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         },
         error => {
           dispatch(failure(error.toString()));
           dispatch(alertActions.error(error.toString()));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
         }
       );
   };

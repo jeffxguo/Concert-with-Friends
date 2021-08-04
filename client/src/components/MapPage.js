@@ -129,7 +129,11 @@ export default function GoogleMaps({ latitude, longitude }) {
               }
               return;
             } else {
-              return dispatch(alertActions.error("You need to login first"));
+              dispatch(alertActions.error("You need to login first"));
+              setTimeout(() => {
+                dispatch(alertActions.clear());
+              }, 3000);
+              return;
             }
           };
 

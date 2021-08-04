@@ -29,6 +29,9 @@ export default function EventCard(event) {
             dispatch(userActions.addGroup(userData.data._id, event.id, userData.data.username, userData.data.email, userData.data.phone, event.title));
         } else {
             dispatch(alertActions.error("You need to login first"));
+            setTimeout(() => {
+                dispatch(alertActions.clear());
+            }, 3000);
         }
     }
 

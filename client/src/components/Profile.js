@@ -72,10 +72,10 @@ const useStyles = makeStyles((theme) => ({
     height: "50px"
   },
   txtInput: {
-		backgroundColor: "white",
-		borderRadius: 4,
-		border: "none",
-	},
+    backgroundColor: "white",
+    borderRadius: 4,
+    border: "none",
+  },
   editBtn: {
     backgroundColor: COLORS.grey,
     color: "white"
@@ -84,24 +84,24 @@ const useStyles = makeStyles((theme) => ({
 
 const musicTypes = [
   {
-      label: "Hip-hop",
-      value: "Hip-hop"
+    label: "Hip-hop",
+    value: "Hip-hop"
   },
   {
-      label: "Pop",
-      value: "Pop"
+    label: "Pop",
+    value: "Pop"
   },
   {
-      label: "R&B",
-      value: "R&B"
+    label: "R&B",
+    value: "R&B"
   },
   {
-      label: "Rock'n'roll",
-      value: "Rock'n'roll"
+    label: "Rock'n'roll",
+    value: "Rock'n'roll"
   },
   {
-      label: "None of the above",
-      value: "N/A"
+    label: "None of the above",
+    value: "N/A"
   }
 ]
 
@@ -141,13 +141,13 @@ export default function Profile(props) {
     facebook: {
       icon: <FacebookIcon />,
       value: profile.facebook || '',
-      validator: () => void(0),
+      validator: () => void (0),
       invalid: false
     },
     instagram: {
       icon: <InstagramIcon />,
       value: profile.instagram || '',
-      validator: () => void(0),
+      validator: () => void (0),
       invalid: false
     },
     taste: {
@@ -164,9 +164,12 @@ export default function Profile(props) {
     if (profile._id) {
       if (Object.values(profileInputs).some(elem => elem.invalid)) {
         dispatch(alertActions.error("Please fix the invalid inputs first!"))
+        setTimeout(() => {
+          dispatch(alertActions.clear());
+        }, 3000);
         return;
       } else {
-        const newInputs = Object.entries(profileInputs).map(([key, val]) => ({[key]: val.value}));
+        const newInputs = Object.entries(profileInputs).map(([key, val]) => ({ [key]: val.value }));
         dispatch(userActions.updateProfile(profile._id, newInputs.reduce((elem1, elem2) => {
           return Object.assign(elem1, elem2)
         }, {})
@@ -177,14 +180,14 @@ export default function Profile(props) {
     }
   }
 
-	const handleChange = (e, validateInput) => {
-		const { name, value } = e.target;
+  const handleChange = (e, validateInput) => {
+    const { name, value } = e.target;
     if (["facebook", "instagram"].includes(name) || validateInput(value)) {
-      setProfileInputs(inputs => ({ ...inputs, [name]: {...inputs[[name]], "value" : value, "invalid": false }}));
+      setProfileInputs(inputs => ({ ...inputs, [name]: { ...inputs[[name]], "value": value, "invalid": false } }));
     } else {
-      setProfileInputs(inputs => ({ ...inputs, [name]: {...inputs[[name]], "value" : value, "invalid": true }}));
+      setProfileInputs(inputs => ({ ...inputs, [name]: { ...inputs[[name]], "value": value, "invalid": true } }));
     }
-	}
+  }
 
   return (
     <div className={classes.root}>
@@ -211,48 +214,48 @@ export default function Profile(props) {
               <ListItemIcon>
                 {text["icon"]}
               </ListItemIcon>
-              <ListItemText primary={editing ? 
-              <TextField
-              disabled={key === "username"}
-              error={text["invalid"]}
-              helperText={text["invalid"] ? "Invalid entry" : null}
-              className={classes.txtInput}
-              name={key}
-              size="small"
-              variant="outlined"
-              defaultValue={text["value"]}
-              onChange={(e) => handleChange(e, text["validator"])}
-              select={key === "taste"}
-            >
-            {key === "taste" ? musicTypes.map((option, idx) => (
-              <MenuItem key={idx} value={option.value}>
-                  {option.label}
-              </MenuItem>
-          )) : null}
-          </TextField>
-              : text["value"]} />
+              <ListItemText primary={editing ?
+                <TextField
+                  disabled={key === "username"}
+                  error={text["invalid"]}
+                  helperText={text["invalid"] ? "Invalid entry" : null}
+                  className={classes.txtInput}
+                  name={key}
+                  size="small"
+                  variant="outlined"
+                  defaultValue={text["value"]}
+                  onChange={(e) => handleChange(e, text["validator"])}
+                  select={key === "taste"}
+                >
+                  {key === "taste" ? musicTypes.map((option, idx) => (
+                    <MenuItem key={idx} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  )) : null}
+                </TextField>
+                : text["value"]} />
             </ListItem>
           ))}
         </List>
         {
-          editing ? 
-          <div>
-          <Button onClick={handleSaveProfile} variant="contained" color="primary">
-          Save
-          </Button>
-          <Button onClick={() => {
-            setEditing(false);
-            setProfileInputs(initialInputs);
-            dispatch(alertActions.clear());
-          }}>
-          Cancel
-          </Button>
-          </div> :
-          <div>
-            <Button onClick={() => setEditing(true)} variant="contained" className={classes.editBtn}>
-            Edit
-            </Button>
-          </div>
+          editing ?
+            <div>
+              <Button onClick={handleSaveProfile} variant="contained" color="primary">
+                Save
+              </Button>
+              <Button onClick={() => {
+                setEditing(false);
+                setProfileInputs(initialInputs);
+                dispatch(alertActions.clear());
+              }}>
+                Cancel
+              </Button>
+            </div> :
+            <div>
+              <Button onClick={() => setEditing(true)} variant="contained" className={classes.editBtn}>
+                Edit
+              </Button>
+            </div>
         }
       </Drawer>
     </div>
