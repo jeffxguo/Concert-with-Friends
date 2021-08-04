@@ -44,11 +44,11 @@ export default function EventCard(event) {
         <div>
             <Card className={classes.card}>
                 <CardMedia component='img' src={event.img} style={{
-                    height: '15em'
+                    height: '12em'
                 }} />
                 <div className={classes.addButton}>
                     {loggedIn && event.joined ?
-                        <Button variant="contained" color="secondary" onClick={handleClickLeave}>
+                        <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary" onClick={handleClickLeave}>
                             Leave
                         </Button>
                         : <IconButton style={{
@@ -82,7 +82,7 @@ export default function EventCard(event) {
                                 }}>
                                     <GroupIcon style={{ height: 26 }} />
                                 </Icon>
-                                <span style={{ fontSize: "1.2em", fontWeight: 600, color: COLORS.black }}>{event.memberNum ? `${event.memberNum} members` : 'No members yet'}</span>
+                                <span style={{ fontSize: "1.1em", fontWeight: 600, color: COLORS.black }}>{event.memberNum ? `${event.memberNum} members` : 'No members yet'}</span>
                             </div>
                         </div>
 
@@ -106,8 +106,8 @@ const useStyles = makeStyles({
     },
     card: {
         position: 'relative',
-        height: '30em',
-        width: '24em'
+        height: '26em',
+        width: '22em'
     },
     addButton: {
         position: 'absolute',

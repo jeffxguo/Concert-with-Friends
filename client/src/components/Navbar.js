@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1em",
     textDecoration: "none",
     '&:hover': {
+      textDecoration: "none",
       textDecorationColor: COLORS.highlight,
       color: COLORS.highlight,
       fontWeight: "bold"
@@ -116,10 +117,10 @@ export default function Navbar(props) {
               <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
             </Typography>
           </Link>
-          <NavLink to="/home" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecoration: "underline", textDecorationColor: COLORS.highlight }}>
+          <NavLink to="/home" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecorationColor: COLORS.highlight }}>
             Groups
           </NavLink>
-          <NavLink to="/map" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecoration: "underline", textDecorationColor: COLORS.highlight }}>
+          <NavLink to="/map" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecorationColor: COLORS.highlight }}>
             Map
           </NavLink>
           {
@@ -149,7 +150,7 @@ export default function Navbar(props) {
                 </Menu>
               </div>
               :
-              <NavLink to="/login" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecoration: "underline", textDecorationColor: COLORS.highlight }}>
+              <NavLink to="/login" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecorationColor: COLORS.highlight }}>
                 Login
               </NavLink>
 
