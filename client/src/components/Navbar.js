@@ -3,7 +3,7 @@ import NavigationRoundedIcon from '@material-ui/icons/NavigationRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { COLORS } from '../constants/Colors';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { userActions } from '../actions/user.actions';
@@ -28,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.black,
     margin: "1em",
     fontSize: "1em",
+    textDecoration: "none",
+    '&:hover': {
+      textDecorationColor: COLORS.highlight,
+      color: COLORS.highlight,
+      fontWeight: "bold"
+    }
   }
 }));
 
@@ -77,19 +83,6 @@ export default function Navbar(props) {
     getCurrentCity();
   }, [])
 
-
-  // useEffect (() => {
-  //   Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
-
-  // Geocoder.from(currentLoc)
-  // .then(json => {
-  // //var addressComponent = json.results[0].address_components[3].long_name;
-  //   setCurrentCity(json.results[0].address_components[3].long_name)
-  // })
-  // .catch(error => console.warn(error));
-
-  // }, []) 
-
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -123,12 +116,12 @@ export default function Navbar(props) {
               <img style={{ marginLeft: 40, width: "9em" }} src={logo} alt={"logo"} />
             </Typography>
           </Link>
-          <Link color="inherit" to="/home" className={classes.nav}>
+          <NavLink to="/home" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecoration: "underline", textDecorationColor: COLORS.highlight }}>
             Groups
-          </Link>
-          <Link color="inherit" to="/map" className={classes.nav}>
+          </NavLink>
+          <NavLink to="/map" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecoration: "underline", textDecorationColor: COLORS.highlight }}>
             Map
-          </Link>
+          </NavLink>
           {
             loggedIn ?
               <div>
@@ -156,9 +149,9 @@ export default function Navbar(props) {
                 </Menu>
               </div>
               :
-              <Link to="/login" className={classes.nav}>
+              <NavLink to="/login" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecoration: "underline", textDecorationColor: COLORS.highlight }}>
                 Login
-              </Link>
+              </NavLink>
 
           }
 
