@@ -143,9 +143,14 @@ export default function GroupCard(group) {
                                 keepMounted
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
+                                anchorOrigin={{
+                                    horizontal: "right",
+                                }}
+                                transformOrigin={{
+                                    horizontal: "right",
+                                }}
                             >
-                                <MenuItem onClick={() => 
-                                {window.open("http://www.google.com/calendar/render?action=TEMPLATE&text=" + group.title + 
+                                <MenuItem onClick={() => {window.open("http://www.google.com/calendar/render?action=TEMPLATE&text=" + group.title + 
                                     "&dates=" + moment(date).format('YYYYMMDDTHHmmssZ') + "/" + moment(date).add(1, 'hours').format('YYYYMMDDTHHmmssZ') +
                                     "&location=" + group.address, "_blank");
                                     handleClose();}}>Add to Calendar</MenuItem>
