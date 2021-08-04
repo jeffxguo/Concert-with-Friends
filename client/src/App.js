@@ -13,6 +13,7 @@ import { Route, Switch, Router, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { COLORS } from './constants/Colors';
 import { history } from './helpers/history';
+import { getWithExpiry } from './helpers/session-expire';
 import { alertActions } from './actions/alert.actions';
 
 import './App.css';
@@ -58,7 +59,8 @@ function App() {
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   return (
     <Route {...rest} render={props => {
-      if (!localStorage.getItem('user')) {
+      if (!getWithExpiry('user')) {
+      // if (!localStorage.getItem('user')) {
         // not logged in so redirect to login page with the return url
         return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
       }

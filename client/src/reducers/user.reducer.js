@@ -1,6 +1,7 @@
 import { actionTypes } from '../constants/ActionTypes';
+import { getWithExpiry } from '../helpers/session-expire';
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = getWithExpiry('user');
 const initialState = user ? { loggedIn: true, user } : {};
 
 const userReducer = (state = initialState, action) => {
