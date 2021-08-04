@@ -197,6 +197,7 @@ const SearchBar = (props) => {
                   marginRight: "2em",
                   width: "12em",
                 }}
+                minDate={new Date()}
                 disableToolbar
                 variant="inline"
                 format="MM/dd/yyyy"
@@ -221,6 +222,7 @@ const SearchBar = (props) => {
                   marginRight: "2em",
                   width: "12em",
                 }}
+                minDate={new Date(startDate)}
                 disableToolbar
                 variant="inline"
                 format="MM/dd/yyyy"
