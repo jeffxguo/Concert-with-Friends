@@ -7,9 +7,22 @@ import { userActions } from '../actions/user.actions';
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		width: "30em",
-		padding: 50,
-		marginTop: 200,
+        [theme.breakpoints.down('sm')]: {
+            width: "20%",
+            height: "20%",
+            padding: 30
+        },
+        [theme.breakpoints.down('md')]: {
+            width: "30%",
+            height: "30%",
+            padding: 40
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: "40%",
+            height: "40%",
+            padding: 50
+        },
+		marginTop: "12%",
 		borderRadius: 10,
 		backgroundColor: COLORS.darkBlue,
 		color: "white"
