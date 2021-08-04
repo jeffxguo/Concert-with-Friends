@@ -15,6 +15,7 @@ import ContactList from './ContactList';
 import moment from 'moment';
 import AddToCalendarHOC from 'react-add-to-calendar-hoc';
 import Dropdown from 'react-bootstrap/Dropdown'
+import emailjs from 'emailjs-com'
 
 export default function GroupCard(group) {
     const classes = useStyles();
@@ -34,6 +35,13 @@ export default function GroupCard(group) {
     const AddToCalendarDropdown = AddToCalendarHOC(Button, MappedDropdown);
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+    
+        function sendEmail(e) {
+        e.preventDefault();
+        emailjs.sendForm('service_hix3o8o','template_p0j9wjm',e.target,'user_a564XBSBeNeDkGfhl5ozI').then (res => {
+            console.log(res);
+       }).catch(err => console.log(err));
+    }
 
     return (
         <div>
@@ -93,10 +101,60 @@ export default function GroupCard(group) {
                                     )}
                                 </Popup>
                             </div>
+                                                        <div className={classes.inviteButton}>
+                            <Popup trigger={<Button style={{
+                                color: COLORS.white,
+                                overlay: {
+                                    background: "black"
+                                },
+                                textAlign: 'center'
+                            }}>
+                                {"Invite Friends"}
+                            </Button>} modal>
+                                {close => (
+                                    <span className={classes.modal} style={{                                        
+                                    }}>
+                                        <IconButton className={classes.close} onClick={close} style={{
+                                            position: 'absolute',
+                                            right: '20px',
+                                            top: '30px',
+                                        }}>
+                                            <ClearIcon />
+                                        </IconButton>
+                                        <div className="container border"
+                                        style={{
+                                            marginTop: "50px",
+                                            width: '150%'
+                                        }}> 
+                                            <form className="column" onSubmit={sendEmail} >
+                                            <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" name = "name" class="form-control" placeholder="Enter name"></input>
+                                            </div>
+                                            <div class="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" name="friend_email" class="form-control"  placeholder="Enter email"></input>
+                                            </div>
+                                            <div class="form-group">
+                                            <label>Message</label>
+                                            <textarea class="form-control" name ="message" id="exampleFormControlTextarea1" rows="4"></textarea>
+                                            </div>
+                                            <button type="submit" value = "send" class="btn btn-primary">Send</button>
+
+                                            <input type="hidden" name="group_title" value={group.title}/>
+                                            <input type="hidden" name="group_address" value={group.address}/>
+                                            <input type="hidden" name="group_month" value= {months[date.getMonth()]}/>
+                                            <input type="hidden" name="group_date" value= {date.getDate()}/>
+                                            <input type="hidden" name="group_year" value= {date.getFullYear()}/>
+                                            <input type="hidden" name="user_name" value= {userData.data.username}/>
+                                            </form>
+                                        </div> 
+                                    </span>
+                                )}
+                            </Popup>
+                        </div>  
                         </div>
-
-                    </div>
-
+                        </div>
                 </CardContent>
 
             </Card>
@@ -106,15 +164,15 @@ export default function GroupCard(group) {
 
 const useStyles = makeStyles({
     leaveButton: {
-        padding: '0px 10px',
+        padding: '0px 0px',
         borderStyle: "solid",
         borderColor: COLORS.highlight,
         borderWidth: 1,
         borderRadius: 4,
         position: 'absolute',
         bottom: '15px',
-        left: '30px',
-        width: '150px'
+        left: '10px',
+        width: '127px',
     },
     membersButton: {
         padding: '0px 4px',
@@ -125,13 +183,25 @@ const useStyles = makeStyles({
         borderRadius: 4,
         position: 'absolute',
         bottom: '15px',
-        right: '30px',
-        width: '150px'
+        left: '150px',
+        width: '150px',
+    },
+    inviteButton: {
+        padding: '0px 4px',
+        backgroundColor: COLORS.highlight,
+        borderStyle: "solid",
+        borderColor: COLORS.highlight,
+        borderWidth: 1,
+        borderRadius: 4,
+        position: 'absolute',
+        bottom: '15px',
+        left: '308px',
+        width: '150px',
     },
     card: {
         position: 'relative',
         height: '30em',
-        width: '24em'
+        width: '30em'
     },
     addCalendarButton: {
         backgroundColor: COLORS.white,
