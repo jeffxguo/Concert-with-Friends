@@ -101,11 +101,11 @@ export default function GroupCard(group) {
                                     )}
                                 </Popup>
                             </div>
-                                                        <div className={classes.inviteButton}>
+                        <div className={classes.inviteButton}>
                             <Popup trigger={<Button style={{
                                 color: COLORS.white,
                                 overlay: {
-                                    background: "black"
+                                    background: "#FFFF00"
                                 },
                                 textAlign: 'center'
                             }}>
@@ -117,36 +117,38 @@ export default function GroupCard(group) {
                                         <IconButton className={classes.close} onClick={close} style={{
                                             position: 'absolute',
                                             right: '20px',
-                                            top: '30px',
+                                            top: '-5rem',
+                                            backgroundColor: COLORS.white
                                         }}>
                                             <ClearIcon />
                                         </IconButton>
-                                        <div className="container border"
+                                        <div className="container"
                                         style={{
-                                            marginTop: "50px",
-                                            width: '150%'
+                                            padding: "2rem",
+                                            width: '150%',
+                                            backgroundColor: COLORS.white
                                         }}> 
                                             <form className="column" onSubmit={sendEmail} >
-                                            <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" name = "name" class="form-control" placeholder="Enter name"></input>
-                                            </div>
-                                            <div class="form-group">
-                                            <label>Email address</label>
-                                            <input type="email" name="friend_email" class="form-control"  placeholder="Enter email"></input>
-                                            </div>
-                                            <div class="form-group">
-                                            <label>Message</label>
-                                            <textarea class="form-control" name ="message" id="exampleFormControlTextarea1" rows="4"></textarea>
-                                            </div>
-                                            <button type="submit" value = "send" class="btn btn-primary">Send</button>
+                                                <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" name = "name" class="form-control" placeholder="Enter name"></input>
+                                                </div>
+                                                <div class="form-group">
+                                                <label>Email address</label>
+                                                <input type="email" name="friend_email" class="form-control"  placeholder="Enter email"></input>
+                                                </div>
+                                                <div class="form-group">
+                                                <label>Message</label>
+                                                <textarea class="form-control" name ="message" id="exampleFormControlTextarea1" rows="4"></textarea>
+                                                </div>
+                                                <button type="submit" value = "send" class="btn btn-primary">Send</button>
 
-                                            <input type="hidden" name="group_title" value={group.title}/>
-                                            <input type="hidden" name="group_address" value={group.address}/>
-                                            <input type="hidden" name="group_month" value= {months[date.getMonth()]}/>
-                                            <input type="hidden" name="group_date" value= {date.getDate()}/>
-                                            <input type="hidden" name="group_year" value= {date.getFullYear()}/>
-                                            <input type="hidden" name="user_name" value= {userData.data.username}/>
+                                                <input type="hidden" name="group_title" value={group.title}/>
+                                                <input type="hidden" name="group_address" value={group.address}/>
+                                                <input type="hidden" name="group_month" value= {months[date.getMonth()]}/>
+                                                <input type="hidden" name="group_date" value= {date.getDate()}/>
+                                                <input type="hidden" name="group_year" value= {date.getFullYear()}/>
+                                                <input type="hidden" name="user_name" value= {userData.data.username}/>
                                             </form>
                                         </div> 
                                     </span>
@@ -187,6 +189,12 @@ const useStyles = makeStyles({
         width: '150px',
     },
     inviteButton: {
+        // position: 'fixed',
+        // backgroundColor: '#00000050',
+        // width: '100%',
+        // height: '100vh',
+        // top: '-1rem',
+        // left: 0
         padding: '0px 4px',
         backgroundColor: COLORS.highlight,
         borderStyle: "solid",
@@ -195,7 +203,7 @@ const useStyles = makeStyles({
         borderRadius: 4,
         position: 'absolute',
         bottom: '15px',
-        left: '308px',
+        right: '5%',
         width: '150px',
     },
     card: {
