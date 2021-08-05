@@ -28,7 +28,6 @@ function login(username, password) {
         .then(user => {
             console.log(user);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            // localStorage.setItem('user', JSON.stringify(user));
             setWithExpiry('user', JSON.stringify(user), 1000 * 60 * 60);
             return user;
         });
@@ -104,7 +103,6 @@ function addGroup(userId, eventId, name, email, phone, event) {
             if (data.statusCode === (404 || 500 || 204)) {
                 return Promise.reject(data.message);
             }
-            // localStorage.setItem('user', JSON.stringify(data));
             setWithExpiry('user', JSON.stringify(data), 1000 * 60 * 60);
             return Promise.resolve(data);
         });
@@ -123,7 +121,6 @@ function updateProfile(userId, newProfileData) {
                 return Promise.reject(data.message);
             }
             console.log(data);
-            // localStorage.setItem('user', JSON.stringify(data));
             setWithExpiry('user', JSON.stringify(data), 1000 * 60 * 60);
             return Promise.resolve(data);
         });
@@ -159,8 +156,7 @@ function deleteGroup(userId, eventId) {
             if (data.statusCode === (404 || 500)) {
                 return Promise.reject(data.message);
             }
-            // localStorage.setItem('user', JSON.stringify(data));
-            setWithExpiry('user', JSON.stringify(data), 5000);
+            setWithExpiry('user', JSON.stringify(data), 1000 * 60 * 60);
             return Promise.resolve(data);
         });
 }

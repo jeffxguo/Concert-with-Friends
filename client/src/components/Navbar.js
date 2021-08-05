@@ -2,11 +2,13 @@ import { AppBar, Button, Menu, MenuItem, Toolbar, Typography, IconButton, makeSt
 import NavigationRoundedIcon from '@material-ui/icons/NavigationRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { COLORS } from '../constants/Colors';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { getWithExpiry } from '../helpers/session-expire';
 import { userActions } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
 import Geocoder from 'react-native-geocoding';
 import logo from '../images/logo.png'
 
@@ -43,6 +45,17 @@ export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const loggedIn = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
+
+  let interval = useRef(null);
+  useEffect(() => {
+     interval.current = setInterval(() => {
+       if (!getWithExpiry('user')) {
+         dispatch(userActions.logout());
+         dispatch(alertActions.error("We are logging you out due to inactivity!"))
+       }
+     }, 1000 * 60 * 60);
+     return () => clearInterval(interval.current);
+  }, [])
 
   const [currentLoc, setCurrentLoc] = React.useState({
     lat: 0,
