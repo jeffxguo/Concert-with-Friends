@@ -22,17 +22,17 @@ export default function MyGroupsPage() {
 
     useEffect(() => {
         const data = []
-
-        userService.getGroups(userData.data._id).then(async (userGroups) => {
-            for (const eventID of userGroups) {
-                const response = await fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
-                const group = await response.json()
-                data.push(group)
-            }
-        }).then(_res => {
-            setGroups(data)
-        })
-
+        if (userData && userData.data && userData.data._id) {
+            userService.getGroups(userData.data._id).then(async (userGroups) => {
+                for (const eventID of userGroups) {
+                    const response = await fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
+                    const group = await response.json()
+                    data.push(group)
+                }
+            }).then(_res => {
+                setGroups(data)
+            })
+        }
     }, []);
 
     return (

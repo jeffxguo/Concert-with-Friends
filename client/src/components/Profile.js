@@ -116,22 +116,22 @@ export default function Profile(props) {
   const initialInputs = {
     username: {
       icon: <PersonRoundedIcon />,
-      value: profile.username || '',
+      value: profile && profile.username || '',
       validator: function (u) { return u !== "" },
       invalid: false
     },
     email: {
       icon: <MailRoundedIcon />,
-      value: profile.email || '',
+      value: profile && profile.email || '',
       validator: function (e) {
-        const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]{2,4})*$/;
+        const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         return re.test(e);
       },
       invalid: false
     },
     phone: {
       icon: <PhoneRoundedIcon />,
-      value: profile.phone || '',
+      value: profile && profile.phone || '',
       validator: function (p) {
         const re = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         return re.test(p);
@@ -140,19 +140,19 @@ export default function Profile(props) {
     },
     facebook: {
       icon: <FacebookIcon />,
-      value: profile.facebook || '',
+      value: profile && profile.facebook || '',
       validator: () => void (0),
       invalid: false
     },
     instagram: {
       icon: <InstagramIcon />,
-      value: profile.instagram || '',
+      value: profile && profile.instagram || '',
       validator: () => void (0),
       invalid: false
     },
     taste: {
       icon: <MusicNoteRoundedIcon />,
-      value: profile.taste || '',
+      value: profile && profile.taste || '',
       validator: function (t) { return t !== "" },
       invalid: false
     }
@@ -161,7 +161,7 @@ export default function Profile(props) {
   const [profileInputs, setProfileInputs] = useState(initialInputs);
 
   const handleSaveProfile = () => {
-    if (profile._id) {
+    if (profile && profile._id) {
       if (Object.values(profileInputs).some(elem => elem.invalid)) {
         dispatch(alertActions.error("Please fix the invalid inputs first!"))
         setTimeout(() => {
