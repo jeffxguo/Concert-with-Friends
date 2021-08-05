@@ -62,10 +62,10 @@ export default function Navbar(props) {
     if (isActive) {
       interval.current = setInterval(() => {
         if (!getWithExpiry('user')) {
-          dispatch(userActions.logout());
-          dispatch(alertActions.error("We are logging you out due to inactivity!"));
+          dispatch(alertActions.error("We are logging you out due to inactivity in 3 seconds!"));
           setTimeout(() => {
             dispatch(alertActions.clear());
+            dispatch(userActions.logout());
         }, 3000);
         }
       }, TIME_OUT);
