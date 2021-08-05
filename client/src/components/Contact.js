@@ -18,22 +18,22 @@ export default function Contact(member) {
                         <Typography><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Email </span> {member.email}</Typography>
                     </div>
                     <div className={classes.socials}>
-                        <IconButton style={{
+                        {member.instagram && <IconButton style={{
                             marginRight: 10,
                             color: COLORS.black,
                         }}>
                             <a href={`https://www.instagram.com/${member.instagram}`} target="blank">
                                 <img className={classes.iconImage} src={ig} alt={"instagram"} />
                             </a>
-                        </IconButton>
-                        <IconButton style={{
+                        </IconButton>}
+                        {member.facebook && <IconButton style={{
                             marginRight: 10,
                             color: COLORS.black,
                         }}>
                             <a href={`https://www.facebook.com/${member.facebook}`} target="blank">
                                 <img className={classes.iconImage} src={fb} alt={"facebook"} />
                             </a>
-                        </IconButton>
+                        </IconButton>}
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: COLORS.bgGrey,
         color: "black",
         padding: '1em',
-        fontSize: '22px',
+        fontSize: '1.1em',
         width: '100%',
     },
     content: {
@@ -72,5 +72,8 @@ const useStyles = makeStyles(theme => ({
     socials: {
         display: 'flex',
         flexDirection: 'row'
+    },
+    iconImage: {
+        width: "1.2em"
     }
 }));
