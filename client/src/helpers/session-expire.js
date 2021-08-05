@@ -25,5 +25,5 @@ export const getWithExpiry = (key) => {
 		localStorage.removeItem(key)
 		return null
 	}
-	return item
+	return JSON.parse(item.value)
 }
