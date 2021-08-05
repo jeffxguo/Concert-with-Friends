@@ -1,11 +1,5 @@
+import React, { useState } from 'react';
 import { Card, CardContent, Button, CardMedia, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
-import React from 'react';
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
@@ -20,6 +14,7 @@ import emailjs from 'emailjs-com'
 export default function GroupCard(group) {
     const classes = useStyles();
     const date = new Date(group.date);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
