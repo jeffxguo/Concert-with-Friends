@@ -60,7 +60,6 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   return (
     <Route {...rest} render={props => {
       if (!getWithExpiry('user')) {
-      // if (!localStorage.getItem('user')) {
         // not logged in so redirect to login page with the return url
         return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
       }

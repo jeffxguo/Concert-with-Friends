@@ -16,12 +16,6 @@ export default function GoogleMaps() {
   const alert = useSelector(state => state.alert);
   const dispatch = useDispatch();
 
-//   useEffect(() => {
-//     if (!getWithExpiry('user')) {
-//       dispatch(userActions.logout());
-//     }
-// }, [getWithExpiry('user')])
-
   const [currentLoc, setCurrentLoc] = useState({
     lat: 0,
     lng: 0

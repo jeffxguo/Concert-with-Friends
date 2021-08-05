@@ -25,12 +25,6 @@ export default function EventCard(event) {
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     if (!getWithExpiry('user')) {
-    //       dispatch(userActions.logout());
-    //     }
-    // }, [getWithExpiry('user')])
-
     const handleClickJoin = () => {
         if (loggedIn && userData && userData.data && userData.data._id) {
             dispatch(userActions.addGroup(userData.data._id, event.id, userData.data.username, userData.data.email, userData.data.phone, event.title));
