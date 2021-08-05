@@ -166,6 +166,7 @@ export default function SignupPage(props) {
                                     fullWidth
                                     name="password"
                                     size="small"
+                                    type="password"
                                     placeholder="Password"
                                     variant="outlined"
                                     className={classes.txtInput}

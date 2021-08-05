@@ -30,6 +30,7 @@ export default function GroupCardList(props) {
                                 img={group.images[0].url}
                                 joined={group.joined}
                                 handleClickLeave={props.handleClickLeave}
+                                url={group.url}
                             />
                         </div>
                     )
