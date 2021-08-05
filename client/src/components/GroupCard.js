@@ -8,6 +8,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
+import EmailModal from './EmailModal';
 import moment from 'moment';
 import emailjs from 'emailjs-com'
 
@@ -55,56 +56,28 @@ export default function GroupCard(group) {
 
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
                             <div className={classes.inviteButton}>
-                            <Popup trigger={
-                            <Button style={{
-                                color: COLORS.highlight,
-                                textAlign: 'center'
-                            }}>
-                                {"Invite Friends"}
-                            </Button>} modal>
-                                {close => (
-                                    <span className={classes.modal} style={{                                        
-                                    }}>
-                                        <IconButton className={classes.close} onClick={close} style={{
-                                            position: 'absolute',
-                                            right: '20px',
-                                            top: '-5rem',
-                                            backgroundColor: COLORS.white
+                                <Popup trigger={
+                                <Button style={{
+                                    color: COLORS.highlight,
+                                    textAlign: 'center'
+                                }}>
+                                    {"Invite Friends"}
+                                </Button>} modal>
+                                    {close => (
+                                        <span className={classes.modal} style={{                                        
                                         }}>
-                                            <ClearIcon />
-                                        </IconButton>
-                                        <div className="container"
-                                        style={{
-                                            padding: "2rem",
-                                            width: '150%',
-                                            backgroundColor: COLORS.white
-                                        }}> 
-                                            <form className="column" onSubmit={sendEmail} >
-                                                <div class="form-group">
-                                                <label>Name</label>
-                                                <input type="text" name = "name" class="form-control" placeholder="Enter name"></input>
-                                                </div>
-                                                <div class="form-group">
-                                                <label>Email address</label>
-                                                <input type="email" name="friend_email" class="form-control"  placeholder="Enter email"></input>
-                                                </div>
-                                                <div class="form-group">
-                                                <label>Message</label>
-                                                <textarea class="form-control" name ="message" rows="4"></textarea>
-                                                </div>
-                                                <button type="submit" value = "send" class="btn btn-primary">Send</button>
-
-                                                {/* <input type="hidden" name="group_title" value={group.title}/>
-                                                <input type="hidden" name="group_address" value={group.address}/>
-                                                <input type="hidden" name="group_month" value= {months[date.getMonth()]}/>
-                                                <input type="hidden" name="group_date" value= {date.getDate()}/>
-                                                <input type="hidden" name="group_year" value= {date.getFullYear()}/>
-                                                <input type="hidden" name="user_name" value= {userData.data.username}/> */}
-                                            </form>
-                                        </div> 
-                                    </span>
-                                )}
-                            </Popup>
+                                            <IconButton className={classes.close} onClick={close} style={{
+                                                position: 'absolute',
+                                                left: '25rem',
+                                                top: '0.5rem',
+                                                backgroundColor: COLORS.white
+                                            }}>
+                                                <ClearIcon />
+                                            </IconButton>
+                                            <EmailModal />
+                                        </span>
+                                    )}
+                                </Popup>
                             </div>
                             <div className={classes.membersButton}>
                                 <Popup trigger={<Button style={{
@@ -133,7 +106,7 @@ export default function GroupCard(group) {
                         <div className={classes.moreButton}>
                             <IconButton style={{
                                 color: COLORS.highlight,
-                                backgroundColor: COLORS.white
+                                backgroundColor: COLORS.white,
                             }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 <MoreVertIcon />
                             </IconButton>
@@ -193,10 +166,10 @@ const useStyles = makeStyles({
         width: '150px',
     },
     moreButton: {
-        padding: '0px 4px',
         position: 'absolute',
         top: '20px',
-        right: '5%'
+        right: '5%',
+        fontSize: '1.7em'
     },
     card: {
         position: 'relative',
