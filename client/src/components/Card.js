@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
 import { Icon } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { getWithExpiry } from '../helpers/session-expire';
 
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
@@ -36,8 +37,13 @@ export default function EventCard(event) {
     }
 
     const handleClickLeave = () => {
-        if (userData && userData.data && userData.data._id) {
+        if (loggedIn && userData && userData.data && userData.data._id) {
             dispatch(userActions.deleteGroup(userData.data._id, event.id));
+        } else {
+            dispatch(alertActions.error("You need to login first"));
+            setTimeout(() => {
+                dispatch(alertActions.clear());
+            }, 3000);
         }
     }
 

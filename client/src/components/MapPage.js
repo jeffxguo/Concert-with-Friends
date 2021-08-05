@@ -7,7 +7,9 @@ import pin from "../images/pin.png"
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
 
-export default function GoogleMaps({ latitude, longitude }) {
+import { getWithExpiry } from '../helpers/session-expire';
+
+export default function GoogleMaps() {
   const [events, setEvents] = useState([]);
   const loggedIn = useSelector(state => state.user.loggedIn);
   const userData = useSelector(state => state.user.user);

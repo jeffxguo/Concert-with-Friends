@@ -1,4 +1,4 @@
-import { authHeader } from '../helpers/auth-header';
+import { setWithExpiry } from '../helpers/session-expire';
 import { groupService } from './group.service';
 import emailjs from 'emailjs-com';
 
@@ -12,6 +12,8 @@ export const userService = {
     getUser,
     deleteGroup
 };
+
+const TIME_OUT = 1000 * 60 * 60; // 1 hour
 
 
 emailjs.init("user_wBQ98U5brugzhi3uFKp08");
@@ -28,7 +30,7 @@ function login(username, password) {
         .then(user => {
             console.log(user);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+            setWithExpiry('user', JSON.stringify(user), TIME_OUT);
             return user;
         });
 }
@@ -103,7 +105,7 @@ function addGroup(userId, eventId, name, email, phone, event) {
             if (data.statusCode === (404 || 500 || 204)) {
                 return Promise.reject(data.message);
             }
-            localStorage.setItem('user', JSON.stringify(data));
+            setWithExpiry('user', JSON.stringify(data), TIME_OUT);
             return Promise.resolve(data);
         });
 }
@@ -121,7 +123,7 @@ function updateProfile(userId, newProfileData) {
                 return Promise.reject(data.message);
             }
             console.log(data);
-            localStorage.setItem('user', JSON.stringify(data));
+            setWithExpiry('user', JSON.stringify(data), TIME_OUT);
             return Promise.resolve(data);
         });
 }
@@ -156,7 +158,7 @@ function deleteGroup(userId, eventId) {
             if (data.statusCode === (404 || 500)) {
                 return Promise.reject(data.message);
             }
-            localStorage.setItem('user', JSON.stringify(data));
+            setWithExpiry('user', JSON.stringify(data), TIME_OUT);
             return Promise.resolve(data);
         });
 }

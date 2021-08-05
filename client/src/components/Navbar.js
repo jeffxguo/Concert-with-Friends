@@ -2,11 +2,13 @@ import { AppBar, Button, Menu, MenuItem, Toolbar, Typography, IconButton, makeSt
 import NavigationRoundedIcon from '@material-ui/icons/NavigationRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { COLORS } from '../constants/Colors';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { getWithExpiry } from '../helpers/session-expire';
 import { userActions } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
 import Geocoder from 'react-native-geocoding';
 import logo from '../images/logo.png'
 
@@ -41,8 +43,35 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isActive, setIsActive] = useState(false);
   const loggedIn = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
+
+  const TIME_OUT = 1000 * 60 * 60;
+
+  useEffect(() => {
+    if (!loggedIn) {
+      setIsActive(false);
+    } else {
+      setIsActive(true);
+    }
+  }, [loggedIn])
+
+  let interval = useRef(null);
+  useEffect(() => {
+    if (isActive) {
+      interval.current = setInterval(() => {
+        if (!getWithExpiry('user')) {
+          dispatch(alertActions.error("We are logging you out due to inactivity in 3 seconds!"));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+            dispatch(userActions.logout());
+        }, 3000);
+        }
+      }, TIME_OUT);
+    }
+     return () => clearInterval(interval.current);
+  }, [isActive])
 
   const [currentLoc, setCurrentLoc] = React.useState({
     lat: 0,

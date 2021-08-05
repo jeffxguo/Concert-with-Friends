@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Button, CardMedia, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,7 +6,6 @@ import { COLORS } from '../constants/Colors';
 import ClearIcon from '@material-ui/icons/Clear';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
-import { useDispatch, useSelector } from 'react-redux';
 import ContactList from './ContactList';
 import EmailModal from './EmailModal';
 import moment from 'moment';
@@ -15,10 +14,6 @@ import emailjs from 'emailjs-com'
 export default function GroupCard(group) {
     const classes = useStyles();
     const date = new Date(group.date);
-    const duration = moment.duration(date - date).asHours();
-    const loggedIn = useSelector(state => state.user.loggedIn);
-    const userData = useSelector(state => state.user.user);
-    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
