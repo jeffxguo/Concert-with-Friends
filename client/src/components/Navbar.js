@@ -43,19 +43,35 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isActive, setIsActive] = useState(false);
   const loggedIn = useSelector(state => state.user.loggedIn);
   const dispatch = useDispatch();
 
+  const TIME_OUT = 1000 * 60 * 60;
+
+  useEffect(() => {
+    if (!loggedIn) {
+      setIsActive(false);
+    } else {
+      setIsActive(true);
+    }
+  }, [loggedIn])
+
   let interval = useRef(null);
   useEffect(() => {
-     interval.current = setInterval(() => {
-       if (!getWithExpiry('user')) {
-         dispatch(userActions.logout());
-         dispatch(alertActions.error("We are logging you out due to inactivity!"))
-       }
-     }, 1000 * 60 * 60);
+    if (isActive) {
+      interval.current = setInterval(() => {
+        if (!getWithExpiry('user')) {
+          dispatch(userActions.logout());
+          dispatch(alertActions.error("We are logging you out due to inactivity!"));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+        }, 3000);
+        }
+      }, TIME_OUT);
+    }
      return () => clearInterval(interval.current);
-  }, [])
+  }, [isActive])
 
   const [currentLoc, setCurrentLoc] = React.useState({
     lat: 0,
