@@ -7,6 +7,8 @@ import Select from '@material-ui/core/Select';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 const SearchBar = (props) => {
   const [searchTerm, setSearchTerm] = useState("")
@@ -15,6 +17,7 @@ const SearchBar = (props) => {
   const [radius, setRadius] = useState("")
   const [startDate, setStartDate] = useState(new Date().setHours(0, 0))
   const [endDate, setEndDate] = useState(null)
+  const [showAllFilters, setShowAllFilters] = useState(false)
 
   const handleStartDateChange = (date) => {
     setStartDate(moment(date).format('YYYY-MM-DDTHH:mm:ssZ'));
@@ -120,30 +123,6 @@ const SearchBar = (props) => {
           </Select>
         </div>
         <div style={{ textAlign: "left" }}>
-          <Typography style={{ fontWeight: "600" }}>Radius(miles)</Typography>
-          <Select
-            style={{
-              color: "white",
-              marginTop: "1em",
-              marginRight: "2em",
-              width: "9em"
-            }}
-            className={classes.select}
-            inputProps={{
-              classes: {
-                icon: classes.icon,
-              },
-            }}
-            native
-            onChange={event => { setRadius(String(event.target.value).toLowerCase()) }}
-            placeholder="radius"
-          >
-            {radiuses.map(r =>
-              <option value={r}>{r}</option>
-            )}
-          </Select>
-        </div>
-        <div style={{ textAlign: "left" }}>
           <Typography style={{ fontWeight: "600" }}>Genre</Typography>
 
           <Select
@@ -168,59 +147,11 @@ const SearchBar = (props) => {
             )}
           </Select>
         </div>
-        <div style={{ textAlign: "left" }}>
-          <Typography style={{ fontWeight: "600" }}>From</Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              style={{
-                marginTop: "1em",
-                marginRight: "2em",
-                width: "12em",
-              }}
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="start-date-picker"
-              value={startDate}
-              onChange={handleStartDateChange}
-              InputProps={{ className: classes.datePickerInput }}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-                className: classes.keyboardButton
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </div>
-        <div style={{ textAlign: "left" }}>
-          <Typography style={{ fontWeight: "600" }}>To</Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              style={{
-                marginTop: "1em",
-                marginRight: "2em",
-                width: "12em",
-              }}
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="end-date-picker"
-              value={endDate}
-              onChange={handleEndDateChange}
-              InputProps={{ className: classes.datePickerInput }}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-                className: classes.keyboardButton
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </div>
         <div style={{
-          padding: ".8em .5em",
+          padding: ".6em .5em",
           marginTop: "2em",
-          height: 50,
-          width: 50,
+          height: "2.8em",
+          width: "2.8em",
           borderRadius: 4,
           backgroundColor: COLORS.highlight,
           color: "white",
@@ -228,14 +159,105 @@ const SearchBar = (props) => {
         }}
           onClick={() => props.handleSearch(searchTerm, city, radius, selectedGenre, moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'), endDate)}
         >
-          <SearchIcon />
+          <SearchIcon style={{ height: 24, width: 24 }} />
         </div>
       </div>
+      {showAllFilters &&
+        <div style={{ display: "flex", marginTop: "1em", justifyContent: "center" }}>
+          <div style={{ textAlign: "left" }}>
+            <Typography style={{ fontWeight: "600" }}>Radius (miles)</Typography>
+            <Select
+              style={{
+                color: "white",
+                marginTop: "1em",
+                marginRight: "2em",
+                width: "12em"
+              }}
+              className={classes.select}
+              inputProps={{
+                classes: {
+                  icon: classes.icon,
+                },
+              }}
+              native
+              onChange={event => { setRadius(String(event.target.value).toLowerCase()) }}
+              placeholder="radius"
+            >
+              {radiuses.map(r =>
+                <option value={r}>{r}</option>
+              )}
+            </Select>
+          </div>
+          <div style={{ textAlign: "left" }}>
+            <Typography style={{ fontWeight: "600" }}>From</Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                style={{
+                  marginTop: "1em",
+                  marginRight: "2em",
+                  width: "12em",
+                }}
+                minDate={new Date()}
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="start-date-picker"
+                value={startDate}
+                onChange={handleStartDateChange}
+                InputProps={{ className: classes.datePickerInput }}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                  className: classes.keyboardButton
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </div>
+          <div style={{ textAlign: "left" }}>
+            <Typography style={{ fontWeight: "600" }}>To</Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                style={{
+                  marginTop: "1em",
+                  marginRight: "2em",
+                  width: "12em",
+                }}
+                minDate={new Date(startDate)}
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="end-date-picker"
+                value={endDate}
+                onChange={handleEndDateChange}
+                InputProps={{ className: classes.datePickerInput }}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                  className: classes.keyboardButton
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </div>
+          <div style={{
+            height: "2.8em",
+            width: "2.8em"
+          }}
+          />
+        </div>
+      }
+      <div className={classes.moreFilters} onClick={() => { setShowAllFilters(!showAllFilters) }}>{showAllFilters ? <><ExpandLessIcon style={{ marginRight: 4 }} /> Less filters</> : <><ExpandMoreIcon style={{ marginRight: 4 }} />More filters</>}</div>
     </div>
   );
 }
 
 const useStyles = makeStyles({
+  moreFilters: {
+    marginTop: "1em",
+    '&:hover': {
+      textDecoration: "underline",
+      cursor: "pointer"
+    }
+  },
   select: {
     '&:before': {
       borderColor: "white",
