@@ -4,7 +4,6 @@ const cors = require("cors");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const path = require('path');
 const app = express();
@@ -36,8 +35,8 @@ mongoose.connect(
 );
 
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(
     session({
@@ -75,7 +74,8 @@ app.post("/login", (req, res, next) => {
                     email: user.email,
                     phone: user.phone,
                     taste: user.taste,
-                    joinedGroups: user.joinedGroups
+                    joinedGroups: user.joinedGroups,
+                    avatar: user.avatar
                 }
                 res.send(
                     {
@@ -112,7 +112,7 @@ app.post("/register", (req, res) => {
                 taste: req.body.taste,
                 facebook: req.body.facebook,
                 instagram: req.body.instagram,
-                joinedGroups: [],
+                joinedGroups: []
             });
             await newUser.save();
             res.send({

@@ -7,7 +7,8 @@ const user = new mongoose.Schema({
     email: String,
     facebook: String,
     instagram: String,
-    joinedGroups: [String]
+    joinedGroups: [String],
+    avatar: Buffer
 });
 
 module.exports = mongoose.model('User', user);

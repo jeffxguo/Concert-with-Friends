@@ -8,13 +8,13 @@ export const userService = {
     register,
     addGroup,
     updateProfile,
+    uploadAvatar,
     getGroups,
     getUser,
     deleteGroup
 };
 
 const TIME_OUT = 1000 * 60 * 60; // 1 hour
-
 
 emailjs.init("user_wBQ98U5brugzhi3uFKp08");
 
@@ -28,7 +28,6 @@ function login(username, password) {
     return fetch(`/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            console.log(user);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             setWithExpiry('user', JSON.stringify(user), TIME_OUT);
             return user;
@@ -125,6 +124,25 @@ function updateProfile(userId, newProfileData) {
             console.log(data);
             setWithExpiry('user', JSON.stringify(data), TIME_OUT);
             return Promise.resolve(data);
+        });
+}
+
+function uploadAvatar(userId, newAvatarFile) {
+    const formData = new FormData();
+    formData.append('avatar', newAvatarFile);
+    const requestOptions = {
+        method: 'PUT',
+        body: formData
+    };
+
+    return fetch(`/users/${userId}/avatar`, requestOptions).then(response => response.json())
+        .then((user) => {
+            if (user.statusCode === (404 || 500)) {
+                return Promise.reject(user.message);
+            }
+            console.log(user);
+            setWithExpiry('user', JSON.stringify(user), TIME_OUT);
+            return Promise.resolve(user);
         });
 }
 

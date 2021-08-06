@@ -16,6 +16,7 @@ export const userActions = {
   getGroups,
   addGroup,
   updateProfile,
+  uploadAvatar,
   deleteGroup
 }
 
@@ -123,6 +124,28 @@ function updateProfile(userId, newProfileData) {
 
   function success(user) { return { type: actionTypes.UPDATEPROFILE_SUCCESS, user } }
   function failure(error) { return { type: actionTypes.UPDATEPROFILE_FAILURE, error } }
+}
+
+function uploadAvatar(userId, newAvatarFile) {
+  return dispatch => {
+    userService.uploadAvatar(userId, newAvatarFile)
+      .then(
+        user => {
+          dispatch(success(user));
+          dispatch(alertActions.success('Upload avatar successfully'));
+          setTimeout(() => {
+            dispatch(alertActions.clear());
+          }, 3000);
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
+  };
+
+  function success(user) { return { type: actionTypes.UPLOADAVATAR_SUCCESS, user } }
+  function failure(error) { return { type: actionTypes.UPLOADAVATAR_FAILURE, error } }
 }
 
 function getGroups(userId) {
