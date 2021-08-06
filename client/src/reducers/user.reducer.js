@@ -36,6 +36,14 @@ const userReducer = (state = initialState, action) => {
             };
         case actionTypes.UPDATEPROFILE_FAILURE:
             return {};
+        case actionTypes.UPLOADAVATAR_SUCCESS:
+            return {
+                avatarUploaded: true,
+                loggedIn: true,
+                user: action.user
+            };
+        case actionTypes.UPLOADAVATAR_FAILURE:
+            return {};
         case actionTypes.DELETEGROUP_SUCCESS:
             return {
                 groupLeft: true,

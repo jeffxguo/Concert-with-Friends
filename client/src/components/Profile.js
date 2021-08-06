@@ -18,7 +18,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import { Avatar } from '@material-ui/core';
+import Avatar from 'react-avatar-edit'
+import {Avatar as AvatarMaterial} from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { COLORS } from '../constants/Colors';
 
@@ -113,6 +114,10 @@ export default function Profile(props) {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user.user);
   const profile = userData && userData.data;
+  let initialAvatar;
+  if (profile && profile.avatar && profile.avatar.data) {
+    initialAvatar = new Buffer.from(profile.avatar.data).toString("ascii");
+  }
   const initialInputs = {
     username: {
       icon: <PersonRoundedIcon />,
@@ -159,6 +164,7 @@ export default function Profile(props) {
   };
 
   const [profileInputs, setProfileInputs] = useState(initialInputs);
+  const [avatarImage, setAvatarImage] = useState(initialAvatar);
 
   const handleSaveProfile = () => {
     if (profile && profile._id) {
@@ -174,6 +180,7 @@ export default function Profile(props) {
           return Object.assign(elem1, elem2)
         }, {})
         ));
+        dispatch(userActions.uploadAvatar(profile._id, avatarImage));
         setEditing(false);
         return;
       }
@@ -186,6 +193,23 @@ export default function Profile(props) {
       setProfileInputs(inputs => ({ ...inputs, [name]: { ...inputs[[name]], "value": value, "invalid": false } }));
     } else {
       setProfileInputs(inputs => ({ ...inputs, [name]: { ...inputs[[name]], "value": value, "invalid": true } }));
+    }
+  }
+  
+  const onCrop = (preview) => {
+    setAvatarImage(preview);
+  }
+
+  const onBeforeFileLoad = (elem) => {
+    if (elem.target.files[0].size > 71680) {
+      alert("File is too big!");
+      elem.target.value = "";
+    };
+  }
+
+  const onFileLoad = (elem) => {
+    if (profile && profile._id) {
+      setAvatarImage(elem);
     }
   }
 
@@ -206,7 +230,16 @@ export default function Profile(props) {
           </IconButton>
         </div>
         <Divider />
-        <Avatar className={classes.avatarImage} alt={profile?.username}></Avatar>
+        <div>
+        {editing ? <Avatar
+          width={150}
+          height={100}
+          onCrop={onCrop}
+          onFileLoad={onFileLoad}
+          onBeforeFileLoad={onBeforeFileLoad}
+          src={null}
+        /> : <AvatarMaterial src={avatarImage} alt={profile?.username} className={classes.avatarImage}/>}
+        </div>
         <Divider />
         <List>
           {Object.entries(profileInputs).map(([key, text], index) => (
@@ -246,6 +279,7 @@ export default function Profile(props) {
               <Button onClick={() => {
                 setEditing(false);
                 setProfileInputs(initialInputs);
+                setAvatarImage(initialAvatar);
                 dispatch(alertActions.clear());
               }}>
                 Cancel
