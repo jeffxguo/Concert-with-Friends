@@ -1,16 +1,21 @@
 import React from 'react';
 import { Box, Typography, IconButton, makeStyles } from '@material-ui/core';
 import { COLORS } from '../constants/Colors';
+import Avatar from '@material-ui/core/Avatar';
 import fb from '../images/fb.png'
 import ig from '../images/ig.png'
 
 export default function Contact(member) {
     const classes = useStyles();
+    let initialAvatar;
+    if (member.avatar && member.avatar.data) {
+      initialAvatar = new Buffer.from(member.avatar.data).toString("ascii");
+    }
 
     return (
         <Box borderRadius="borderRadius" className={classes.box}>
             <div className={classes.content}>
-                <img className={classes.memberImage} src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'} alt={"Member"} />
+                <Avatar src={initialAvatar} alt={member?.username} className={classes.memberImage} />
                 <div className={classes.details}>
                     <Typography style={{ fontSize: "1.2em", fontWeight: 700 }}>{member.name}</Typography>
                     <div className={classes.contactInfo} style={{ marginTop: 10 }}>
