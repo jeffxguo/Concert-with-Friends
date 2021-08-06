@@ -169,6 +169,7 @@ export default function SignupPage(props) {
                                     type="password"
                                     placeholder="Password"
                                     variant="outlined"
+                                    errorText="MUST be at least 8 characters and contain one number"
                                     className={classes.txtInput}
                                     onChange={handleChange}
                                 />

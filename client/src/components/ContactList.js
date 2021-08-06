@@ -35,7 +35,7 @@ export default function ContactList(props) {
                     console.log(member)
                     return (
                         <div className={classes.items} key={i}>
-                            <Contact name={member.name} image={member.image} phone={member.phone} email={member.email} instagram={member.instagram} facebook={member.facebook} />
+                            <Contact name={member.username} avatar={member.avatar} phone={member.phone} email={member.email} instagram={member.instagram} facebook={member.facebook} />
                         </div>
                     )
                 })}
