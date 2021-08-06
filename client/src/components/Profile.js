@@ -114,7 +114,10 @@ export default function Profile(props) {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user.user);
   const profile = userData && userData.data;
-  const initialAvatar = profile && profile.avatar;
+  let initialAvatar;
+  if (profile && profile.avatar && profile.avatar.data) {
+    initialAvatar = new Buffer.from(profile.avatar.data).toString("ascii");
+  }
   const initialInputs = {
     username: {
       icon: <PersonRoundedIcon />,
@@ -161,7 +164,7 @@ export default function Profile(props) {
   };
 
   const [profileInputs, setProfileInputs] = useState(initialInputs);
-  const [avatarImage, setAvatarImage] = useState(new Buffer.from(initialAvatar.data).toString("ascii"));
+  const [avatarImage, setAvatarImage] = useState(initialAvatar);
 
   const handleSaveProfile = () => {
     if (profile && profile._id) {
@@ -230,7 +233,7 @@ export default function Profile(props) {
         <div>
         {editing ? <Avatar
           width={150}
-          height={95}
+          height={100}
           onCrop={onCrop}
           onFileLoad={onFileLoad}
           onBeforeFileLoad={onBeforeFileLoad}
@@ -276,7 +279,7 @@ export default function Profile(props) {
               <Button onClick={() => {
                 setEditing(false);
                 setProfileInputs(initialInputs);
-                setAvatarImage(new Buffer.from(initialAvatar.data).toString("ascii"));
+                setAvatarImage(initialAvatar);
                 dispatch(alertActions.clear());
               }}>
                 Cancel
