@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
+const multer = require('multer');
+const upload = multer({ dest: "uploads/" });
 const User = require("../schema/user");
 const Group = require("../schema/group");
 
@@ -184,11 +185,12 @@ router.get("/:id", (req, res) => {
             });
         } else {
             res.send({
-                name: doc.username,
+                username: doc.username,
                 phone: doc.phone,
                 email: doc.email,
                 instagram: doc.instagram,
-                facebook: doc.facebook
+                facebook: doc.facebook,
+                avatar: doc.avatar
             });
         }
     })
@@ -196,6 +198,30 @@ router.get("/:id", (req, res) => {
 
 router.put("/:userId/edit-profile", (req, res) => {
     User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "email": req.body.email, "phone": req.body.phone, "facebook": req.body.facebook, "instagram": req.body.instagram, "taste": req.body.taste } },
+        { new: true }, async (err, doc) => {
+            if (err) {
+                res.send({
+                    statusCode: 500,
+                    message: "Internal Error"
+                });
+            } else if (!doc) {
+                res.send({
+                    statusCode: 404,
+                    message: "User Not Found"
+                });
+            } else {
+                res.send({
+                    statusCode: 200,
+                    data: doc
+                });
+            }
+        });
+});
+
+router.put('/:userId/avatar', upload.single('avatar'), async (req, res, next) => {
+    const avatarBuffer = req.body.avatar;
+    // const base64Flag = 'data:image/png;base64,';
+    User.findOneAndUpdate({ _id: req.params.userId }, { "$set": { "avatar": avatarBuffer } },
         { new: true }, async (err, doc) => {
             if (err) {
                 res.send({
