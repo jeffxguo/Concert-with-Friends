@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import MapPage from './components/MapPage';
 import MyGroupsPage from './components/MyGroupsPage';
 import LandingPage from './components/LandingPage';
+import Footer from './components/Footer';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Router, Redirect } from 'react-router-dom';
@@ -27,6 +28,7 @@ function App() {
   useEffect(() => {
     history.listen(() => {
       // clear alert
+      window.scrollTo(0, 0)
       dispatch(alertActions.clear());
     });
   }, []);
@@ -49,6 +51,7 @@ function App() {
             </Route>
             <PrivateRoute path='/mygroups' exact component={MyGroupsPage} />
           </Switch>
+          <Footer />
         </Router>
       </ThemeProvider>
     </div>
