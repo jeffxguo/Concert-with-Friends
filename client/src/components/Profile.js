@@ -80,6 +80,10 @@ const useStyles = makeStyles((theme) => ({
   editBtn: {
     backgroundColor: COLORS.grey,
     color: "white"
+  },
+  profileIcons: {
+    width: "1.5rem",
+    height: "1.5rem"
   }
 }));
 
@@ -120,13 +124,13 @@ export default function Profile(props) {
   }
   const initialInputs = {
     username: {
-      icon: <PersonRoundedIcon />,
+      icon: <PersonRoundedIcon className={classes.profileIcons}/>,
       value: profile && profile.username,
       validator: function (u) { return u !== "" },
       invalid: false
     },
     email: {
-      icon: <MailRoundedIcon />,
+      icon: <MailRoundedIcon className={classes.profileIcons}/>,
       value: profile && profile.email,
       validator: function (e) {
         const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -135,7 +139,7 @@ export default function Profile(props) {
       invalid: false
     },
     phone: {
-      icon: <PhoneRoundedIcon />,
+      icon: <PhoneRoundedIcon className={classes.profileIcons}/>,
       value: profile && profile.phone,
       validator: function (p) {
         const re = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -144,19 +148,19 @@ export default function Profile(props) {
       invalid: false
     },
     facebook: {
-      icon: <FacebookIcon />,
+      icon: <FacebookIcon className={classes.profileIcons}/>,
       value: profile && profile.facebook,
       validator: () => void (0),
       invalid: false
     },
     instagram: {
-      icon: <InstagramIcon />,
+      icon: <InstagramIcon className={classes.profileIcons}/>,
       value: profile && profile.instagram,
       validator: () => void (0),
       invalid: false
     },
     taste: {
-      icon: <MusicNoteRoundedIcon />,
+      icon: <MusicNoteRoundedIcon className={classes.profileIcons}/>,
       value: profile && profile.taste,
       validator: function (t) { return t !== "" },
       invalid: false
