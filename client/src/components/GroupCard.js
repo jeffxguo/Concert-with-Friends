@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Button, CardMedia, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Card, CardContent, Button, CardMedia, Typography, IconButton, Menu, MenuItem, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
@@ -7,14 +7,15 @@ import ClearIcon from '@material-ui/icons/Clear';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import ContactList from './ContactList';
-import EmailModal from './EmailModal';
 import moment from 'moment';
 import emailjs from 'emailjs-com'
+import { useSelector } from 'react-redux';
 
 export default function GroupCard(group) {
     const classes = useStyles();
     const date = new Date(group.date);
     const [anchorEl, setAnchorEl] = useState(null);
+    const userData = useSelector(state => state.user.user);
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -23,7 +24,6 @@ export default function GroupCard(group) {
     const handleClose = () => {
       setAnchorEl(null);
     };
-
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
     
         function sendEmail(e) {
@@ -32,6 +32,7 @@ export default function GroupCard(group) {
             console.log(res);
        }).catch(err => console.log(err));
     }
+    console.log(userData.data)
 
     return (
         <div>
@@ -69,7 +70,36 @@ export default function GroupCard(group) {
                                             }}>
                                                 <ClearIcon />
                                             </IconButton>
-                                            <EmailModal />
+                                            <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>
+                                            <form className={classes.form} onSubmit={sendEmail} >
+                                                <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" name = "name" class="form-control" placeholder="Enter name"></input>
+                                                </div>
+                                                <div class="form-group">
+                                                <label>Email address</label>
+                                                <input type="email" name="friend_email" class="form-control"  placeholder="Enter email"></input>
+                                                </div>
+                                                <div class="form-group">
+                                                <label>Message</label>
+                                                <textarea class="form-control" name ="message" rows="4"></textarea>
+                                                </div>
+                                                <div className={classes.sendDiv}>
+                                                    <Button type={'submit'} className={classes.sendBtn}>
+                                                        {"Send"}
+                                                    </Button>  
+                                                </div>
+                                                <input type="hidden" name="group_title" value={group.title}/>
+                                                <input type="hidden" name="group_address" value={group.address}/>
+                                                <input type="hidden" name="group_url" value={group.url}/>
+                                                <input type="hidden" name="group_month" value= {months[date.getMonth()]}/>
+                                                <input type="hidden" name="group_date" value= {date.getDate()}/>
+                                                <input type="hidden" name="group_year" value= {date.getFullYear()}/>
+                                                <input type="hidden" name="user_name" value= {userData.data.username}/>
+                                                <input type="hidden" name="ticket_link" value= {userData.data.username}/>
+                                            </form>
+                                        </Box>
+                                    )
                                         </span>
                                     )}
                                 </Popup>
@@ -196,5 +226,21 @@ const useStyles = makeStyles({
         flex: 3
     },
     modal: {
+    },
+    box: {
+        width: "30em",
+        height: "auto",
+    },
+    form: {
+        padding: "2rem"
+    },
+    sendDiv: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+    },
+    sendBtn: {
+        color: COLORS.white,
+        backgroundColor: COLORS.highlight,
+        textAlign: 'center'
     }
 });
