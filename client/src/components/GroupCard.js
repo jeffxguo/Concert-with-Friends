@@ -9,7 +9,6 @@ import Popup from 'reactjs-popup';
 import ContactList from './ContactList';
 import EmailModal from './EmailModal';
 import moment from 'moment';
-import emailjs from 'emailjs-com'
 
 export default function GroupCard(group) {
     const classes = useStyles();
@@ -25,13 +24,6 @@ export default function GroupCard(group) {
     };
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-    
-        function sendEmail(e) {
-        e.preventDefault();
-        emailjs.sendForm('service_hix3o8o','template_p0j9wjm',e.target,'user_a564XBSBeNeDkGfhl5ozI').then (res => {
-            console.log(res);
-       }).catch(err => console.log(err));
-    }
 
     return (
         <div>
@@ -64,12 +56,11 @@ export default function GroupCard(group) {
                                             <IconButton className={classes.close} onClick={close} style={{
                                                 position: 'absolute',
                                                 left: '25rem',
-                                                top: '0.5rem',
-                                                backgroundColor: COLORS.white
+                                                top: '0.5rem'
                                             }}>
                                                 <ClearIcon />
                                             </IconButton>
-                                            <EmailModal />
+                                            <EmailModal title={group.title} address={group.address} url={group.url} date={group.date}/>
                                         </span>
                                     )}
                                 </Popup>
