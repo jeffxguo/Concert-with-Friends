@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         height: '15em',
-        'flex-direction': 'column'
+        'flex-direction': 'column',
+        marginTop: '12%'
     },
     content: {
         display: 'flex',
