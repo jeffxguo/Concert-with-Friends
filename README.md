@@ -1,5 +1,8 @@
 # Concert-with-Friend
 
+## Live App
+https://concert-with-friends.herokuapp.com/
+
 ## Project Description
 
 As the world is gradually recovering from the pandemic, more and more live concerts are finally coming back! Wanna go to your favourite artist's live show but don't have a buddy? We got you covered! Concert with Friends is a web application that helps you find new friends to go to a concert with. Find concerts nearby you on the map or filtered from a list and join its group to start meeting new people!
