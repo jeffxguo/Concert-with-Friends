@@ -87,9 +87,14 @@ export default function SignupPage(props) {
         setUserProfile(profile => ({ ...profile, [name]: value }));
     }
 
+    const validatePassword = (e) => {
+        const re = /^(?=.*\d)[a-zA-Z\d\w\W]{8,}$/;
+        return re.test(e);
+    }
+
     const handleSignupSubmit = (e) => {
         e.preventDefault();
-        if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
+        if (userProfile.username && userProfile.email && userProfile.phone && validatePassword(userProfile.password)) {
             console.log(userProfile)
             dispatch(userActions.register(userProfile));
         }
@@ -169,7 +174,8 @@ export default function SignupPage(props) {
                                     type="password"
                                     placeholder="Password"
                                     variant="outlined"
-                                    errorText="MUST be at least 8 characters and contain one number"
+                                    error={!validatePassword(userProfile.password)}
+                                    helperText="MUST be at least 8 characters and contain one number"
                                     className={classes.txtInput}
                                     onChange={handleChange}
                                 />
