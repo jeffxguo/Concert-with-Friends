@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Concert with Friends is a web application that helps you find new friends to go to a concert with. Find concerts nearby you on the map or filtered from a list and join its group to start meeting new people.
+As the world is gradually recovering from the pandemic, more and more live concerts are finally coming back! Wanna go to your favourite artist's live show but don't have a buddy? We got you covered! Concert with Friends is a web application that helps you find new friends to go to a concert with. Find concerts nearby you on the map or filtered from a list and join its group to start meeting new people!
 
 ### Who is it for? 
 
@@ -32,26 +32,26 @@ Functionalities to remove base on time constriction will be email alerts and add
 
 ### 3-5 minimal requirements (will definitely complete)
 
-1. User login/sign up
-2. Pins on google maps showing Ticket-master events 
-3. Groups that user’s can join based on events
-4. Filter events by city
-5. join/leave group
-6. Show number of people joined
+1. User login/sign up ✅
+2. Pins on google maps showing Ticket-master events ✅
+3. Groups that user’s can join based on events ✅
+4. Filter events by city ✅
+5. join/leave group ✅
+6. Show number of people joined ✅
 
 ### 3-7 "standard" requirements (will most likely complete)
 
-1. Profile editing
-2. Filter events/groups by proximity
-3. Filter events/groups by date
-4. Email alerts
-5. Add to calendar
+1. Profile editing + Avatar uploading ✅
+2. Filter events/groups by proximity ✅
+3. Filter events/groups by date ✅
+4. Email alerts ✅
+5. Add to calendar ✅
 
 ### 2-3 stretch requirements (plan to complete at least 1!)
 
-1. Spotify integration where users can display their playlist
-2. In app messaging 
-3. Be able to send invite links to friends
+1. Spotify integration where users can display their playlist 🚫
+2. In app messaging 🚫
+3. Be able to send invite links to friends ✅
 
 ## Task Breakdown
 
@@ -78,3 +78,17 @@ Functionalities to remove base on time constriction will be email alerts and add
 
 ## FIGMA hi-fidelity design file
 https://www.figma.com/file/vgKphQ9Y0UD4Z9faVusc6B/cpsc-455-proj?node-id=0%3A1
+
+
+## Technical Specifications
+
+
+## Above and Beyond Features
+
+
+## Next Steps
+
+
+## Contributions
+
+
