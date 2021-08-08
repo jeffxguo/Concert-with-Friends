@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             width: "20%",
             height: "20%",
-            padding: 30
+            padding: 30,
         },
         [theme.breakpoints.down('md')]: {
             width: "30%",
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         borderRadius: 4,
         border: "none",
     }
-    })
+})
 );
 
 const musicTypes = [
@@ -100,7 +100,7 @@ export default function SignupPage(props) {
         }
     }
     return (
-        <Container className={classes.root}>
+        <Container className={classes.root} style={{ marginBottom: "30vh" }}>
             {alert.message &&
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
             }

@@ -45,7 +45,7 @@ export default function Footer(props) {
             </div>
             <div className={classes.copyright}>
                 <Typography style={{ color: COLORS.black, fontSize: '1em' }}>Copyright © 2021 Concert with Friends</Typography>
-                <Typography style={{ color: COLORS.black, fontSize: '1em', marginTop: '.5em' }}>conertwithfriends@gmail.com</Typography>
+                <Typography style={{ color: COLORS.black, fontSize: '1em', marginTop: '.5em' }}>concertwithfriends@gmail.com</Typography>
             </div>
         </Box>
     )
