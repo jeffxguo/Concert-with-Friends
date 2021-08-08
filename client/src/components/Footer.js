@@ -12,37 +12,40 @@ export default function Footer(props) {
 
 
     return (
-        <Box className={classes.root} style={{ backgroundColor: COLORS.black }}>
+        <Box className={classes.root} style={{ backgroundColor: COLORS.lightGrey }}>
             <div className={classes.content}>
                 <div className={classes.links}>
-                    <Typography style={{ fontSize: '18px', fontWeight: 'bold', color: COLORS.white }}> Navigation </Typography>
+                    <img style={{ marginLeft: 40, width: "16em" }} src={logo} alt={"logo"} />
+                </div>
+                <div className={classes.links}>
+                    <Typography style={{ fontSize: '18px', fontWeight: 'bold', color: COLORS.highlight, marginBottom: ".5em" }}> Sitemap </Typography>
                     <div>
-                        <Link to="/" style={{ color: COLORS.white, textDecorationColor: COLORS.white }}>
+                        <Link to="/" style={{ color: COLORS.black, textDecorationColor: COLORS.black }}>
                             Home
                         </Link>
                     </div>
                     <div>
-                        <Link to="/home" style={{ color: COLORS.white, textDecorationColor: COLORS.white }}>
+                        <Link to="/home" style={{ color: COLORS.black, textDecorationColor: COLORS.black }}>
                             Groups
                         </Link>
                     </div>
                     <div>
-                        <Link to="/map" style={{ color: COLORS.white, textDecorationColor: COLORS.white }}>
+                        <Link to="/map" style={{ color: COLORS.black, textDecorationColor: COLORS.black }}>
                             Map
                         </Link>
                     </div>
                 </div>
-                
+
                 <div className={classes.links}>
-                    <Typography style={{ fontSize: '18px', fontWeight: 'bold', color: COLORS.white }}> Resources </Typography>
-                    <a href="https://github.com/jeffxguo/Concert-with-Friends" rel="noreferrer" target="_blank" style={{ color: COLORS.white, textDecorationColor: COLORS.white }}>
+                    <Typography style={{ fontSize: '18px', fontWeight: 'bold', color: COLORS.highlight, marginBottom: ".5em" }}> Repo </Typography>
+                    <a href="https://github.com/jeffxguo/Concert-with-Friends" rel="noreferrer" target="_blank" style={{ color: COLORS.black, textDecorationColor: COLORS.black }}>
                         Github
                     </a>
                 </div>
             </div>
-            <div className={classes.copyright}> 
-                <Typography style={{ color: COLORS.white, fontSize: '14px'}}>Copyright © 2021 Concert with Friends</Typography>
-                <Typography style={{ color: COLORS.white, fontSize: '12px'}}>conertwithfriends@gmail.com</Typography>
+            <div className={classes.copyright}>
+                <Typography style={{ color: COLORS.black, fontSize: '1em' }}>Copyright © 2021 Concert with Friends</Typography>
+                <Typography style={{ color: COLORS.black, fontSize: '1em', marginTop: '.5em' }}>concertwithfriends@gmail.com</Typography>
             </div>
         </Box>
     )
@@ -53,19 +56,22 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         height: '15em',
         'flex-direction': 'column',
-        marginTop: '12%'
     },
     content: {
         display: 'flex',
         flexDirection: 'row',
         paddingTop: '1em',
-        'justify-content': 'center',
+        justifyContent: "center"
     },
     links: {
         'flex-direction': 'column',
-        margin: '15px',
+        margin: '1em 4em',
+        textAlign: "left"
     },
     copyright: {
-        marginTop: '1em'
+        marginTop: '2em',
+        paddingBottom: '4em',
+        backgroundColor: COLORS.lightGrey
+
     }
 }))

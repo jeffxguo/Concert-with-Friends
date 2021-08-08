@@ -69,7 +69,7 @@ export default function LoginPage() {
 		return;
 	}
 	return (
-		<Container className={classes.root}>
+		<Container className={classes.root} style={{ marginBottom: "30vh" }}>
 			{alert.message &&
 				<div style={{ position: "fixed", zIndex: 100, width: "30vw", left: 0, textAlign: "center", bottom: 80, margin: "0 35vw 0 35vw" }} className={`alert ${alert.type}`}>{alert.message}</div>
 			}
