@@ -43,8 +43,8 @@ export default function GoogleMaps() {
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          lat: position.coords.latitude || 0,
+          lng: position.coords.longitude || 0,
         }
         map.setCenter(currentLoc);
         setCurrentLoc(currentLoc);

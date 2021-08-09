@@ -34,7 +34,13 @@ export default function EventPage() {
             }
             setCurrentLoc(currentLoc);
 
-            fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50')
+            let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&keyword=music'
+
+            if (currentLoc.lat && currentLoc.lng) {
+                url += '&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&radius=50'
+            }
+
+            fetch(url)
                 .then(response => response.json())
                 .then(async (data) => {
                     let eventsData = data._embedded.events;
