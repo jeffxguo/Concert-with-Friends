@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { AppBar, Button, Box, Menu, MenuItem, Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
-import NavigationRoundedIcon from '@material-ui/icons/NavigationRounded';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import { Link, NavLink } from 'react-router-dom';
+import React from 'react';
+import { Box, Typography, makeStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { COLORS } from '../constants/Colors';
 
 import logo from '../images/logo.png'

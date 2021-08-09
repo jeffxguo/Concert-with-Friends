@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
 import EventCard from './Card'
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Fragment } from 'react';
-import { alertActions } from '../actions/alert.actions';
 
 export default function CardList(props) {
     const alert = useSelector(state => state.alert);
