@@ -154,7 +154,7 @@ export default function GoogleMaps() {
 
   useEffect(() => {
     if (userData && userData.data && userData.data.joinedGroups) {
-      const eventsData = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
+      const eventsData = events?.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
       setEvents(eventsData);
     }
   }, [userData]);
