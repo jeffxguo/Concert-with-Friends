@@ -60,41 +60,41 @@ export default function EventCard(event) {
                 <div className={classes.addButton}>
                     {loggedIn && event.joined ?
                         <div>
-                        <Popup trigger = {
-                            <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary">
-                            {"Leave"}
-                        </Button>} modal>
-                        {close => (
-                            <span className={classes.modal} style={{
-                            }}>
-                                <IconButton className={classes.close} onClick={close} style={{
-                                    position: 'absolute',
-                                    right: '20px',
-                                    top: '20px',
-                                }}>
-                                    <ClearIcon />
-                                </IconButton>
-                                <div class="card">
-                                     <h5 class="card-header">Confirm</h5>
-                                         <div class="card-body">
-                                     
-                                        <p class="card-text">Are you sure you want to leave {event.title} </p>
-                                        <div class="modal-footer"> 
-                                        <a href="#" class="btn btn-secondary" onClick={close} >Cancel</a>
-                                        <a href="#" class="btn btn-primary" onClick={handleClickLeave} >Remove Event</a>
+                            <Popup trigger={
+                                <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary">
+                                    {"Leave"}
+                                </Button>} modal>
+                                {close => (
+                                    <span className={classes.modal} style={{
+                                    }}>
+                                        <IconButton className={classes.close} onClick={close} style={{
+                                            position: 'absolute',
+                                            right: '20px',
+                                            top: '20px',
+                                        }}>
+                                            <ClearIcon />
+                                        </IconButton>
+                                        <div class="card">
+                                            <h5 class="card-header">Confirm</h5>
+                                            <div class="card-body">
+
+                                                <p class="card-text">Are you sure you want to leave {event.title} </p>
+                                                <div class="modal-footer">
+                                                    <a href="#" class="btn btn-secondary" onClick={close} >Cancel</a>
+                                                    <a href="#" class="btn btn-primary" style={{ backgroundColor: COLORS.highlight }} onClick={handleClickLeave} >Leave Group</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </span>
-                        )}
-                        </Popup>
-                        
+                                    </span>
+                                )}
+                            </Popup>
+
                         </div>
-                        
-            
 
 
-                                                
+
+
+
 
                         : <IconButton style={{
                             backgroundColor: 'white',
