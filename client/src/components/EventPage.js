@@ -25,6 +25,7 @@ export default function EventPage() {
     }
 
     const getCurrentCity = async () => {
+        let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&keyword=music'
 
         try {
             const position = await getCurrentLongLat();
@@ -34,7 +35,6 @@ export default function EventPage() {
             }
             setCurrentLoc(currentLoc);
 
-            let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&keyword=music'
 
             if (currentLoc.lat && currentLoc.lng) {
                 url += '&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&radius=50'
@@ -53,6 +53,18 @@ export default function EventPage() {
                 });
 
         } catch (error) {
+            fetch(url)
+                .then(response => response.json())
+                .then(async (data) => {
+                    let eventsData = data._embedded.events;
+                    eventsData = await Promise.all(eventsData.map(async (event) => ({ ...event, memberNum: await groupService.getMembers(event.id).then(arr => arr.length).catch(err => { console.log(err); }) })));
+                    if (userData && userData.data && userData.data.joinedGroups) {
+                        eventsData = eventsData.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
+                    }
+                    setEvents(eventsData);
+                    setLoading(false)
+                });
+
             console.warn(error)
             return null;
         }
