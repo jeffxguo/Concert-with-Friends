@@ -68,9 +68,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
   },
   avatarImage: {
-    margin: "5% 0 5% 50%",
-    width: "50px",
-    height: "50px"
+    margin: "5% 0 5% 45%",
+    width: "4rem",
+    height: "4rem"
+  },
+  avatarUpload: {
+    margin: "0 0 0 30%"
   },
   txtInput: {
     backgroundColor: "white",
@@ -230,20 +233,25 @@ export default function Profile(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={props.handleCloseProfile}>
-            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'rtl' ? <ChevronLeftIcon className={classes.profileIcons}/> : <ChevronRightIcon className={classes.profileIcons}/>}
           </IconButton>
         </div>
         <Divider />
-        <div>
-        {editing ? <Avatar
+        {editing ? 
+        <div className={classes.avatarUpload}>
+          <Avatar
           width={150}
           height={100}
+          borderStyle={{borderColor: COLORS.grey, borderStyle: "dashed", borderWidth: "0.15rem", borderRadius: "0.5rem"}}
+          label={"Choose an image"}
+          labelStyle={{fontSize: "1em", fontWeight: "bold"}}
           onCrop={onCrop}
           onFileLoad={onFileLoad}
           onBeforeFileLoad={onBeforeFileLoad}
           src={null}
-        /> : <AvatarMaterial src={avatarImage} alt={profile?.username} className={classes.avatarImage}/>}
-        </div>
+        />
+        </div> 
+        : <AvatarMaterial src={avatarImage} alt={profile?.username} className={classes.avatarImage}/>}
         <Divider />
         <List>
           {Object.entries(profileInputs).map(([key, text], index) => (

@@ -1,8 +1,11 @@
 # Concert-with-Friend
 
+## Live App
+https://concert-with-friends.herokuapp.com/
+
 ## Project Description
 
-Concert with Friends is a web application that helps you find new friends to go to a concert with. Find concerts nearby you on the map or filtered from a list and join its group to start meeting new people.
+As the world is gradually recovering from the pandemic, more and more live concerts are finally coming back! Wanna go to your favourite artist's live show but don't have a buddy? We got you covered! Concert with Friends is a web application that helps you find new friends to go to a concert with. Find concerts nearby you on the map or filtered from a list and join its group to start meeting new people!
 
 ### Who is it for? 
 
@@ -14,9 +17,8 @@ Allow users to browse local concerts and join others who are attending that even
 
 ### What type of data will it store? 
 
-- Basic User’s information, eg: name, music taste
-- Login credentials(username, password)
-- contact info, eg: Phone number, FB contact, email
+- User's login credentials, i.e. username, password
+- User's personal information, i.e.: email, mobile, facebook/instagram contacts, avatar, joined groups
 - Event group’s information, eg: event, members
 
 ### What will users be able to do with this data?
@@ -26,32 +28,33 @@ Discover and join groups for a particular event and connect with other's that ar
 ### What is some additional functionality you can add/remove based on time constraints?
 
 Additional functionalities we can add are Spotify integrations so users can link their playlist and connect with other's who share similar music taste as well as in app messaging.
-Functionalities to remove base on time constriction will be email alerts and adding the event to the user's calendar.
+Functionalities to remove based on time constriction will be email alerts and adding the event to the user's calendar.
 
 ## Project task requirements
 
 ### 3-5 minimal requirements (will definitely complete)
 
-1. User login/sign up
-2. Pins on google maps showing Ticket-master events 
-3. Groups that user’s can join based on events
-4. Filter events by city
-5. join/leave group
-6. Show number of people joined
+1. User login/sign up ✅
+2. Pins on google maps showing Ticket-master events ✅
+3. Groups that user’s can join based on events ✅
+5. join/leave group ✅
+6. Show number of people joined ✅
 
 ### 3-7 "standard" requirements (will most likely complete)
 
-1. Profile editing
-2. Filter events/groups by proximity
-3. Filter events/groups by date
-4. Email alerts
-5. Add to calendar
+1. Profile editing + Avatar uploading ✅
+2. Filter events by proximity ✅
+3. Filter events by date ✅
+4. 5. Filter events by city ✅
+5. Add to calendar ✅
+
 
 ### 2-3 stretch requirements (plan to complete at least 1!)
 
-1. Spotify integration where users can display their playlist
-2. In app messaging 
-3. Be able to send invite links to friends
+1. Spotify integration where users can display their playlist 🚫
+2. In app messaging 🚫
+3. Email integration: be able to send invite links to friends and alert users when people join their group ✅
+4. Alert system and session timeout for user experience improvement ✅
 
 ## Task Breakdown
 
@@ -78,3 +81,17 @@ Functionalities to remove base on time constriction will be email alerts and add
 
 ## FIGMA hi-fidelity design file
 https://www.figma.com/file/vgKphQ9Y0UD4Z9faVusc6B/cpsc-455-proj?node-id=0%3A1
+
+
+## Technical Specifications
+
+
+## Above and Beyond Features
+
+
+## Next Steps
+
+
+## Contributions
+
+

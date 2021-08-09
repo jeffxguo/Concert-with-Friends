@@ -76,10 +76,9 @@ function addGroup(userId, eventId, name, email, phone, event) {
         };
 
         emailjs.send('service_spamsea', 'template_bxy4k56', templateParams)
-            .then(function (response) {
-                console.log('SUCCESS!', response.status, response.text);
+            .then(function (_response) {
             }, function (error) {
-                console.log('FAILED...', error);
+                console.log(error);
             });
     })
 
@@ -92,10 +91,9 @@ function addGroup(userId, eventId, name, email, phone, event) {
     };
 
     emailjs.send('service_spamsea', 'template_bxy4k56', templateParams)
-        .then(function (response) {
-            console.log('SUCCESS!', response.status, response.text);
+        .then(function (_response) {
         }, function (error) {
-            console.log('FAILED...', error);
+            console.log(error);
         });
 
 
@@ -121,7 +119,6 @@ function updateProfile(userId, newProfileData) {
             if (data.statusCode === (404 || 500)) {
                 return Promise.reject(data.message);
             }
-            console.log(data);
             setWithExpiry('user', JSON.stringify(data), TIME_OUT);
             return Promise.resolve(data);
         });
@@ -140,7 +137,6 @@ function uploadAvatar(userId, newAvatarFile) {
             if (user.statusCode === (404 || 500)) {
                 return Promise.reject(user.message);
             }
-            console.log(user);
             setWithExpiry('user', JSON.stringify(user), TIME_OUT);
             return Promise.resolve(user);
         });

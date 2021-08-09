@@ -7,8 +7,6 @@ import pin from "../images/pin.png"
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
 
-import { getWithExpiry } from '../helpers/session-expire';
-
 export default function GoogleMaps() {
   const [events, setEvents] = useState([]);
   const loggedIn = useSelector(state => state.user.loggedIn);
@@ -50,7 +48,6 @@ export default function GoogleMaps() {
         }
         map.setCenter(currentLoc);
         setCurrentLoc(currentLoc);
-        console.log(currentLoc)
         return currentLoc;
 
       } catch (error) {
@@ -176,7 +173,6 @@ export default function GoogleMaps() {
         onGoogleApiLoaded={({ map, maps }) => ModelsMap(map, maps).then(
           (events) => {
             setEvents(events);
-            console.log(events);
           })}
       ></GoogleMapReact>
     </div>

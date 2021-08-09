@@ -98,7 +98,6 @@ export default function SignupPage(props) {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         if (userProfile.username && userProfile.email && userProfile.phone && validatePassword(userProfile.password)) {
-            console.log(userProfile)
             dispatch(userActions.register(userProfile));
         }
         if(!validatePassword(userProfile.password)) {
@@ -199,6 +198,7 @@ export default function SignupPage(props) {
                                     size="small"
                                     placeholder="Select"
                                     variant="outlined"
+                                    defaultValue=""
                                     className={classes.txtInput}
                                     onChange={handleChange}
                                 >
