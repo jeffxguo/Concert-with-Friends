@@ -17,6 +17,8 @@ import { getWithExpiry } from '../helpers/session-expire';
 
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
+import Popup from 'reactjs-popup';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export default function EventCard(event) {
     const classes = useStyles();
@@ -57,9 +59,43 @@ export default function EventCard(event) {
                 }} />
                 <div className={classes.addButton}>
                     {loggedIn && event.joined ?
-                        <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary" onClick={handleClickLeave}>
-                            Leave
-                        </Button>
+                        <div>
+                            <Popup trigger={
+                                <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary">
+                                    {"Leave"}
+                                </Button>} modal>
+                                {close => (
+                                    <span className={classes.modal} style={{
+                                    }}>
+                                        <IconButton className={classes.close} onClick={close} style={{
+                                            position: 'absolute',
+                                            right: '20px',
+                                            top: '20px',
+                                        }}>
+                                            <ClearIcon />
+                                        </IconButton>
+                                        <div class="card">
+                                            <h5 class="card-header">Confirm</h5>
+                                            <div class="card-body">
+
+                                                <p class="card-text">Are you sure you want to leave {event.title} </p>
+                                                <div class="modal-footer">
+                                                    <a href="#" class="btn btn-secondary" onClick={close} >Cancel</a>
+                                                    <a href="#" class="btn btn-primary" style={{ backgroundColor: COLORS.highlight }} onClick={handleClickLeave} >Leave Group</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                )}
+                            </Popup>
+
+                        </div>
+
+
+
+
+
+
                         : <IconButton style={{
                             backgroundColor: 'white',
                             color: COLORS.black,
