@@ -106,7 +106,8 @@ export default function SignupPage(props) {
             dispatch(alertActions.error("Invalid Password"));
             setTimeout(() => {
                 dispatch(alertActions.clear());
-              }, 3000);
+                invalidPassword = false;
+            }, 3000);
         }
     }
     return (
