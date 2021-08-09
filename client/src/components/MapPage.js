@@ -57,30 +57,32 @@ export default function GoogleMaps() {
 
     }
 
-    return getCurrentCity().then((currentLoc) =>
+    return getCurrentCity().then((currentLoc) => {
+      let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO'
+      if (currentLoc) {
+        url += '&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50'
 
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            let events = data._embedded.events;
+            if (userData && userData.data && userData.data.joinedGroups) {
+              events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
+            }
 
-      fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50'))
-      .then(response => response.json())
-      .then(data => {
-        let events = data._embedded.events;
-        if (userData && userData.data && userData.data.joinedGroups) {
-          events = events.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }));
-        }
+            for (let i = 0; i < events.length; i++) {
 
-        for (let i = 0; i < events.length; i++) {
+              const marker = new maps.Marker({
+                position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
+                map
+              })
 
-          const marker = new maps.Marker({
-            position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
-            map
-          })
+              const date = new Date(events[i].dates.start.dateTime);
+              const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
-          const date = new Date(events[i].dates.start.dateTime);
-          const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-
-          const infowindow = new maps.InfoWindow({
-            content:
-              `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
+              const infowindow = new maps.InfoWindow({
+                content:
+                  `<div id="content" style='display: flex; max-width: 500px; padding: 10px'>
               <div style='flex:1'>
               <img src=${events[i].images[0].url} style='border-radius: 4px; object-fit: cover; height: 180px; width: 200px'>
               </div>
@@ -102,49 +104,53 @@ export default function GoogleMaps() {
               style='background-color: #fff; color: ${COLORS.highlight}; font-size: 1.2em; border: solid 1px ${COLORS.highlight}; border-radius: 4px; padding: .5em 1em'>Buy Tickets</button>
               </div>
               </div>`
+              });
+
+              marker.addListener("click", () => {
+                infowindow.open({
+                  anchor: marker,
+                  map,
+                  shouldFocus: false,
+                });
+              })
+
+              const handleClick = (e) => {
+                if (loggedIn && userData) {
+                  if (document.getElementById("add-group")) {
+                    handleClickJoin(events[i].id, events[i].name);
+                    document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: 10px 20px`);
+                    document.getElementById("add-group").innerText = "Leave";
+                    document.getElementById("add-group").id = "leave-group";
+                  }
+                  else if (document.getElementById("leave-group")) {
+                    handleClickLeave(events[i].id);
+                    document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: 10px 20px`);
+                    document.getElementById("leave-group").innerText = "Join";
+                    document.getElementById("leave-group").id = "add-group";
+                  }
+                  return;
+                } else {
+                  dispatch(alertActions.error("You need to login first"));
+                  setTimeout(() => {
+                    dispatch(alertActions.clear());
+                  }, 3000);
+                  return;
+                }
+              };
+
+              maps.event.addListener(infowindow, 'domready', () => {
+                if (document.getElementById("join-leave")) {
+                  document.getElementById("join-leave").addEventListener("click", handleClick)
+                }
+              })
+            }
+            return events;
           });
+      }
+    });
 
-          marker.addListener("click", () => {
-            infowindow.open({
-              anchor: marker,
-              map,
-              shouldFocus: false,
-            });
-          })
-
-          const handleClick = (e) => {
-            if (loggedIn && userData) {
-              if (document.getElementById("add-group")) {
-                handleClickJoin(events[i].id, events[i].name);
-                document.getElementById("add-group").setAttribute("style", `background-color: ${COLORS.lightRed}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: 10px 20px`);
-                document.getElementById("add-group").innerText = "Leave";
-                document.getElementById("add-group").id = "leave-group";
-              }
-              else if (document.getElementById("leave-group")) {
-                handleClickLeave(events[i].id);
-                document.getElementById("leave-group").setAttribute("style", `background-color: ${COLORS.highlight}; margin-right: 10px; color: #fff; font-size: 1.2em; border: none; border-radius: 4px; padding: 10px 20px`);
-                document.getElementById("leave-group").innerText = "Join";
-                document.getElementById("leave-group").id = "add-group";
-              }
-              return;
-            } else {
-              dispatch(alertActions.error("You need to login first"));
-              setTimeout(() => {
-                dispatch(alertActions.clear());
-              }, 3000);
-              return;
-            }
-          };
-
-          maps.event.addListener(infowindow, 'domready', () => {
-            if (document.getElementById("join-leave")) {
-              document.getElementById("join-leave").addEventListener("click", handleClick)
-            }
-          })
-        }
-        return events;
-      });
   }
+
 
   useEffect(() => {
     if (userData && userData.data && userData.data.joinedGroups) {
