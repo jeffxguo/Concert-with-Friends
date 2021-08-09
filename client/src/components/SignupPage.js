@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { userActions } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, IconButton, Grid, Button, TextField, MenuItem, makeStyles } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
@@ -62,6 +63,8 @@ const musicTypes = [
     }
 ]
 
+var invalidPassword = false;
+
 export default function SignupPage(props) {
     const classes = useStyles();
     const [userProfile, setUserProfile] = useState({
@@ -97,6 +100,13 @@ export default function SignupPage(props) {
         if (userProfile.username && userProfile.email && userProfile.phone && validatePassword(userProfile.password)) {
             console.log(userProfile)
             dispatch(userActions.register(userProfile));
+        }
+        if(!validatePassword(userProfile.password)) {
+            invalidPassword = true;
+            dispatch(alertActions.error("Invalid Password"));
+            setTimeout(() => {
+                dispatch(alertActions.clear());
+              }, 3000);
         }
     }
     return (
@@ -174,7 +184,7 @@ export default function SignupPage(props) {
                                     type="password"
                                     placeholder="Password"
                                     variant="outlined"
-                                    error={!validatePassword(userProfile.password)}
+                                    error={invalidPassword}
                                     helperText="MUST be at least 8 characters and contain one number"
                                     className={classes.txtInput}
                                     onChange={handleChange}
