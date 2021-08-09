@@ -17,9 +17,8 @@ Allow users to browse local concerts and join others who are attending that even
 
 ### What type of data will it store? 
 
-- Basic User’s information, eg: name, music taste
-- Login credentials(username, password)
-- contact info, eg: Phone number, FB contact, email
+- User's login credentials, i.e. username, password
+- User's personal information, i.e.: email, mobile, facebook/instagram contacts, avatar, joined groups
 - Event group’s information, eg: event, members
 
 ### What will users be able to do with this data?
@@ -29,7 +28,7 @@ Discover and join groups for a particular event and connect with other's that ar
 ### What is some additional functionality you can add/remove based on time constraints?
 
 Additional functionalities we can add are Spotify integrations so users can link their playlist and connect with other's who share similar music taste as well as in app messaging.
-Functionalities to remove base on time constriction will be email alerts and adding the event to the user's calendar.
+Functionalities to remove based on time constriction will be email alerts and adding the event to the user's calendar.
 
 ## Project task requirements
 
