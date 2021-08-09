@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { userActions } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, IconButton, Grid, Button, TextField, MenuItem, makeStyles } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
@@ -62,6 +63,8 @@ const musicTypes = [
     }
 ]
 
+var invalidPassword = false;
+
 export default function SignupPage(props) {
     const classes = useStyles();
     const [userProfile, setUserProfile] = useState({
@@ -87,10 +90,23 @@ export default function SignupPage(props) {
         setUserProfile(profile => ({ ...profile, [name]: value }));
     }
 
+    const validatePassword = (e) => {
+        const re = /^(?=.*\d)[a-zA-Z\d\w\W]{8,}$/;
+        return re.test(e);
+    }
+
     const handleSignupSubmit = (e) => {
         e.preventDefault();
-        if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
+        if (userProfile.username && userProfile.email && userProfile.phone && validatePassword(userProfile.password)) {
             dispatch(userActions.register(userProfile));
+        }
+        if(!validatePassword(userProfile.password)) {
+            invalidPassword = true;
+            dispatch(alertActions.error("Invalid Password"));
+            setTimeout(() => {
+                dispatch(alertActions.clear());
+                invalidPassword = false;
+            }, 3000);
         }
     }
     return (
@@ -168,7 +184,8 @@ export default function SignupPage(props) {
                                     type="password"
                                     placeholder="Password"
                                     variant="outlined"
-                                    errortext="MUST be at least 8 characters and contain one number"
+                                    error={invalidPassword}
+                                    helperText="MUST be at least 8 characters and contain one number"
                                     className={classes.txtInput}
                                     onChange={handleChange}
                                 />
