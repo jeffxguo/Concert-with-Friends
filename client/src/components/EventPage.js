@@ -9,6 +9,7 @@ import { groupService } from '../services/group.service';
 
 export default function EventPage() {
     const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
@@ -32,7 +33,6 @@ export default function EventPage() {
                 lng: position.coords.longitude,
             }
             setCurrentLoc(currentLoc);
-            console.log(currentLoc)
 
             fetch('https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50')
                 .then(response => response.json())
@@ -43,6 +43,7 @@ export default function EventPage() {
                         eventsData = eventsData.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
                     }
                     setEvents(eventsData);
+                    setLoading(false)
                 });
 
         } catch (error) {
@@ -104,7 +105,7 @@ export default function EventPage() {
             }}></div>
             <SearchBar handleSearch={handleSearch} />
             <Typography variant="h1" style={{ margin: "1.5em .5em .5em .5em" }}>Upcoming Events</Typography>
-            <CardList events={events ? events : []} />
+            {loading ? <Typography style={{ margin: "1em" }}>Loading events...</Typography> : <CardList events={events ? events : []} />}
         </div>
     )
 }
