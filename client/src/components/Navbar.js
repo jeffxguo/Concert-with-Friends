@@ -1,4 +1,4 @@
-import { AppBar, Button, Menu, MenuItem, Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
+import { AppBar, Avatar, Button, Menu, MenuItem, Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
 import NavigationRoundedIcon from '@material-ui/icons/NavigationRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { COLORS } from '../constants/Colors';
@@ -45,6 +45,9 @@ export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const loggedIn = useSelector(state => state.user.loggedIn);
+  const userData = useSelector(state => state.user.user);
+  const avatar = userData?.data?.avatar;
+  const avatarImage = avatar && new Buffer.from(avatar.data).toString("ascii");
   const dispatch = useDispatch();
 
   const TIME_OUT = 1000 * 60 * 60;
@@ -156,7 +159,10 @@ export default function Navbar(props) {
             loggedIn ?
               <div>
                 <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
-                  <AccountCircleRoundedIcon style={{ height: 40, width: 40 }} />
+                  { avatarImage ? 
+                    <Avatar src={avatarImage} alt={userData?.data?.username} style={{ height: 40, width: 40 }}/> :
+                    <AccountCircleRoundedIcon style={{ height: 40, width: 40 }} />
+                  }
                 </IconButton>
                 <Menu
                   id="simple-menu"
