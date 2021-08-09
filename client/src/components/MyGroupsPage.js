@@ -2,7 +2,6 @@ import { Typography } from "@material-ui/core";
 import GroupCardList from "./GroupCardList";
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { alertActions } from "../actions/alert.actions";
 import { userService } from "../services/user.service";
 import { userActions } from '../actions/user.actions';
 

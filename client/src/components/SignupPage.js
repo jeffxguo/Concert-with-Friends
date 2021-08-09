@@ -90,7 +90,6 @@ export default function SignupPage(props) {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         if (userProfile.username && userProfile.email && userProfile.phone && userProfile.password) {
-            console.log(userProfile)
             dispatch(userActions.register(userProfile));
         }
     }
