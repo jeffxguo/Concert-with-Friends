@@ -19,17 +19,17 @@ export default function EmailModal(group) {
     return (
         <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>
             <form className={classes.form} onSubmit={sendEmail} >
-                <div class="form-group">
+                <div className="form-group">
                     <label>Name</label>
-                    <input type="text" name="name" class="form-control" placeholder="Enter name"></input>
+                    <input type="text" name="name" className="form-control" placeholder="Enter name"></input>
                 </div>
-                <div class="form-group">
+                <div clasName="form-group">
                     <label>Email address</label>
-                    <input type="email" name="friend_email" class="form-control" placeholder="Enter email"></input>
+                    <input type="email" name="friend_email" className="form-control" placeholder="Enter email"></input>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label>Message</label>
-                    <textarea class="form-control" name="message" rows="4"></textarea>
+                    <textarea className="form-control" name="message" rows="4"></textarea>
                 </div>
                 <div className={classes.sendDiv}>
                     <Button type={'submit'} className={classes.sendBtn}>

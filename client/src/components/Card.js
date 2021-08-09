@@ -73,14 +73,14 @@ export default function EventCard(event) {
                                         }}>
                                             <ClearIcon />
                                         </IconButton>
-                                        <div class="card">
-                                            <h5 class="card-header">Confirm</h5>
-                                            <div class="card-body">
+                                        <div className="card">
+                                            <h5 className="card-header">Confirm</h5>
+                                            <div className="card-body">
 
-                                                <p class="card-text">Are you sure you want to leave {event.title} </p>
-                                                <div class="modal-footer">
-                                                    <a href="#" class="btn btn-secondary" onClick={close} >Cancel</a>
-                                                    <a href="#" class="btn btn-primary" style={{ backgroundColor: COLORS.highlight }} onClick={handleClickLeave} >Leave Group</a>
+                                                <p className="card-text">Are you sure you want to leave {event.title} </p>
+                                                <div className="modal-footer">
+                                                    <a href="#" className="btn btn-secondary" onClick={close} >Cancel</a>
+                                                    <a href="#" className="btn btn-primary" style={{ backgroundColor: COLORS.highlight }} onClick={handleClickLeave} >Leave Group</a>
                                                 </div>
                                             </div>
                                         </div>
