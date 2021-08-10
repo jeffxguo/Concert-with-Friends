@@ -15,14 +15,13 @@ export default function EmailModal(group) {
 
     const sendEmail = (e) => {
         e.preventDefault();
-        emailjs.sendForm('service_hix3o8o', 'template_p0j9wjm', e.target, 'user_a564XBSBeNeDkGfhl5ozI').then (res => {
-            console.log(res);
-       }).catch(err => console.log(err));
-       group.close();
-       dispatch(alertActions.success("Message sent successfully"))
-       setTimeout(() => {
-        dispatch(alertActions.clear());
-    }, 3000);
+        emailjs.sendForm('service_hix3o8o', 'template_p0j9wjm', e.target, 'user_a564XBSBeNeDkGfhl5ozI').then(res => {
+        }).catch(err => console.log(err));
+        group.close();
+        dispatch(alertActions.success("Message sent successfully"))
+        setTimeout(() => {
+            dispatch(alertActions.clear());
+        }, 3000);
     }
     return (
         <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>
