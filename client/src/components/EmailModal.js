@@ -15,7 +15,7 @@ export default function EmailModal(group) {
 
     const sendEmail = (e) => {
         e.preventDefault();
-        emailjs.sendForm('service_hix3o8o','template_p0j9wjm',e.target,'user_a564XBSBeNeDkGfhl5ozI').then (res => {
+        emailjs.sendForm('service_hix3o8o', 'template_p0j9wjm', e.target, 'user_a564XBSBeNeDkGfhl5ozI').then (res => {
             console.log(res);
        }).catch(err => console.log(err));
        group.close();
