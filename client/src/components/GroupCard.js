@@ -60,7 +60,7 @@ export default function GroupCard(group) {
                                             }}>
                                                 <ClearIcon />
                                             </IconButton>
-                                            <EmailModal title={group.title} address={group.address} url={group.url} date={group.date}/>
+                                            <EmailModal title={group.title} address={group.address} url={group.url} date={group.date} close={close}/>
                                         </span>
                                     )}
                                 </Popup>

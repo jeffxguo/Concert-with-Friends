@@ -3,11 +3,13 @@ import { COLORS } from '../constants/Colors';
 import React from 'react';
 import emailjs from 'emailjs-com';
 import Button from "@material-ui/core/Button";
-import { useSelector } from 'react-redux';
+import { alertActions } from '../actions/alert.actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function EmailModal(group) {
     const classes = useStyles();
     const userData = useSelector(state => state.user.user);
+    const dispatch = useDispatch();
     const date = new Date(group.date);
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -15,6 +17,11 @@ export default function EmailModal(group) {
         e.preventDefault();
         emailjs.sendForm('service_hix3o8o', 'template_p0j9wjm', e.target, 'user_a564XBSBeNeDkGfhl5ozI').then(res => {
         }).catch(err => console.log(err));
+        group.close();
+        dispatch(alertActions.success("Message sent successfully"))
+        setTimeout(() => {
+            dispatch(alertActions.clear());
+        }, 3000);
     }
     return (
         <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>
@@ -69,4 +76,4 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: COLORS.highlight
         }
     }
-}));
+})); 
