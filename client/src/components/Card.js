@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
@@ -13,10 +13,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { COLORS } from '../constants/Colors';
 import { Icon } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { getWithExpiry } from '../helpers/session-expire';
 
 import { userActions } from '../actions/user.actions';
 import { alertActions } from '../actions/alert.actions';
+import Popup from 'reactjs-popup';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export default function EventCard(event) {
     const classes = useStyles();
@@ -57,9 +58,43 @@ export default function EventCard(event) {
                 }} />
                 <div className={classes.addButton}>
                     {loggedIn && event.joined ?
-                        <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary" onClick={handleClickLeave}>
-                            Leave
-                        </Button>
+                        <div>
+                            <Popup trigger={
+                                <Button style={{ fontSize: "1rem" }} variant="contained" color="secondary">
+                                    {"Leave"}
+                                </Button>} modal>
+                                {close => (
+                                    <span className={classes.modal} style={{
+                                    }}>
+                                        <IconButton className={classes.close} onClick={close} style={{
+                                            position: 'absolute',
+                                            right: '20px',
+                                            top: '20px',
+                                        }}>
+                                            <ClearIcon />
+                                        </IconButton>
+                                        <div className="card">
+                                            <h5 className="card-header">Confirm</h5>
+                                            <div className="card-body">
+
+                                                <p className="card-text">Are you sure you want to leave {event.title} </p>
+                                                <div className="modal-footer">
+                                                    <a href="#" className="btn btn-secondary" onClick={close} >Cancel</a>
+                                                    <a href="#" className="btn btn-primary" style={{ backgroundColor: COLORS.highlight }} onClick={handleClickLeave} >Leave Group</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                )}
+                            </Popup>
+
+                        </div>
+
+
+
+
+
+
                         : <IconButton style={{
                             backgroundColor: 'white',
                             color: COLORS.black,

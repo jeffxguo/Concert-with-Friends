@@ -1,4 +1,3 @@
-import { Typography } from "@material-ui/core";
 import { COLORS } from "../constants/Colors";
 import background from "../images/landing.jpg";
 import img1 from "../images/ag.jpeg";

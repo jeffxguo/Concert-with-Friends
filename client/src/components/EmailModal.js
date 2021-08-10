@@ -21,8 +21,8 @@ export default function EmailModal(group) {
        group.close();
        dispatch(alertActions.success("Message sent successfully"))
        setTimeout(() => {
-         dispatch(alertActions.clear());
-     }, 3000);
+        dispatch(alertActions.clear());
+    }, 3000);
     }
     return (
         <Box borderRadius="borderRadius" className={classes.box} style={{ display: "block", textAlign: "left", backgroundColor: COLORS.white }}>

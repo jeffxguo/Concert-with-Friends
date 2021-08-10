@@ -19,7 +19,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import Avatar from 'react-avatar-edit'
-import {Avatar as AvatarMaterial} from '@material-ui/core';
+import { Avatar as AvatarMaterial } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { COLORS } from '../constants/Colors';
 
@@ -68,9 +68,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
   },
   avatarImage: {
-    margin: "5% 0 5% 50%",
-    width: "50px",
-    height: "50px"
+    margin: "5% 0 5% 45%",
+    width: "4rem",
+    height: "4rem"
+  },
+  avatarUpload: {
+    margin: "0 0 0 30%"
   },
   txtInput: {
     backgroundColor: "white",
@@ -124,13 +127,13 @@ export default function Profile(props) {
   }
   const initialInputs = {
     username: {
-      icon: <PersonRoundedIcon className={classes.profileIcons}/>,
+      icon: <PersonRoundedIcon className={classes.profileIcons} />,
       value: profile && profile.username,
       validator: function (u) { return u !== "" },
       invalid: false
     },
     email: {
-      icon: <MailRoundedIcon className={classes.profileIcons}/>,
+      icon: <MailRoundedIcon className={classes.profileIcons} />,
       value: profile && profile.email,
       validator: function (e) {
         const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -139,7 +142,7 @@ export default function Profile(props) {
       invalid: false
     },
     phone: {
-      icon: <PhoneRoundedIcon className={classes.profileIcons}/>,
+      icon: <PhoneRoundedIcon className={classes.profileIcons} />,
       value: profile && profile.phone,
       validator: function (p) {
         const re = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -148,19 +151,19 @@ export default function Profile(props) {
       invalid: false
     },
     facebook: {
-      icon: <FacebookIcon className={classes.profileIcons}/>,
+      icon: <FacebookIcon className={classes.profileIcons} />,
       value: profile && profile.facebook,
       validator: () => void (0),
       invalid: false
     },
     instagram: {
-      icon: <InstagramIcon className={classes.profileIcons}/>,
+      icon: <InstagramIcon className={classes.profileIcons} />,
       value: profile && profile.instagram,
       validator: () => void (0),
       invalid: false
     },
     taste: {
-      icon: <MusicNoteRoundedIcon className={classes.profileIcons}/>,
+      icon: <MusicNoteRoundedIcon className={classes.profileIcons} />,
       value: profile && profile.taste,
       validator: function (t) { return t !== "" },
       invalid: false
@@ -199,13 +202,13 @@ export default function Profile(props) {
       setProfileInputs(inputs => ({ ...inputs, [name]: { ...inputs[[name]], "value": value, "invalid": true } }));
     }
   }
-  
+
   const onCrop = (preview) => {
     setAvatarImage(preview);
   }
 
   const onBeforeFileLoad = (elem) => {
-    if (elem.target.files[0].size > 71680) {
+    if (elem.target.files[0].size > 716800) {
       alert("File is too big!");
       elem.target.value = "";
     };
@@ -230,20 +233,25 @@ export default function Profile(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={props.handleCloseProfile}>
-            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'rtl' ? <ChevronLeftIcon className={classes.profileIcons} /> : <ChevronRightIcon className={classes.profileIcons} />}
           </IconButton>
         </div>
         <Divider />
-        <div>
-        {editing ? <Avatar
-          width={150}
-          height={100}
-          onCrop={onCrop}
-          onFileLoad={onFileLoad}
-          onBeforeFileLoad={onBeforeFileLoad}
-          src={null}
-        /> : <AvatarMaterial src={avatarImage} alt={profile?.username} className={classes.avatarImage}/>}
-        </div>
+        {editing ?
+          <div className={classes.avatarUpload}>
+            <Avatar
+              width={150}
+              height={100}
+              borderStyle={{ borderColor: COLORS.grey, borderStyle: "dashed", borderWidth: "0.15rem", borderRadius: "0.5rem" }}
+              label={"Choose an image"}
+              labelStyle={{ fontSize: "1em", fontWeight: "bold" }}
+              onCrop={onCrop}
+              onFileLoad={onFileLoad}
+              onBeforeFileLoad={onBeforeFileLoad}
+              src={null}
+            />
+          </div>
+          : <AvatarMaterial src={avatarImage} alt={profile?.username} className={classes.avatarImage} />}
         <Divider />
         <List>
           {Object.entries(profileInputs).map(([key, text], index) => (
