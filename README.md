@@ -121,11 +121,11 @@ The calendar feature is directly accessible on the `My Groups` page. This featur
 
 
 ### Nancy
-- User `sign-up/login`(front-end)
-- User `profile editing/avartar uploading`(full-stack)
-- `Join/leave groups` on main and maps pages(front-end)
-- Show `number of people joined` on group cards(front-end)
-- `Heroku deployment` setups
+- User sign-up/login(front-end)
+- User profile editing/avartar uploading(full-stack)
+- Join/leave groups on main and maps pages(front-end)
+- Show number of people joined on group cards(front-end)
+- Heroku deployment setups
 
 ### Ysabelle
 
