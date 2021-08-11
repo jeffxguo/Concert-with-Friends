@@ -139,7 +139,7 @@ We plan to add on extra features that was not implemented in our stretch goal su
 -Nav Bar
   - show current user's city
 - My Groups
- - invite friends functionality
+  - invite friends functionality
 
 ### Jeffrey
 
