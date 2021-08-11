@@ -103,7 +103,7 @@ The `session timeout` is a feature built upon the user login functionality in or
 The `confirmation modals` were created for when a user attempts to leave a group. This will help reduce unintentional actions.
 
 ### Inputs 🖊 
-All our input fields have some sort of validation tied to it. Email/phone numbers have formatting validation and passwords have minimum length requirements. 
+All our input fields have some sort of validation tied to it. Email/phone numbers have formatting validation and passwords have minimum length requirements(i.e. at least 8 characters and must contain numbers). 
 
 ### Map View 🗺 
 For event searching, we provide users with two different options. They can either use our search feature on the `main page` or find events based on their current location on the `maps page`. Our search feature provides them multiple filtering options to help them find exactly what they are looking for whereas the map view allows an easier visual overview of events around them. Our `maps page` also has custom popups to match the theme of the rest of the app.
@@ -116,5 +116,21 @@ The calendar feature is directly accessible on the `My Groups` page. This featur
 
 
 ## Contributions
+
+### Ruonan
+
+
+### Nancy
+- User `sign-up/login`(front-end)
+- User `profile editing/avartar uploading`(full-stack)
+- `Join/leave groups` on main and maps pages(front-end)
+- Show `number of people joined` on group cards(front-end)
+- `Heroku deployment` setups
+
+### Ysabelle
+
+
+### Jeffrey
+
 
 
