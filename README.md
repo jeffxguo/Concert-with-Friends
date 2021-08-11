@@ -91,25 +91,25 @@ https://www.figma.com/file/vgKphQ9Y0UD4Z9faVusc6B/cpsc-455-proj?node-id=0%3A1
 Where our project excels is in our intentional user-centric designs and features. In the following sections, we will outline the key features built for improving our user’s experience.
 
 ### Email System 📧 
-To help users keep track of app activity, we have an email system that notifies users via email when a new person joins their event group. Our email system also allows users to send email invites to their friends directly inside the app. 
+To help users keep track of app activity, we have an `email system` that notifies users via email when a new person joins their event group. Our `email system` also allows users to send email invites to their friends directly inside the app. 
 
 ### Alert System 🚨 
-Our alert system holds the global states for all the errors and messages on the client side. The messages will be rendered in either a component or in the window alert box, as a client-side error handling approach. This is to give users an idea about what’s going wrong in the background and guide them towards further actions.
+Our `alert system` holds the global states for all the errors and messages on the client side. The messages will be rendered in either a component or in the window alert box, as a client-side error handling approach. This is to give users an idea about what’s going wrong in the background and guide them towards further actions.
  
 ### Session Timeout ⌛️
-The session timeout is a feature built upon the user login functionality in order to enhance site security and minimize the exposure to session-based attacks. Our app will track users’ activity state(not data) regularly to check if they are still actively performing actions, and will log them out automatically when their current session expires(i.e. No action has been performed in a certain amount of time). Usually, a new action will refresh the current session, and the default expiry period has been set to 1 hour.
+The `session timeout` is a feature built upon the user login functionality in order to enhance site security and minimize the exposure to session-based attacks. Our app will track users’ activity state(not data) regularly to check if they are still actively performing actions, and will log them out automatically when their current session expires(i.e. no action has been performed in a certain amount of time). Usually, a new action will refresh the current session, and the default expiry period has been set to 1 hour.
 
 ### Confirmation Modal ✅
-The confirmation modals were created for when a user attempts to leave a group. This will help reduce unintentional actions.
+The `confirmation modals` were created for when a user attempts to leave a group. This will help reduce unintentional actions.
 
 ### Inputs 🖊 
 All our input fields have some sort of validation tied to it. Email/phone numbers have formatting validation and passwords have minimum length requirements. 
 
 ### Map View 🗺 
-For event searching, we provide users with two different options. They can either use our search feature on the main page or find events based on their current location on the maps page. Our search feature provides them multiple filtering options to help them find exactly what they are looking for whereas the map view allows an easier visual overview of events around them. Our maps page also has custom popups to match the theme of the rest of the app.
+For event searching, we provide users with two different options. They can either use our search feature on the `main page` or find events based on their current location on the `maps page`. Our search feature provides them multiple filtering options to help them find exactly what they are looking for whereas the map view allows an easier visual overview of events around them. Our `maps page` also has custom popups to match the theme of the rest of the app.
 
 ### Calendar Feature 📅 
-The calendar feature is directly accessible on the ‘my groups’ page. This feature pre-fills all of the information and minimizes the effort needed to add a new event to a user’s calendar.
+The calendar feature is directly accessible on the `My Groups` page. This feature pre-fills all of the information and minimizes the effort needed to add a new event to a user’s calendar.
 
 
 ## Next Steps
