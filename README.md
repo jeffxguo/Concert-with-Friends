@@ -113,6 +113,7 @@ The calendar feature is directly accessible on the `My Groups` page. This featur
 
 
 ## Next Steps
+We plan to add on extra features that was not implemented in our stretch goal such as integrating Spotify into the user's profile so that other user's can see your playlist and type of music that you are into. Another feature is to ad on the chat option so that users can talk in a chat room with other users who also signed up for that event.
 
 
 ## Contributions
@@ -122,12 +123,24 @@ The calendar feature is directly accessible on the `My Groups` page. This featur
 
 ### Nancy
 - User sign-up/login(front-end)
-- User profile editing/avartar uploading(full-stack)
+- User profile editing/avatar uploading(full-stack)
 - Join/leave groups on main and maps pages(front-end)
 - Show number of people joined on group cards(front-end)
 - Heroku deployment setups
 
 ### Ysabelle
+- Maps Page
+  - Render the map using user's location as center
+  - Place the markers on the map
+  - Info window to pop up when markers are clicked which shows information/image about the event
+-Events Page
+  - order the events in ascending date order
+  - radius and current city in the search bar
+  - confirmation modal to ask the user if they are sure they want to leave the event
+-Nav Bar
+  - show current user's city
+My Groups
+ - invite friends functionality
 
 
 ### Jeffrey
