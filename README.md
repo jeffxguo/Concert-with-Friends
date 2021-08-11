@@ -132,13 +132,13 @@ We plan to add on extra features that was not implemented in our stretch goal su
   - Render the map using user's location as center
   - Place the markers on the map
   - Info window to pop up when markers are clicked which shows information/image about the event
--Events Page
+- Cards Page
   - order the events in ascending date order
   - radius and current city in the search bar
   - confirmation modal to ask the user if they are sure they want to leave the event
 -Nav Bar
   - show current user's city
-My Groups
+- My Groups
  - invite friends functionality
 
 ### Jeffrey
