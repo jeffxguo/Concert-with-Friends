@@ -208,6 +208,7 @@ export default function Profile(props) {
   }
 
   const onBeforeFileLoad = (elem) => {
+    // size limit of 700 KB
     if (elem.target.files[0].size > 716800) {
       alert("File is too big!");
       elem.target.value = "";

@@ -12,7 +12,7 @@ export default function EventPage() {
     const [loading, setLoading] = useState(true);
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
-    const apiKey = "zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO"
+    const API_KEY = process.env.REACT_APP_API_KEY || '';
     const [currentLoc, setCurrentLoc] = useState({
         lat: 0,
         lng: 0
@@ -25,7 +25,7 @@ export default function EventPage() {
     }
 
     const getCurrentCity = async () => {
-        let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO&sort=date,asc&keyword=music'
+        let url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${API_KEY}&sort=date,asc&keyword=music`
 
         try {
             const position = await getCurrentLongLat();
@@ -85,7 +85,7 @@ export default function EventPage() {
     }, [userData]);
 
     const handleSearch = async (keywords, city, radius, genre, startDate, endDate) => {
-        let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=' + apiKey + "&sort=date,asc&segmentId=KZFzniwnSyZfZ7v7nJ"
+        let url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${API_KEY}&sort=date,asc&segmentId=KZFzniwnSyZfZ7v7nJ`
         if (keywords) url += "&keyword=" + keywords
         if (city !== "current location") {
             url += "&city=" + city

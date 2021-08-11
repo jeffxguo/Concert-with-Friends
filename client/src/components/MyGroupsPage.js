@@ -9,7 +9,7 @@ export default function MyGroupsPage() {
     const [groups, setGroups] = useState([])
     const userData = useSelector(state => state.user.user);
     const dispatch = useDispatch();
-    const apiKey = "btyHtEL9FKUl9n1MqrTr0OTs33iD0MGi"
+    const API_KEY = process.env.REACT_APP_API_KEY || '';
 
     const handleClickLeave = (eventId) => {
         if (userData && userData.data && userData.data._id) {
@@ -24,7 +24,7 @@ export default function MyGroupsPage() {
         if (userData && userData.data && userData.data._id) {
             userService.getGroups(userData.data._id).then(async (userGroups) => {
                 for (const eventID of userGroups) {
-                    const response = await fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + apiKey)
+                    const response = await fetch('https://app.ticketmaster.com/discovery/v2/events/' + eventID + '?apikey=' + API_KEY)
                     const group = await response.json()
                     data.push(group)
                 }
