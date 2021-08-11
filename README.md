@@ -45,7 +45,7 @@ Functionalities to remove based on time constriction will be email alerts and ad
 1. Profile editing + Avatar uploading ✅
 2. Filter events by proximity ✅
 3. Filter events by date ✅
-4. 5. Filter events by city ✅
+4. Filter events by city ✅
 5. Add to calendar ✅
 
 
