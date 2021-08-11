@@ -113,8 +113,7 @@ The calendar feature is directly accessible on the `My Groups` page. This featur
 
 
 ## Next Steps
-We plan to add on extra features that was not implemented in our stretch goal such as integrating Spotify into the user's profile so that other user's can see your playlist and type of music that you are into. Another feature is to ad on the chat option so that users can talk in a chat room with other users who also signed up for that event.
-
+We plan to add on extra features that was not implemented in our stretch goal such as linking Spotify account into the user's profile so that other users can see your playlist and type of music that you are into. This will help users to find their best-matched buddy based on music taste. Another feature is to add on the chat option so that users can talk in a chat room with other users who also signed up for that event.
 
 ## Contributions
 
