@@ -141,7 +141,6 @@ We plan to add on extra features that was not implemented in our stretch goal su
 My Groups
  - invite friends functionality
 
-
 ### Jeffrey
 
 
