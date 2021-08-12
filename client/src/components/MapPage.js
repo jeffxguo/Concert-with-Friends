@@ -14,6 +14,9 @@ export default function GoogleMaps() {
   const alert = useSelector(state => state.alert);
   const dispatch = useDispatch();
 
+  const API_KEY = process.env.REACT_APP_API_KEY || '';
+  const BS_URL_KEY = process.env.REACT_APP_BS_URL_KEY || '';
+
   const [currentLoc, setCurrentLoc] = useState({
     lat: 0,
     lng: 0
@@ -58,7 +61,7 @@ export default function GoogleMaps() {
     }
 
     return getCurrentCity().then((currentLoc) => {
-      let url = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=zJPgVpNApZcVc9eYvPnrrjrZkOMgExUO'
+      let url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${API_KEY}`
       if (currentLoc) {
         url += '&geoPoint=' + currentLoc.lat + "," + currentLoc.lng + '&keyword=music&radius=50'
 
@@ -169,7 +172,7 @@ export default function GoogleMaps() {
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo" }}
+        bootstrapURLKeys={{ key: BS_URL_KEY }}
         defaultCenter={{
           lat: 0,
           lng: 0
