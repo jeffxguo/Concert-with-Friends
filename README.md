@@ -85,6 +85,21 @@ https://www.figma.com/file/vgKphQ9Y0UD4Z9faVusc6B/cpsc-455-proj?node-id=0%3A1
 
 ## Technical Specifications
 
+### HTML, CSS, and JS
+HTML, CSS, and JS encompass all the code that is used throughout the project. Javascript and HTML are used in tandem with JSX to create the structure and functionality of the frontend components. The CSS is then used to style all of the components to fit correctly and look visually appealing.
+
+### React & Redux
+Our app is built upon using React, allowing us to easily break down our code structure into components. Redux is used to manage the state into one store throughout the entire app, making it possible to keep track of the logged in user throughout the app, while dispatching actions such as alerts and logging in and out.
+
+### MongoDB
+We used MongoDB to create a database that stores our collections of groups and users. By connecting our web application to MongoDB using Mongoose, we are able to easily fetch information and update our records in the database for users that want to sign up and join groups. MongoDB is simpler and more flexible to use than options like MySQL because it doesn’t enforce a schema, but can require more processing effort in storing data.
+
+### Node & Express
+
+
+### Heroku
+Heroku is the cloud hosting platform that we used to deploy our app online.
+
 
 ## Above and Beyond Features 👀 
 
