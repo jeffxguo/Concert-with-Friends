@@ -97,6 +97,13 @@ export default function SignupPage(props) {
 
     const handleSignupSubmit = (e) => {
         e.preventDefault();
+        if (userProfile.username === "" || userProfile.email === "" || userProfile.phone === "" || userProfile.password === "") {
+            dispatch(alertActions.error('Please fill out the blank entries'));
+            setTimeout(() => {
+              dispatch(alertActions.clear());
+            }, 3000);
+            return;
+        }
         if (userProfile.username && userProfile.email && userProfile.phone && validatePassword(userProfile.password)) {
             dispatch(userActions.register(userProfile));
         }
