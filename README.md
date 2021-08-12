@@ -148,20 +148,20 @@ We plan to add on extra features that was not implemented in our stretch goal su
 - Page routing
 - Created the Navbar component
 - User sign-up/login(front-end)
- - Created the sign-up/login forms
- - Established redux store to manage user and alert states
- - Set up reducers, helpers and action creators
+  - Created the sign-up/login forms
+  - Established redux store to manage user and alert states
+  - Set up reducers, helpers and action creators
 - User profile editing/avatar uploading(full-stack)
- - Create the profile page
- - Implemented the profile editing end-to-end
- - Implemented the avartar uploading end-to-end
+  - Create the profile page
+  - Implemented the profile editing end-to-end
+  - Implemented the avartar uploading end-to-end
 - Join/leave groups(front-end)
- - Implemented the user join/leave group with action dispatching on the main page
- - Implemented the user join/leave group with action dispatching on the maps page
+  - Implemented the user join/leave group with action dispatching on the main page
+  - Implemented the user join/leave group with action dispatching on the maps page
 - Show number of people joined on group cards(front-end)
 - Heroku deployment setups
- - Refactored the code base for deployment
- - Set up continuous deployment through Github actions
+  - Refactored the code base for deployment
+  - Set up continuous deployment through Github actions
 
 ### Ysabelle
 - Maps Page
@@ -172,7 +172,7 @@ We plan to add on extra features that was not implemented in our stretch goal su
   - order the events in ascending date order
   - radius and current city in the search bar
   - confirmation modal to ask the user if they are sure they want to leave the event
--Nav Bar
+- Nav Bar
   - show current user's city
 - My Groups
   - invite friends functionality
