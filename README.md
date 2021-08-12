@@ -142,6 +142,10 @@ We plan to add on extra features that was not implemented in our stretch goal su
   - invite friends functionality
 
 ### Jeffrey
-
-
+- "From" and "To" date filters on search bar
+- Event cards on Home and MyGroups page
+  - View Members modal that shows contact info of members in a group
+  - Dropdown with "Add to Calendar", "Purchase Tickets", and "Leave Group"
+- Endpoints and schemas for managing users and groups in the database
+- Password validation on Sign-up page
 
