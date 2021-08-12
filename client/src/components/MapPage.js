@@ -42,7 +42,6 @@ export default function GoogleMaps() {
     }
 
     const getCurrentCity = async () => {
-
       try {
         const position = await getCurrentLongLat();
         const currentLoc = {
@@ -52,12 +51,10 @@ export default function GoogleMaps() {
         map.setCenter(currentLoc);
         setCurrentLoc(currentLoc);
         return currentLoc;
-
       } catch (error) {
         console.warn(error)
         return null;
       }
-
     }
 
     return getCurrentCity().then((currentLoc) => {
@@ -74,12 +71,10 @@ export default function GoogleMaps() {
             }
 
             for (let i = 0; i < events.length; i++) {
-
               const marker = new maps.Marker({
                 position: { lat: parseFloat(events[i]._embedded.venues[0].location.latitude), lng: parseFloat(events[i]._embedded.venues[0].location.longitude) },
                 map
               })
-
               const date = new Date(events[i].dates.start.dateTime);
               const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -108,7 +103,6 @@ export default function GoogleMaps() {
               </div>
               </div>`
               });
-
               marker.addListener("click", () => {
                 infowindow.open({
                   anchor: marker,
@@ -116,7 +110,6 @@ export default function GoogleMaps() {
                   shouldFocus: false,
                 });
               })
-
               const handleClick = (e) => {
                 if (loggedIn && userData) {
                   if (document.getElementById("add-group")) {
@@ -140,7 +133,6 @@ export default function GoogleMaps() {
                   return;
                 }
               };
-
               maps.event.addListener(infowindow, 'domready', () => {
                 if (document.getElementById("join-leave")) {
                   document.getElementById("join-leave").addEventListener("click", handleClick)
@@ -151,9 +143,7 @@ export default function GoogleMaps() {
           });
       }
     });
-
   }
-
 
   useEffect(() => {
     if (userData && userData.data && userData.data.joinedGroups) {
@@ -167,7 +157,6 @@ export default function GoogleMaps() {
       window.alert(alert.message);
     }
   }, [alert]);
-
 
   return (
     <div style={{ height: "100vh", width: "100%" }}>

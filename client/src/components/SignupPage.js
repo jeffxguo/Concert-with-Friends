@@ -100,7 +100,7 @@ export default function SignupPage(props) {
         if (userProfile.username && userProfile.email && userProfile.phone && validatePassword(userProfile.password)) {
             dispatch(userActions.register(userProfile));
         }
-        if(!validatePassword(userProfile.password)) {
+        if (!validatePassword(userProfile.password)) {
             invalidPassword = true;
             dispatch(alertActions.error("Invalid Password"));
             setTimeout(() => {

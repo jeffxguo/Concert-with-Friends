@@ -6,7 +6,6 @@ import img3 from "../images/arctic.jpeg";
 import { Link } from "react-router-dom";
 
 export default function LandingPage() {
-
     return (
         <div>
             <div style={{
@@ -22,7 +21,6 @@ export default function LandingPage() {
                     <div style={{ marginTop: "2em", color: "white", fontSize: "1.4em", textAlign: "left", fontWeight: 700 }}>WE GOT YOU COVERED ON BOTH</div>
                 </div>
             </div>
-
             <div style={{ display: "flex", flexDirection: "row", margin: " 4em 10%" }}>
                 <div style={{ flex: 2, fontSize: "2.2rem", textAlign: "left", fontWeight: "700", margin: "1em 1em 0 0" }}>
                     Find <span style={{ color: COLORS.highlight }}>friends.</span> <br /> Connect on Social Media. <br /> Attend <span style={{ color: COLORS.highlight }}>concerts together.</span>
@@ -44,7 +42,6 @@ export default function LandingPage() {
                             justifyContent: "flex-end",
                             marginRight: "2em"
                         }}></div>
-
                     </div>
                     <div style={{ flex: 1 }}>
                         <div style={{

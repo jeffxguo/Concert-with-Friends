@@ -5,16 +5,13 @@ import { Fragment } from 'react';
 
 export default function CardList(props) {
     const alert = useSelector(state => state.alert);
-
     return (
         <Fragment>
-
             <div>
                 {alert.message &&
                     <div style={{ position: "fixed", zIndex: 100, width: "30vw", left: 0, textAlign: "center", bottom: 80, margin: "0 35vw 0 35vw" }} className={`alert ${alert.type}`}>{alert.message}</div>
                 }
             </div>
-
             <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                 {props.events.map((event, i) => {
                     return (

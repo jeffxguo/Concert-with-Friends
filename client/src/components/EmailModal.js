@@ -76,4 +76,4 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: COLORS.highlight
         }
     }
-})); 
+}));

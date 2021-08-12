@@ -16,11 +16,11 @@ export default function GroupCard(group) {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
-  
+
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
     };
 
     const months = ["JAN", 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -44,14 +44,14 @@ export default function GroupCard(group) {
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
                             <div className={classes.inviteButton}>
                                 <Popup trigger={
-                                <Button style={{
-                                    color: COLORS.highlight,
-                                    textAlign: 'center'
-                                }}>
-                                    {"Invite Friends"}
-                                </Button>} modal>
+                                    <Button style={{
+                                        color: COLORS.highlight,
+                                        textAlign: 'center'
+                                    }}>
+                                        {"Invite Friends"}
+                                    </Button>} modal>
                                     {close => (
-                                        <span className={classes.modal} style={{                                        
+                                        <span className={classes.modal} style={{
                                         }}>
                                             <IconButton className={classes.close} onClick={close} style={{
                                                 position: 'absolute',
@@ -60,7 +60,7 @@ export default function GroupCard(group) {
                                             }}>
                                                 <ClearIcon />
                                             </IconButton>
-                                            <EmailModal title={group.title} address={group.address} url={group.url} date={group.date} close={close}/>
+                                            <EmailModal title={group.title} address={group.address} url={group.url} date={group.date} close={close} />
                                         </span>
                                     )}
                                 </Popup>
@@ -89,38 +89,44 @@ export default function GroupCard(group) {
                                     )}
                                 </Popup>
                             </div>
-                        <div className={classes.moreButton}>
-                            <IconButton style={{
-                                color: COLORS.highlight,
-                                backgroundColor: COLORS.white,
-                            }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                <MoreVertIcon />
-                            </IconButton>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                                anchorOrigin={{
-                                    horizontal: "right",
-                                }}
-                                transformOrigin={{
-                                    horizontal: "right",
-                                }}
-                            >
-                                <MenuItem onClick={() => {window.open("http://www.google.com/calendar/render?action=TEMPLATE&text=" + group.title + 
-                                    "&dates=" + moment(date).format('YYYYMMDDTHHmmssZ') + "/" + moment(date).add(1, 'hours').format('YYYYMMDDTHHmmssZ') +
-                                    "&location=" + group.address, "_blank");
-                                    handleClose();}}>Add to Calendar</MenuItem>
-                                <MenuItem onClick={() => {window.open(group.url)
-                                    handleClose();}}>Purchase Tickets</MenuItem>
-                                <MenuItem onClick={() => {group.handleClickLeave(group.id);
-                                    handleClose();}}>Leave Group</MenuItem>
-                            </Menu>
-                        </div>  
+                            <div className={classes.moreButton}>
+                                <IconButton style={{
+                                    color: COLORS.highlight,
+                                    backgroundColor: COLORS.white,
+                                }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                    <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        horizontal: "right",
+                                    }}
+                                    transformOrigin={{
+                                        horizontal: "right",
+                                    }}
+                                >
+                                    <MenuItem onClick={() => {
+                                        window.open("http://www.google.com/calendar/render?action=TEMPLATE&text=" + group.title +
+                                            "&dates=" + moment(date).format('YYYYMMDDTHHmmssZ') + "/" + moment(date).add(1, 'hours').format('YYYYMMDDTHHmmssZ') +
+                                            "&location=" + group.address, "_blank");
+                                        handleClose();
+                                    }}>Add to Calendar</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        window.open(group.url)
+                                        handleClose();
+                                    }}>Purchase Tickets</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        group.handleClickLeave(group.id);
+                                        handleClose();
+                                    }}>Leave Group</MenuItem>
+                                </Menu>
+                            </div>
                         </div>
-                        </div>
+                    </div>
                 </CardContent>
             </Card>
         </div>
