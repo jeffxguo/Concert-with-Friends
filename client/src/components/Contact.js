@@ -18,7 +18,7 @@ export default function Contact(member) {
                 <Avatar src={initialAvatar} alt={member?.username} className={classes.memberImage} />
                 <div className={classes.details}>
                     <Typography style={{ fontWeight: 700 }}><span style={{ fontSize: "1.2em" }}>{member.name} </span>
-                        {member.taste &&
+                        {member.taste && member.taste!=="N/A" && member.taste!=="" &&
                             <span style={{ fontSize: "1em", color: COLORS.grey, "font-style": "italic" }}>{member.taste} Listener </span>
                         }
                     </Typography>
