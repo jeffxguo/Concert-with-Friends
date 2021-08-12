@@ -17,12 +17,10 @@ export default function Contact(member) {
             <div className={classes.content}>
                 <Avatar src={initialAvatar} alt={member?.username} className={classes.memberImage} />
                 <div className={classes.details}>
-                    <Typography style={{ fontWeight: 700 }}><span style={{ fontSize: "1.2em" }}>{member.name} </span>
-                        {member.taste && member.taste!=="N/A" && member.taste!=="" &&
-                            <span style={{ fontSize: "1em", color: COLORS.grey, "font-style": "italic" }}>{member.taste} Listener </span>
-                        }
-                    </Typography>
-                        
+                    <Typography style={{ fontWeight: 700 }}><span style={{ fontSize: "1.2em" }}>{member.name} </span></Typography>
+                    <Typography>{member.taste && member.taste!=="N/A" && member.taste!=="" &&
+                        <span style={{ fontSize: "1em", color: COLORS.grey, fontWeight: 600 }}>{member.taste} Listener </span>
+                    }</Typography>
                     <div className={classes.contactInfo} style={{ marginTop: 10 }}>
                         <Typography style={{ marginRight: 40 }}><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Phone </span>{member.phone}</Typography>
                         <Typography><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Email </span> {member.email}</Typography>
