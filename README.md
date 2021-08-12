@@ -151,6 +151,7 @@ We plan to add on extra features that was not implemented in our stretch goal su
   - Created the sign-up/login forms
   - Established redux store to manage user and alert states
   - Set up reducers, helpers and action creators
+  - Implemented session timeout
 - User profile editing/avatar uploading(full-stack)
   - Create the profile page
   - Implemented the profile editing end-to-end
