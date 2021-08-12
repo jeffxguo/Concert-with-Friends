@@ -86,20 +86,19 @@ https://www.figma.com/file/vgKphQ9Y0UD4Z9faVusc6B/cpsc-455-proj?node-id=0%3A1
 ## Technical Specifications
 
 ### HTML, CSS, and JS
-HTML, CSS, and JS encompass all the code that is used throughout the project. Javascript and HTML are used in tandem with JSX to create the structure and functionality of the frontend components. The CSS is then used to style all of the components to fit correctly and look visually appealing.
+HTML, CSS, and JS encompass all the code that is used throughout the project. Javascript and HTML are used in tandem with JSX to create the structure and functionality of the front-end components. The CSS is then used to style all of the components to fit correctly and look visually appealing.
 
 ### React & Redux
 Our app is built upon using React, allowing us to easily break down our code structure into components. Redux is used to manage the state into one store throughout the entire app, making it possible to keep track of the logged in user throughout the app, while dispatching actions such as alerts and logging in and out.
 
 ### MongoDB
-We used MongoDB to create a database that stores our collections of groups and users. By connecting our web application to MongoDB using Mongoose, we are able to easily fetch information and update our records in the database for users that want to sign up and join groups. MongoDB is simpler and more flexible to use than options like MySQL because it doesn’t enforce a schema, but can require more processing effort in storing data.
+We used MongoDB to create a database that stores our collections of groups and users. To perform queries to the database through code, we used Mongoose as the ODM in the backend and were able to easily fetch information and update our records in the database for users who want to sign up/login and join/leave groups, etc. The reason why we chose MongoDB is that it's a schema-less NoSQL database, so it's simpler and more flexible for web app development since we had more flexibility in schema design and can be easily scaled and hosted on a cloud server(i.e. MongoDB Atlas). Wherease for SQL databases, it would be more expensive to handle frequent writes since it enforces a structured data table though it might be a better option for storing a huge bulk of data.
 
 ### Node & Express
-
+Node and Express were mainly used to build up our backend server. ExpressJS is a nodejs web framework that we used to write RESTful APIs to handle different HTTP requests from the client side. We adopted routings for users and groups to enforce a better RESTful API design. As mentioned above, Mongoose API was used inside of the our APIs to communicate with the MongoDB database. 
 
 ### Heroku
-Heroku is the cloud hosting platform that we used to deploy our app online.
-
+Heroku is the cloud hosting platform that we used to deploy our app online. To deploy the app in one [dyno](https://www.heroku.com/dynos), we used nodejs as the buildpack and refactored our code base to have a separate client folder to store the front-end code(React app) with the back-end code living inside of the server folder, and added scripts in the root `package.json` for Heroku to build our client code. We chose to use Heroku because it is easy to set up and supports integration with Github actions, which has improved the development productivity significantly.
 
 ## Above and Beyond Features 👀 
 
