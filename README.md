@@ -132,16 +132,20 @@ We plan to add on extra features that was not implemented in our stretch goal su
 ## Contributions
 
 ### Ruonan
-- User sign-in/sign-up/authentication using Passport.js (backend)
-- built the search feature component (frontend), integrated it with ticketmaster API to support searching by different filters
+- User authentication 
+  - Sign-up/sign-in using Passport.js (backend)
+- Search feature component 
+  - Built the component (frontend) 
+  - Set up integration with ticketmaster API to support searching by different filters
 - Designed and built custom markers on maps page
 - Designed and built landing page
 - Integrated "my groups" page with ticketmaster API and database 
-- Email API setup (Email.js) 
-- Sending emails to alert all users in a group of new members joining
+- Email
+  - Set up integration with Email.js to support sending different types of emails within the app
+  - Added email notifications for everytime someone new joins an event group
 - MongoDB setup on backend
-- Designed database to support use cases
-- Designed and styled app components with CSS
+- Designed database to support all use cases
+- Designed and styled app with CSS to make it pretty :)
 
 
 ### Nancy
