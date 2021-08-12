@@ -135,7 +135,7 @@ We plan to add on extra features that was not implemented in our stretch goal su
 - User authentication 
   - Sign-up/sign-in using Passport.js (backend)
 - Search feature component 
-  - Created the component(frontend) 
+  - Built the component (frontend) 
   - Set up integration with ticketmaster API to support searching by different filters
 - Designed and built custom markers on maps page
 - Designed and built landing page
