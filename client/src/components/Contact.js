@@ -12,7 +12,6 @@ export default function Contact(member) {
     if (member.avatar && member.avatar.data) {
         initialAvatar = new Buffer.from(member.avatar.data).toString("ascii");
     }
-
     return (
         <Box borderRadius="borderRadius" className={classes.box}>
             <div className={classes.content}>
@@ -23,12 +22,10 @@ export default function Contact(member) {
                             <Typography style={{ fontWeight: 700 }}><span style={{ fontSize: "1.2em" }}>{member.name} </span></Typography>
                         </div>
                         <div style={{ textAlign: "right", flex: 1 }}>
-
                             <Typography>{member.taste && member.taste !== "N/A" && member.taste !== "" &&
                                 <>
                                     <span style={{ fontSize: ".9em", color: COLORS.grey, fontWeight: 600 }}>{member.taste}</span>
                                     <MusicNoteIcon style={{ color: COLORS.pink, marginLeft: '.5em' }} />
-
                                 </>
                             }</Typography>
                         </div>

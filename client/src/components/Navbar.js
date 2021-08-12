@@ -65,7 +65,7 @@ export default function Navbar(props) {
     if (isActive) {
       interval.current = setInterval(() => {
         if (!getWithExpiry('user')) {
-          dispatch(alertActions.error("We are logging you out due to inactivity in 3 seconds!"));
+          dispatch(alertActions.error("We are logging you out due to inactivity"));
           setTimeout(() => {
             dispatch(alertActions.clear());
             dispatch(userActions.logout());
@@ -90,9 +90,7 @@ export default function Navbar(props) {
 
 
   const getCurrentCity = async () => {
-
     Geocoder.init("AIzaSyDaB9iZHEtafiTwgos1qZF0S6iKuW4UpIo");
-
     try {
       const position = await getCurrentLongLat();
       const currentLoc = {

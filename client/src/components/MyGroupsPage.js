@@ -36,8 +36,6 @@ export default function MyGroupsPage() {
     return (
         <div style={{ margin: "2em 10%", textAlign: "left" }}>
             <Typography variant="h1" style={{ margin: "1.5em .5em .5em .5em" }}>My Groups</Typography>
-
-            {/* Need to GET groups from user and pass event info + group members to GroupCardList */}
             <GroupCardList groups={groups ? groups : []} handleClickLeave={handleClickLeave} />
         </div>
     )

@@ -27,7 +27,6 @@ function App() {
 
   useEffect(() => {
     history.listen(() => {
-      // clear alert
       window.scrollTo(0, 0)
       dispatch(alertActions.clear());
     });

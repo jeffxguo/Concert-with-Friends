@@ -76,7 +76,6 @@ export default function EventCard(event) {
                                         <div className="card">
                                             <h5 className="card-header">Confirm</h5>
                                             <div className="card-body">
-
                                                 <p className="card-text">Are you sure you want to leave {event.title} </p>
                                                 <div className="modal-footer">
                                                     <a href="#" className="btn btn-secondary" onClick={close} >Cancel</a>
@@ -87,14 +86,7 @@ export default function EventCard(event) {
                                     </span>
                                 )}
                             </Popup>
-
                         </div>
-
-
-
-
-
-
                         : <IconButton style={{
                             backgroundColor: 'white',
                             color: COLORS.black,
@@ -117,7 +109,6 @@ export default function EventCard(event) {
                     <div className={classes.details}>
                         <Typography variant="h2">{event.title}</Typography>
                         <Typography style={{ marginTop: 10 }}>{event.address}</Typography>
-
                         <div className="row no-gutters" style={{ marginTop: 10 }}>
                             <div className={classes.tag}>
                                 <Icon style={{
@@ -129,11 +120,8 @@ export default function EventCard(event) {
                                 <span style={{ fontSize: "1.1em", fontWeight: 600, color: COLORS.black }}>{event.memberNum ? `${event.memberNum} members` : 'No members yet'}</span>
                             </div>
                         </div>
-
                     </div>
-
                 </CardContent>
-
             </Card>
         </div>
     )
