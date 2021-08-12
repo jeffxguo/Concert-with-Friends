@@ -188,6 +188,7 @@ router.get("/:id", (req, res) => {
                 username: doc.username,
                 phone: doc.phone,
                 email: doc.email,
+                taste: doc.taste,
                 instagram: doc.instagram,
                 facebook: doc.facebook,
                 avatar: doc.avatar

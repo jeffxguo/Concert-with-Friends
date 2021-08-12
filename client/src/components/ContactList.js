@@ -34,7 +34,8 @@ export default function ContactList(props) {
                 {members.map((member, i) => {
                     return (
                         <div className={classes.items} key={i}>
-                            <Contact name={member.username} avatar={member.avatar} phone={member.phone} email={member.email} instagram={member.instagram} facebook={member.facebook} />
+                            <Contact name={member.username} avatar={member.avatar} phone={member.phone} email={member.email} 
+                            instagram={member.instagram} facebook={member.facebook} taste={member.taste} />
                         </div>
                     )
                 })}
