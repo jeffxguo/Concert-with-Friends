@@ -6,7 +6,6 @@ import img3 from "../images/arctic.jpeg";
 import { Link } from "react-router-dom";
 
 export default function LandingPage() {
-
     return (
         <div>
             <div style={{
@@ -44,7 +43,6 @@ export default function LandingPage() {
                             justifyContent: "flex-end",
                             marginRight: "2em"
                         }}></div>
-
                     </div>
                     <div style={{ flex: 1 }}>
                         <div style={{

@@ -117,14 +117,15 @@ export default function Profile(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [editing, setEditing] = useState(null);
-
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user.user);
   const profile = userData && userData.data;
   let initialAvatar;
+
   if (profile && profile.avatar && profile.avatar.data) {
     initialAvatar = new Buffer.from(profile.avatar.data).toString("ascii");
   }
+
   const initialInputs = {
     username: {
       icon: <PersonRoundedIcon className={classes.profileIcons} />,

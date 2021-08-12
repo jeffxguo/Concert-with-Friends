@@ -18,7 +18,6 @@ export default function MyGroupsPage() {
         setGroups(groups.filter(group => group.id !== eventId))
     }
 
-
     useEffect(() => {
         const data = []
         if (userData && userData.data && userData.data._id) {

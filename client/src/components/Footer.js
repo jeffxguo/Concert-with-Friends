@@ -8,7 +8,6 @@ import logo from '../images/logo.png'
 export default function Footer(props) {
     const classes = useStyles();
 
-
     return (
         <Box className={classes.root} style={{ backgroundColor: COLORS.lightGrey }}>
             <div className={classes.content}>

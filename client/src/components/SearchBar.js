@@ -285,8 +285,7 @@ const useStyles = makeStyles({
     borderBottom: "1px white solid",
     outline: "none",
     backgroundColor: COLORS.darkBlue,
-  }
-  ,
+  },
   inputFocused: {
     outline: "none",
     border: "none"
@@ -300,6 +299,5 @@ const useStyles = makeStyles({
     color: "white"
   }
 });
-
 
 export default SearchBar;

@@ -154,7 +154,6 @@ export default function GoogleMaps() {
 
   }
 
-
   useEffect(() => {
     if (userData && userData.data && userData.data.joinedGroups) {
       const eventsData = events?.map((event) => ({ ...event, joined: userData.data.joinedGroups.includes(event.id) }))
@@ -167,7 +166,6 @@ export default function GoogleMaps() {
       window.alert(alert.message);
     }
   }, [alert]);
-
 
   return (
     <div style={{ height: "100vh", width: "100%" }}>

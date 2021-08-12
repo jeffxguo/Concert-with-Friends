@@ -69,11 +69,11 @@ export default function Navbar(props) {
           setTimeout(() => {
             dispatch(alertActions.clear());
             dispatch(userActions.logout());
-        }, 3000);
+          }, 3000);
         }
       }, TIME_OUT);
     }
-     return () => clearInterval(interval.current);
+    return () => clearInterval(interval.current);
   }, [isActive])
 
   const [currentLoc, setCurrentLoc] = React.useState({
@@ -109,7 +109,6 @@ export default function Navbar(props) {
       console.warn(error)
       return null;
     }
-
   }
 
   useEffect(() => {
@@ -159,8 +158,8 @@ export default function Navbar(props) {
             loggedIn ?
               <div>
                 <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
-                  { avatarImage ? 
-                    <Avatar src={avatarImage} alt={userData?.data?.username} style={{ height: 40, width: 40 }}/> :
+                  {avatarImage ?
+                    <Avatar src={avatarImage} alt={userData?.data?.username} style={{ height: 40, width: 40 }} /> :
                     <AccountCircleRoundedIcon style={{ height: 40, width: 40 }} />
                   }
                 </IconButton>
@@ -188,9 +187,7 @@ export default function Navbar(props) {
               <NavLink to="/login" className={classes.nav} activeStyle={{ fontWeight: "bold", color: COLORS.highlight, textDecorationColor: COLORS.highlight }}>
                 Login
               </NavLink>
-
           }
-
         </Toolbar>
       </AppBar>
     </div>
