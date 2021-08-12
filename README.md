@@ -69,9 +69,10 @@ Functionalities to remove based on time constriction will be email alerts and ad
 **Pins on google maps showing Ticket-master events** 
 
 - Google api integration to render map and markers
-- Pulling in events data that are within a month from ticketmaster 
+- Pulling in events data from ticketmaster 
+- Be able to detect current city automatically
 - Displaying event details in markers
-- Be able to change cities to render new map view & events
+- Be able to buy tickets via a link on marker
 
 
 ![ConcertWithFriends UI Sketches - page 1](https://user-images.githubusercontent.com/20137196/119717563-aff2f480-be23-11eb-8019-d0c779ffb7e8.jpeg)
