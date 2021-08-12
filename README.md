@@ -132,6 +132,16 @@ We plan to add on extra features that was not implemented in our stretch goal su
 ## Contributions
 
 ### Ruonan
+- User sign-in/sign-up/authentication using Passport.js (backend)
+- built the search feature component (frontend), integrated it with ticketmaster API to support searching by different filters
+- Designed and built custom markers on maps page
+- Designed and built landing page
+- Integrated "my groups" page with ticketmaster API and database 
+- Email API setup (Email.js) 
+- Sending emails to alert all users in a group of new members joining
+- MongoDB setup on backend
+- Designed database to support use cases
+- Designed and styled app components with CSS
 
 
 ### Nancy
@@ -163,15 +173,5 @@ We plan to add on extra features that was not implemented in our stretch goal su
 - Endpoints and schemas for managing users and groups in the database
 - Password validation on Sign-up page
 
-### Ruonan
-- User sign-in/sign-up/authentication using Passport.js (backend)
-- built the search feature component (frontend), integrated it with ticketmaster API to support searching by different filters
-- Designed and built custom markers on maps page
-- Designed and built landing page
-- Integrated "my groups" page with ticketmaster API and database 
-- Email API setup (Email.js) 
-- Sending emails to alert all users in a group of new members joining
-- MongoDB setup on backend
-- Designed database to support all use cases
-- Designed and styled the app with CSS
+
 
