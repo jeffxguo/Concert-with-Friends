@@ -4,6 +4,7 @@ import { COLORS } from '../constants/Colors';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../actions/user.actions';
+import { alertActions } from '../actions/alert.actions';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -61,6 +62,13 @@ export default function LoginPage() {
 
 	const handleLoginSubmit = (e) => {
 		e.preventDefault();
+		if (username === "" || password === "") {
+			dispatch(alertActions.error('Please fill out the blank entries'));
+			setTimeout(() => {
+			  dispatch(alertActions.clear());
+			}, 3000);
+			return;
+		}
 		if (username && password) {
 			// get return url from location state or default to home page
 			const { from } = location.state || { from: { pathname: "/" } };
