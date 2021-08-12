@@ -179,12 +179,13 @@ We plan to add on extra features that was not implemented in our stretch goal su
   - invite friends functionality
 
 ### Jeffrey
-- "From" and "To" date filters on search bar
-- Event cards on Home and MyGroups page
-  - View Members modal that shows contact info of members in a group
-  - Dropdown with "Add to Calendar", "Purchase Tickets", and "Leave Group"
+- Created Event cards on Home and MyGroups page
+  - View Members modal that shows contact info of all members in a group
+  - Add to Calendar button that redirects you to Google Calendar
 - Endpoints and schemas for managing users and groups in the database
+- Created Footer component
 - Password validation on Sign-up page
+- "From" and "To" date filters on search bar with date picker
 
 
 
