@@ -4,12 +4,13 @@ import { COLORS } from '../constants/Colors';
 import Avatar from '@material-ui/core/Avatar';
 import fb from '../images/fb.png'
 import ig from '../images/ig.png'
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
 
 export default function Contact(member) {
     const classes = useStyles();
     let initialAvatar;
     if (member.avatar && member.avatar.data) {
-      initialAvatar = new Buffer.from(member.avatar.data).toString("ascii");
+        initialAvatar = new Buffer.from(member.avatar.data).toString("ascii");
     }
 
     return (
@@ -17,10 +18,21 @@ export default function Contact(member) {
             <div className={classes.content}>
                 <Avatar src={initialAvatar} alt={member?.username} className={classes.memberImage} />
                 <div className={classes.details}>
-                    <Typography style={{ fontWeight: 700 }}><span style={{ fontSize: "1.2em" }}>{member.name} </span></Typography>
-                    <Typography>{member.taste && member.taste!=="N/A" && member.taste!=="" &&
-                        <span style={{ fontSize: "1em", color: COLORS.grey, fontWeight: 600 }}>{member.taste} Listener </span>
-                    }</Typography>
+                    <div className={classes.title}>
+                        <div style={{ flex: 1 }}>
+                            <Typography style={{ fontWeight: 700 }}><span style={{ fontSize: "1.2em" }}>{member.name} </span></Typography>
+                        </div>
+                        <div style={{ textAlign: "right", flex: 1 }}>
+
+                            <Typography>{member.taste && member.taste !== "N/A" && member.taste !== "" &&
+                                <>
+                                    <span style={{ fontSize: ".9em", color: COLORS.grey, fontWeight: 600 }}>{member.taste}</span>
+                                    <MusicNoteIcon style={{ color: COLORS.pink, marginLeft: '.5em' }} />
+
+                                </>
+                            }</Typography>
+                        </div>
+                    </div>
                     <div className={classes.contactInfo} style={{ marginTop: 10 }}>
                         <Typography style={{ marginRight: 40 }}><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Phone </span>{member.phone}</Typography>
                         <Typography><span style={{ color: COLORS.highlight, fontWeight: 700 }}>Email </span> {member.email}</Typography>
@@ -67,6 +79,10 @@ const useStyles = makeStyles(theme => ({
     content: {
         display: 'flex',
         flexDirection: 'row'
+    },
+    title: {
+        flexDirection: "row",
+        display: "flex",
     },
     details: {
         marginLeft: "1em",
